@@ -1,4 +1,7 @@
 package com.example.easystoring.ui.assistant
 
-class AssistantViewModel {
+import androidx.lifecycle.ViewModel
+
+class AssistantViewModel : ViewModel() {
+    // TODO: Implement the ViewModel
 }
