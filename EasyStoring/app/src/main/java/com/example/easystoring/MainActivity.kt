@@ -71,32 +71,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 顶部导航栏、侧栏相关设置
-        setSupportActionBar(binding.toolbar)
-        binding.toolbar.setNavigationIcon(R.drawable.ic_family)
-        binding.toolbar.setNavigationOnClickListener {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
-
-        }
-//        supportActionBar?.let {
-//            it.setDisplayHomeAsUpEnabled(true)
-//            it.setHomeAsUpIndicator(R.mipmap.ic_sidebar)
-//        }
-        binding.btn.setOnClickListener{
+        val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationIcon(R.mipmap.ic_sidebar)
+        toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar,menu)
+        menuInflater.inflate(R.menu.toolbar, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        when (item.itemId) {
-//            android.R.id.home->binding.drawerLayout.openDrawer(GravityCompat.START)
-        }
-        return true
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        val binding = ActivityMainBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//        when (item.itemId) {
+////            android.R.id.home->binding.drawerLayout.openDrawer(GravityCompat.START)
+//        }
+//        return true
+//    }
 }
