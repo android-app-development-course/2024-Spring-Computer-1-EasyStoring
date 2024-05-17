@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
+//        toolbar.set
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

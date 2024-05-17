@@ -2,7 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/backup"
-        android:title="Title"
-        app:showAsAction="never"/>
+        android:id="@+id/scan"
+        android:icon="@drawable/ic_scan"
+        android:title="Scan"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/ic_more"
+        android:title="More"
+        app:showAsAction="ifRoom" />
 </menu>
