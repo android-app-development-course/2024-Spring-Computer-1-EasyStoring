@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navRecords"
+        android:icon="@drawable/ic_family"
+        android:title="物品记录" />
+
+    <item
+        android:id="@+id/navManage"
+        android:icon="@drawable/ic_scan"
+        android:title="收纳柜管理" />
+
+    <item
+        android:id="@+id/navAssistant"
+        android:icon="@drawable/ic_favorite"
+        android:title="交易助手" />
+
+</menu>
