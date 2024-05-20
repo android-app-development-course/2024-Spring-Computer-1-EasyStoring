@@ -15,9 +15,20 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            android:background="@color/design_default_color_background"/>
+            android:background="@color/design_default_color_background"
+            android:theme="@style/ToolBarTheme"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="标题"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:visibility="invisible" />
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,11 +63,11 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:layout_width="200dp"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/sideNavView"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#FFF"
-        android:text="SideBar"
-        android:textSize="30dp" />
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

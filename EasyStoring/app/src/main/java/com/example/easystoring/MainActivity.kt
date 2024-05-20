@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -70,14 +72,61 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
-        // 顶部导航栏、侧栏相关设置
+        // 顶部导航栏相关设置
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.mipmap.ic_sidebar)
         toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
-//        toolbar.set
+        binding.text.visibility= View.VISIBLE
+//        https://blog.51cto.com/u_16175472/7870679
+
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.scan -> {
+                    Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
+                }
+
+                R.id.item2 -> {
+                    toolbar.showOverflowMenu()
+                    Toast.makeText(this, "Item2", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
+        // 侧栏
+        val sideNavView = binding.sideNavView
+        sideNavView.itemIconTintList = null
+        sideNavView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navFav -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "Favorite",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                R.id.navHis -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "History",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                R.id.navFam -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "Family",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            }
+            true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
