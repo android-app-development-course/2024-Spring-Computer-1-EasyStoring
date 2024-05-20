@@ -1,8 +1,10 @@
 package com.example.easystoring
 
 import ViewPager2Adapter
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -18,6 +20,7 @@ import com.example.easystoring.ui.dashboard.DashboardFragment
 import com.example.easystoring.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -75,21 +78,24 @@ class MainActivity : AppCompatActivity() {
         // 顶部导航栏相关设置
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.let{
+            it.setDisplayShowTitleEnabled(false)
+        }
         toolbar.setNavigationIcon(R.mipmap.ic_sidebar)
         toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
-        binding.text.visibility= View.VISIBLE
+//        binding.text.visibility= View.VISIBLE
 //        https://blog.51cto.com/u_16175472/7870679
 
         toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.scan -> {
+                    toolbar.showOverflowMenu()
                     Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
                 }
 
                 R.id.item2 -> {
-                    toolbar.showOverflowMenu()
                     Toast.makeText(this, "Item2", Toast.LENGTH_SHORT).show()
                 }
             }
