@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.easystoring.Item
+import com.example.easystoring.ItemAdapter
+import com.example.easystoring.R
 import com.example.easystoring.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -18,6 +23,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val ItemList = ArrayList<Item>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,13 +34,32 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        initItem()
+        val recyclerView : RecyclerView = binding.recyclerView
+        val layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager =  layoutManager
+        val adapter = ItemAdapter(ItemList)     // 在这里修改物品栏显示的内容
+        recyclerView.adapter = adapter
 
-        val textView: TextView = binding.textHome
+
+
         homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+
         }
 
         return root
+    }
+
+    private fun initItem(){
+        for(i in 1..10) {
+            val item1:Item=Item()
+            item1.name = "Item$i"
+            item1.imageId = R.drawable.item_pic
+            item1.belongTo = 1
+            item1.productionDate = "2024-2-25"
+            item1.id = i.toLong()
+            ItemList.add(item1)
+        }
     }
 
     override fun onDestroyView() {

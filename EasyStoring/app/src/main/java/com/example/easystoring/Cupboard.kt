@@ -1,9 +1,10 @@
 package com.example.easystoring
 
 class Cupboard {
-    var id: Long = 0
-    var items = mutableListOf<Item>()
-    var name:String="Default name"
-    var description:String="Default description"
+
+    public var id: Long = 0
+    public var items = mutableListOf<Item>()
+    public var name:String="Default name"
+    public var description:String="Default description"
 
 }
