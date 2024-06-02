@@ -62,8 +62,6 @@ class ItemAdapter(val itemList:List<Item>) :
                 putExtra("position", position.toString())
             }
             viewHolder.itemView.context.startActivity(intent)
-            Toast.makeText(parent.context, "clicked view ${item.name}",
-                Toast.LENGTH_SHORT).show()
         }
         // 点击图片
         viewHolder.ItemImage.setOnClickListener {
