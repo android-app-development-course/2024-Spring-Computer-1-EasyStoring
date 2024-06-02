@@ -2,7 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/backup"
-        android:title="Title"
-        app:showAsAction="never"/>
+        android:id="@+id/scan"
+        android:icon="@drawable/ic_scan"
+        android:title="Scan"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item2"
+        android:title="Item2"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/item3"
+        android:title="Item3"
+        app:showAsAction="never" />
 </menu>

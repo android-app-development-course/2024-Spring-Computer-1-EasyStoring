@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.tasks.Kapt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -59,4 +62,6 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
 }
