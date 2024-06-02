@@ -17,6 +17,9 @@
         android:theme="@style/Theme.EasyStoring"
         tools:targetApi="31">
         <activity
+            android:name=".ui.CupboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ItemActivity"
             android:launchMode="singleTask" />
         <activity
@@ -38,7 +41,7 @@
         </activity>
         <activity
             android:name=".NaviBar"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

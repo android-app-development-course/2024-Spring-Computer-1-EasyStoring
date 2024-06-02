@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
             item1.id = i.toLong()
             item1.name = "Item$i"
             item1.imageId = R.drawable.item_pic
-            item1.cupboardId = Random.nextInt(2)
+            item1.cupboardId = 1
             item1.productionDate = "2024-2-25"
             item1.number = Random.nextInt(10)
             ItemList.add(item1)
