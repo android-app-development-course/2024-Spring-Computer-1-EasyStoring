@@ -9,7 +9,7 @@ import androidx.room.TypeConverters
 //@TypeConverters(CupboardTypeConverter::class)
 data class User(var username: String, var password: String) {
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
+    var id: Int = 0
     var firstName: String = "default"
     var lastName: String = "Default last name"
     var age: Int = 1

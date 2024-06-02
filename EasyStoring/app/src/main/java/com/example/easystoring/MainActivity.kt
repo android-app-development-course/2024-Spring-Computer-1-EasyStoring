@@ -2,14 +2,23 @@ package com.example.easystoring
 
 import ViewPager2Adapter
 import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.Menu
-import android.widget.Toast
+import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.easystoring.databinding.ActivityMainBinding
+import com.example.easystoring.logic.model.AppDBHelper
+import com.example.easystoring.ui.UserInformation.UserInformation
 import com.example.easystoring.ui.assistant.AssistantFragment
 import com.example.easystoring.ui.dashboard.DashboardFragment
 import com.example.easystoring.ui.home.HomeFragment
@@ -20,6 +29,39 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // 创建SQLite数据库
+        val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+        var UserNum = 0
+        val cursor1 = db.rawQuery("SELECT COUNT(*) FROM User", null)
+        cursor1.moveToFirst()
+        var count = cursor1.columnCount
+        Toast.makeText(this,"$count line",Toast.LENGTH_SHORT).show()
+        val cursor = db.query("User",null,null
+            ,null,null,null,null)
+        if (count == 0)
+        {
+            Toast.makeText(this,"0 line",Toast.LENGTH_SHORT).show()
+            var user1 :User = User("user1","password")
+            UserNum +=1
+            user1.id = UserNum
+            user1.firstName = "  "
+            user1.lastName = "  "
+            user1.age = 2
+            val values1 = ContentValues().apply {
+                // 组装数据
+                put("username", user1.username)
+                put("weather", user1.password)
+                put("firstName", user1.firstName)
+                put("lastName", user1.lastName)
+                put("age",user1.age)
+
+            }
+            db.insert("User", null, values1)
+        }
+
+        cursor.close()
+
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -28,10 +70,10 @@ class MainActivity : AppCompatActivity() {
 
         //将所有的Fragment添加到ViewPager2中
         val fragmentList: MutableList<Fragment> = ArrayList()
-//        fragmentList.add(UserInformation())
+        fragmentList.add(UserInformation())
         fragmentList.add(HomeFragment())
         fragmentList.add(DashboardFragment())
-        fragmentList.add(AssistantFragment())
+//        fragmentList.add(AssistantFragment())
         binding.navViewpage2.adapter = ViewPager2Adapter(this, fragmentList)
 
         //当viewpage2页面切换时，nav导航图标也跟着切换
