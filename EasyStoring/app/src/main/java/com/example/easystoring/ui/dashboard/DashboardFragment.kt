@@ -4,10 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+//import com.example.easystoring.AppDataBase
+import com.example.easystoring.EasyStoringApplication
+import com.example.easystoring.R
+import com.example.easystoring.User
 import com.example.easystoring.databinding.FragmentDashboardBinding
+import kotlin.concurrent.thread
 
 class DashboardFragment : Fragment() {
 
