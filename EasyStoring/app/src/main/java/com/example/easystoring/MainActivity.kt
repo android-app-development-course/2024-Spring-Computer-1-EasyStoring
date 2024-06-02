@@ -35,10 +35,10 @@ class MainActivity : AppCompatActivity() {
 
         //将所有的Fragment添加到ViewPager2中
         val fragmentList: MutableList<Fragment> = ArrayList()
+        fragmentList.add(UserInformation())
         fragmentList.add(HomeFragment())
         fragmentList.add(DashboardFragment())
 //        fragmentList.add(AssistantFragment())
-        fragmentList.add(UserInformation())
         binding.navViewpage2.adapter = ViewPager2Adapter(this, fragmentList)
 
         //当viewpage2页面切换时，nav导航图标也跟着切换
@@ -136,13 +136,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-//        val usf=supportFragmentManager.findFragmentById(R.id.usf)
-//        val uView= usf?. view
-//        val b1=uView?.findViewById<Button>(R.id.insertButton)
-//        b1?.setOnClickListener {
-//            Toast.makeText(this,"2333",Toast.LENGTH_SHORT).show()
-//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

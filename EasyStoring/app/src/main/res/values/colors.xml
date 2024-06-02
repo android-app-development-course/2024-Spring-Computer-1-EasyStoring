@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="Yumen">#A2D2E2</color>
+    <color name="Xizi">#87C0CA</color>
+    <color name="Tianshuibi">#5AA4AE</color>
+    <color name="Facui">#108B96</color>
 </resources>
