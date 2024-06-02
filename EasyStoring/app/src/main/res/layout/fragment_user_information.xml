@@ -5,6 +5,7 @@
     android:id="@+id/usf"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_pic"
     android:tag="usf"
     tools:context=".ui.UserInformation.UserInformation">
 
@@ -13,14 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:title="收纳柜" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -28,7 +21,7 @@
         android:id="@+id/browse_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@color/Yumen"
+        android:background="@drawable/button_bg_pic"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
@@ -48,7 +41,7 @@
         android:id="@+id/browse2_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@color/Yumen"
+        android:background="@drawable/button_bg_pic"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
@@ -68,7 +61,7 @@
         android:id="@+id/browse3_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@color/Yumen"
+        android:background="@drawable/button_bg_pic2"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
@@ -88,7 +81,7 @@
         android:id="@+id/browse4_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@color/Yumen"
+        android:background="@drawable/button_bg_pic2"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
@@ -108,7 +101,7 @@
         android:id="@+id/browse5_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@color/Yumen"
+        android:background="@drawable/button_bg_pic"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
@@ -128,7 +121,7 @@
         android:id="@+id/browse6_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@color/Yumen"
+        android:background="@drawable/button_bg_pic"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
@@ -148,7 +141,7 @@
         android:id="@+id/browse7_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@color/Yumen"
+        android:background="@drawable/button_bg_pic2"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
@@ -168,7 +161,7 @@
         android:id="@+id/browse8_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@color/Yumen"
+        android:background="@drawable/button_bg_pic2"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
@@ -187,10 +180,10 @@
 
     <Button
         android:id="@+id/create_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="215dp"
+        android:layout_height="82dp"
         android:layout_marginTop="448dp"
-        android:background="@color/Tianshuibi"
+        android:background="@drawable/button_bg_pic"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
@@ -206,17 +199,4 @@
         app:layout_constraintVertical_bias="0.62"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/version_textView"
-        android:layout_width="144dp"
-        android:layout_height="76dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/create_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="1.0"
-        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

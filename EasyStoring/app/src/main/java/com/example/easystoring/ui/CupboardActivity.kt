@@ -2,7 +2,7 @@ package com.example.easystoring.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
@@ -23,7 +23,7 @@ class CupboardActivity : AppCompatActivity() {
     private val ItemList = ArrayList<Item>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         setContentView(R.layout.activity_cupboard)
 
         initItem()
@@ -32,6 +32,11 @@ class CupboardActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         val adapter = ItemAdapter(ItemList)     // 在这里修改物品栏显示的内容
         recyclerView.adapter = adapter
+
+        val button2: Button =findViewById(R.id.button2)
+        button2.setOnClickListener {
+            finish()
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

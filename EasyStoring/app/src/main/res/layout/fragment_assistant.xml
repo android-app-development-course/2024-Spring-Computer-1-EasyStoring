@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_pic"
     tools:context=".ui.assistant.AssistantFragment">
 
     <ImageView
@@ -23,7 +24,7 @@
         android:layout_width="270dp"
         android:layout_height="0dp"
         android:layout_marginBottom="222dp"
-        android:background="@null"
+        android:background="@color/white"
         android:ems="10"
         android:text="【限量版初音未来FUFU玩偶】二手出售！可爱爆棚，手感柔软，绝对是初音粉的必藏品！经典造型，完美还原初音魅力，让你一秒爱上！机不可失，快来抢购，让初音陪你度过每一个美好瞬间！"
         android:gravity="start|top"
@@ -39,6 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="17dp"
         android:text="初音未来FUFU玩偶"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

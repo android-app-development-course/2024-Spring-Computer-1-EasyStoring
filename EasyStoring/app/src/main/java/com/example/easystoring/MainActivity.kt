@@ -29,32 +29,9 @@ class MainActivity : AppCompatActivity() {
         val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
         val db = dbHelper.writableDatabase
         var UserNum = 0
-        val cursor1 = db.rawQuery("SELECT COUNT(*) FROM User", null)
-        //cursor1.moveToFirst()
-        val count = 0
-        //Toast.makeText(this,"$count line",Toast.LENGTH_SHORT).show()
+
         val cursor = db.query("User",null,null
             ,null,null,null,null)
-        if (count == 0)
-        {
-            Toast.makeText(this,"0 line",Toast.LENGTH_SHORT).show()
-            var user1 :User = User("user1","password")
-            UserNum +=1
-            user1.id = UserNum
-            user1.firstName = "  "
-            user1.lastName = "  "
-            user1.age = 2
-            val values1 = ContentValues().apply {
-                // 组装数据
-                put("username", user1.username)
-                put("weather", user1.password)
-                put("firstName", user1.firstName)
-                put("lastName", user1.lastName)
-                put("age",user1.age)
-
-            }
-            db.insert("User", null, values1)
-        }
 
         cursor.close()
 
