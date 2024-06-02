@@ -1,21 +1,28 @@
 package com.example.easystoring
 
 import ViewPager2Adapter
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.easystoring.databinding.ActivityMainBinding
+import com.example.easystoring.ui.UserInformation.UserInformation
 import com.example.easystoring.ui.assistant.AssistantFragment
 import com.example.easystoring.ui.dashboard.DashboardFragment
 import com.example.easystoring.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,7 +37,8 @@ class MainActivity : AppCompatActivity() {
         val fragmentList: MutableList<Fragment> = ArrayList()
         fragmentList.add(HomeFragment())
         fragmentList.add(DashboardFragment())
-        fragmentList.add(AssistantFragment())
+//        fragmentList.add(AssistantFragment())
+        fragmentList.add(UserInformation())
         binding.navViewpage2.adapter = ViewPager2Adapter(this, fragmentList)
 
         //当viewpage2页面切换时，nav导航图标也跟着切换
@@ -70,13 +78,71 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
-        // 顶部导航栏、侧栏相关设置
+        // 顶部导航栏相关设置
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.let{
+            it.setDisplayShowTitleEnabled(false)
+        }
         toolbar.setNavigationIcon(R.mipmap.ic_sidebar)
         toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
+//        binding.text.visibility= View.VISIBLE
+//        https://blog.51cto.com/u_16175472/7870679
+
+        toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.scan -> {
+                    toolbar.showOverflowMenu()
+                    Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
+                }
+
+                R.id.item2 -> {
+                    Toast.makeText(this, "Item2", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
+        // 侧栏
+        val sideNavView = binding.sideNavView
+        sideNavView.itemIconTintList = null
+        sideNavView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navFav -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "Favorite",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                R.id.navHis -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "History",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                R.id.navFam -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "Family",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            }
+            true
+        }
+
+//        val usf=supportFragmentManager.findFragmentById(R.id.usf)
+//        val uView= usf?. view
+//        val b1=uView?.findViewById<Button>(R.id.insertButton)
+//        b1?.setOnClickListener {
+//            Toast.makeText(this,"2333",Toast.LENGTH_SHORT).show()
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
