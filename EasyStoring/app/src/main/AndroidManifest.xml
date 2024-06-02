@@ -34,9 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".NaviBar"
-            android:exported="true" />
+
+
     </application>
 
 </manifest>
