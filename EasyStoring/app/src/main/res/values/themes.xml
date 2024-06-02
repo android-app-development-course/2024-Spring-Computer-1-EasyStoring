@@ -5,5 +5,15 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.EasyStoring" parent="Base.Theme.EasyStoring" />
+    <style name="Theme.EasyStoring" parent="Base.Theme.EasyStoring" >
+    </style>
+    <!--设置toolbar选项菜单的样式-->
+    <!--overlapAnchor 设在不遮挡toolbar-->
+    <!--colorControlNormal 设置三个点颜色为白色-->
+    <!--在xml布局中 用android:theme:"引用这个style"-->
+    <style name="ToolBarTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="backgroundColor">#FFDD88</item>
+        <item name="overlapAnchor">false</item>
+        <item name="colorControlNormal">#000</item>
+    </style>
 </resources>
