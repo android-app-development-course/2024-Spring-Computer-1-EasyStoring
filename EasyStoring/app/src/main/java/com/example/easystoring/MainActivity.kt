@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.easystoring.databinding.ActivityMainBinding
+import com.example.easystoring.ui.AddFragment
 import com.example.easystoring.ui.assistant.AssistantFragment
 import com.example.easystoring.ui.dashboard.DashboardFragment
 import com.example.easystoring.ui.home.HomeFragment
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -30,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         val fragmentList: MutableList<Fragment> = ArrayList()
         fragmentList.add(HomeFragment())
         fragmentList.add(DashboardFragment())
-        fragmentList.add(AssistantFragment())
+//        fragmentList.add(AssistantFragment())
+        fragmentList.add(AddFragment())
         binding.navViewpage2.adapter = ViewPager2Adapter(this, fragmentList)
 
         //当viewpage2页面切换时，nav导航图标也跟着切换
@@ -76,7 +79,11 @@ class MainActivity : AppCompatActivity() {
         toolbar.setNavigationIcon(R.mipmap.ic_sidebar)
         toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
+
         }
+
+//        val addF = supportFragmentManager.findFragmentById(R.id)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
