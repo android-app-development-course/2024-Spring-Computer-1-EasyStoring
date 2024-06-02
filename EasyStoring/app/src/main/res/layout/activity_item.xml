@@ -97,7 +97,7 @@
                 android:layout_width="150dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="28dp"
-                android:text="添加物品:"
+                android:text="物品详情:"
                 android:textSize="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.32"
