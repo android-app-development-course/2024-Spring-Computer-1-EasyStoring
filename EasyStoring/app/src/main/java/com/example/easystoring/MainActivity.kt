@@ -2,21 +2,14 @@ package com.example.easystoring
 
 import ViewPager2Adapter
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.easystoring.databinding.ActivityMainBinding
-import com.example.easystoring.ui.UserInformation.UserInformation
 import com.example.easystoring.ui.assistant.AssistantFragment
 import com.example.easystoring.ui.dashboard.DashboardFragment
 import com.example.easystoring.ui.home.HomeFragment
@@ -35,10 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         //将所有的Fragment添加到ViewPager2中
         val fragmentList: MutableList<Fragment> = ArrayList()
-        fragmentList.add(UserInformation())
+//        fragmentList.add(UserInformation())
         fragmentList.add(HomeFragment())
         fragmentList.add(DashboardFragment())
-//        fragmentList.add(AssistantFragment())
+        fragmentList.add(AssistantFragment())
         binding.navViewpage2.adapter = ViewPager2Adapter(this, fragmentList)
 
         //当viewpage2页面切换时，nav导航图标也跟着切换
