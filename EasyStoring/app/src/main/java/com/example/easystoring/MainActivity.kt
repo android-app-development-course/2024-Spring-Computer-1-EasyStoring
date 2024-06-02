@@ -24,7 +24,7 @@ import com.example.easystoring.ui.dashboard.DashboardFragment
 import com.example.easystoring.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "Recycle")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity() {
         val db = dbHelper.writableDatabase
         var UserNum = 0
         val cursor1 = db.rawQuery("SELECT COUNT(*) FROM User", null)
-        cursor1.moveToFirst()
-        var count = cursor1.columnCount
-        Toast.makeText(this,"$count line",Toast.LENGTH_SHORT).show()
+        //cursor1.moveToFirst()
+        val count = 0
+        //Toast.makeText(this,"$count line",Toast.LENGTH_SHORT).show()
         val cursor = db.query("User",null,null
             ,null,null,null,null)
         if (count == 0)
