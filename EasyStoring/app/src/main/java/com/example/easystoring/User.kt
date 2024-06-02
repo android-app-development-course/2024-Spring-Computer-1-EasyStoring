@@ -13,7 +13,4 @@ data class User(var username: String, var password: String) {
     var firstName: String = "default"
     var lastName: String = "Default last name"
     var age: Int = 1
-
-    //        var cupboards = mutableListOf<Cupboard>()
-//    var myMap: Map<Int, Int> = mapOf<Int, Int>()
 }
