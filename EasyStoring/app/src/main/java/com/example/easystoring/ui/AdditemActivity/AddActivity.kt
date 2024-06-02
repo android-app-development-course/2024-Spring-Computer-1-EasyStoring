@@ -1,21 +1,19 @@
 package com.example.easystoring.ui.AdditemActivity
 
+//import androidx.activity.enableEdgeToEdge
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ListView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.easystoring.Item
 import com.example.easystoring.R
 
 class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         setContentView(R.layout.activity_add)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -24,6 +22,10 @@ class AddActivity : AppCompatActivity() {
         }
 
         val button1: Button = findViewById(R.id.button1)
+        val button2:Button=findViewById(R.id.button2)
+        button2.setOnClickListener {
+            finish()
+        }
 
         val edit_1: EditText = findViewById(R.id.editText1)
         val edit_2: EditText = findViewById(R.id.editText2)
@@ -37,15 +39,15 @@ class AddActivity : AppCompatActivity() {
         val ImageBtn_3: ImageButton = findViewById(R.id.imageButton3)
         val ImageBtn_4: ImageButton = findViewById(R.id.imageButton4)
 
-        var use_item :Item = Item()
-        button1.setOnClickListener {
-            use_item.name = edit_1.getText().toString()
-            use_item.number = Integer.parseInt(edit_2.getText().toString())
-            use_item.decription = edit_7.getText().toString()
-            use_item.belongTo = Integer.parseInt(edit_8.getText().toString())
-            use_item.productionDate = edit_4.getText().toString()
-            use_item.overdueDate = edit_5.getText().toString()
-        }
+//        var use_item :Item = Item()
+//        button1.setOnClickListener {
+//            use_item.name = edit_1.getText().toString()
+//            use_item.number = Integer.parseInt(edit_2.getText().toString())
+//            use_item.decription = edit_7.getText().toString()
+//            use_item.belongTo = Integer.parseInt(edit_8.getText().toString())
+//            use_item.productionDate = edit_4.getText().toString()
+//            use_item.overdueDate = edit_5.getText().toString()
+//        }
 
         //读入图片
         ImageBtn_1.setOnClickListener{
@@ -53,7 +55,4 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
-    private fun enableEdgeToEdge() {
-        TODO("Not yet implemented")
-    }
 }
