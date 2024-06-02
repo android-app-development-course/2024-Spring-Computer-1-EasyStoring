@@ -17,13 +17,7 @@
         android:networkSecurityConfig="@xml/network_config"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ItemActivity" />
-      <activity
-            android:name=".ui.AdditemActivity.AddCupboardActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.AdditemActivity.AddActivity"
-
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -34,8 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
+        <activity
+            android:name=".NaviBar"
+            android:exported="true"></activity>
     </application>
 
 </manifest>
