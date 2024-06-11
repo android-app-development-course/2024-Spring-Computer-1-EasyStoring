@@ -2,7 +2,6 @@ package com.example.easystoring
 
 import ViewPager2Adapter
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -15,9 +14,9 @@ import com.example.easystoring.databinding.ActivityMainBinding
 import com.example.easystoring.logic.model.AppDBHelper
 import com.example.easystoring.ui.AdditemActivity.AddActivity
 import com.example.easystoring.ui.AdditemActivity.AddCupboardActivity
+import com.example.easystoring.ui.TestFragment.TestFragment
 import com.example.easystoring.ui.UserInformation.UserInformation
 import com.example.easystoring.ui.assistant.AssistantFragment
-import com.example.easystoring.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi", "Recycle")
@@ -43,7 +42,8 @@ class MainActivity : AppCompatActivity() {
 
         //将所有的Fragment添加到ViewPager2中
         val fragmentList: MutableList<Fragment> = ArrayList()
-        fragmentList.add(HomeFragment())
+        fragmentList.add(TestFragment())
+//        fragmentList.add(HomeFragment())
         fragmentList.add(UserInformation())
         fragmentList.add(AssistantFragment())
 //        fragmentList.add(AssistantFragment())
