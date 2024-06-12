@@ -14,9 +14,9 @@ import com.example.easystoring.databinding.ActivityMainBinding
 import com.example.easystoring.logic.model.AppDBHelper
 import com.example.easystoring.ui.AdditemActivity.AddActivity
 import com.example.easystoring.ui.AdditemActivity.AddCupboardActivity
-import com.example.easystoring.ui.TestFragment.TestFragment
 import com.example.easystoring.ui.UserInformation.UserInformation
 import com.example.easystoring.ui.assistant.AssistantFragment
+import com.example.easystoring.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi", "Recycle")
@@ -29,8 +29,9 @@ class MainActivity : AppCompatActivity() {
         val db = dbHelper.writableDatabase
         var UserNum = 0
 
-        val cursor = db.query("User",null,null
-            ,null,null,null,null)
+        val cursor = db.query(
+            "User", null, null, null, null, null, null
+        )
 
         cursor.close()
 
@@ -42,8 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         //将所有的Fragment添加到ViewPager2中
         val fragmentList: MutableList<Fragment> = ArrayList()
-        fragmentList.add(TestFragment())
-//        fragmentList.add(HomeFragment())
+//        fragmentList.add(TestFragment())
+        fragmentList.add(HomeFragment())
         fragmentList.add(UserInformation())
         fragmentList.add(AssistantFragment())
 //        fragmentList.add(AssistantFragment())
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         // 顶部导航栏相关设置
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
-        supportActionBar?.let{
+        supportActionBar?.let {
             it.setDisplayShowTitleEnabled(false)
         }
         toolbar.setNavigationIcon(R.mipmap.ic_sidebar)
@@ -104,10 +105,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.scan -> {
 //                    toolbar.showOverflowMenu()
 //                    Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
-                    if(binding.navViewpage2.currentItem==0)
-                        startActivity(Intent(this,AddActivity::class.java))
-                    else if(binding.navViewpage2.currentItem==1)
-                        startActivity(Intent(this,AddCupboardActivity::class.java))
+                    if (binding.navViewpage2.currentItem == 0)
+                        startActivity(Intent(this, AddActivity::class.java))
+                    else if (binding.navViewpage2.currentItem == 1)
+                        startActivity(Intent(this, AddCupboardActivity::class.java))
+                    else if (binding.navViewpage2.currentItem == 2)
+                        startActivity(Intent(this, AddActivity::class.java))
                 }
 
 //                R.id.item2 -> {
@@ -141,6 +144,14 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(
                         EasyStoringApplication.context,
                         "Family",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                R.id.settings -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "Settings",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
