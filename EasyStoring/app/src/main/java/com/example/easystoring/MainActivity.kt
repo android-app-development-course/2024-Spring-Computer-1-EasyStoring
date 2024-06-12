@@ -105,12 +105,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.scan -> {
 //                    toolbar.showOverflowMenu()
 //                    Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
-                    if (binding.navViewpage2.currentItem == 0)
-                        startActivity(Intent(this, AddActivity::class.java))
-                    else if (binding.navViewpage2.currentItem == 1)
-                        startActivity(Intent(this, AddCupboardActivity::class.java))
-                    else if (binding.navViewpage2.currentItem == 2)
-                        startActivity(Intent(this, AddActivity::class.java))
+                    when (binding.navViewpage2.currentItem) {
+                        0 -> startActivity(Intent(this, AddActivity::class.java))
+                        1 -> startActivity(Intent(this, AddCupboardActivity::class.java))
+                        2 -> startActivity(Intent(this, AddActivity::class.java))
+                    }
                 }
 
 //                R.id.item2 -> {
