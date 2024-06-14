@@ -29,6 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+            android:name=".logic.model.DBShow"
+            android:exported="false" />
         <activity
             android:name=".ui.CupboardActivity"
             android:exported="false" />
