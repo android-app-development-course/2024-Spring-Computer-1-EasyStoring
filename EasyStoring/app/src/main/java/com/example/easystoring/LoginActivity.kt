@@ -1,6 +1,9 @@
 package com.example.easystoring
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,16 +22,30 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        val binding=ActivityLoginBinding.inflate(layoutInflater)
+        val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.loginButton.setOnClickListener {
-            loginCheck("Alex","2333")
+            loginCheck("Alex", "2333")
         }
 
+//        val f:File
+        binding.registerButton.setOnClickListener {
+                val intent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(intent, 2)
+        }
     }
 
-    fun loginCheck(name: String,password:String){
-        NetworkService().userLogin(name,password)
+    @SuppressLint("Range")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 2) {
+            data?.dataString
+        }
+    }
+
+    fun loginCheck(name: String, password: String) {
+        NetworkService().userLogin(name, password)
     }
 }

@@ -2,6 +2,7 @@ package com.example.easystoring
 
 import ViewPager2Adapter
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
@@ -19,7 +20,6 @@ import com.example.easystoring.ui.AdditemActivity.AddCupboardActivity
 import com.example.easystoring.ui.UserInformation.UserInformation
 import com.example.easystoring.ui.assistant.AssistantFragment
 import com.example.easystoring.ui.home.HomeFragment
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi", "Recycle")
