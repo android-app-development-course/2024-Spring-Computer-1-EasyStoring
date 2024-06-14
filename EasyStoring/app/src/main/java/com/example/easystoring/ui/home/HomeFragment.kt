@@ -1,9 +1,12 @@
 package com.example.easystoring.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
@@ -14,6 +17,7 @@ import com.example.easystoring.Item
 import com.example.easystoring.ItemAdapter
 import com.example.easystoring.R
 import com.example.easystoring.databinding.FragmentHomeBinding
+import com.example.easystoring.logic.model.DBShow
 import kotlin.random.Random
 
 
@@ -36,12 +40,18 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        val showSQLite = binding.showSQLite
+        showSQLite.setOnClickListener {
+            startActivity(Intent(requireContext(), DBShow::class.java))
+            Toast.makeText(requireContext(),"1111",Toast.LENGTH_SHORT).show()
+        }
         initItem()
         val recyclerView : RecyclerView = binding.recyclerView
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager =  layoutManager
         val adapter = ItemAdapter(ItemList)     // 在这里修改物品栏显示的内容
         recyclerView.adapter = adapter
+
 
 
 
