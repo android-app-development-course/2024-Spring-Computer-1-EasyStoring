@@ -47,9 +47,9 @@ class CupboardActivity : AppCompatActivity() {
     private fun initItem(){
         for(i in 1..10) {
             val item1: Item = Item(1)
-            item1.id = i.toLong()
+            item1.id = i
             item1.name = "Item$i"
-            item1.imageId = R.drawable.item_pic
+//            item1.imageId = R.drawable.item_pic
             item1.cupboardId = Random.nextInt(2)
             item1.productionDate = "2024-2-25"
             item1.number = Random.nextInt(10)

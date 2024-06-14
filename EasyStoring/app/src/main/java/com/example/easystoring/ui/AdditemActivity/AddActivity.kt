@@ -1,14 +1,20 @@
 package com.example.easystoring.ui.AdditemActivity
 
 //import androidx.activity.enableEdgeToEdge
+import android.content.ContentValues
+import android.database.Cursor
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.easystoring.Item
 import com.example.easystoring.R
+import com.example.easystoring.logic.model.AppDBHelper
+import java.lang.Exception
 
 class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,10 +40,10 @@ class AddActivity : AppCompatActivity() {
         val edit_7: EditText = findViewById(R.id.editText7)
         val edit_8: EditText = findViewById(R.id.editText8)
 
-        val ImageBtn_1: ImageButton = findViewById(R.id.imageButton1)
-        val ImageBtn_2: ImageButton = findViewById(R.id.imageButton2)
-        val ImageBtn_3: ImageButton = findViewById(R.id.imageButton3)
-        val ImageBtn_4: ImageButton = findViewById(R.id.imageButton4)
+//        val ImageBtn_1: ImageButton = findViewById(R.id.imageButton1)
+//        val ImageBtn_2: ImageButton = findViewById(R.id.imageButton2)
+//        val ImageBtn_3: ImageButton = findViewById(R.id.imageButton3)
+//        val ImageBtn_4: ImageButton = findViewById(R.id.imageButton4)
 
 //        var use_item :Item = Item()
 //        button1.setOnClickListener {
@@ -50,9 +56,40 @@ class AddActivity : AppCompatActivity() {
 //        }
 
         //读入图片
-        ImageBtn_1.setOnClickListener{
+//        ImageBtn_1.setOnClickListener{
+//
+//        }
 
+    }
+
+    fun additem(Item1 :Item){
+
+        val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+        var ItemNum = 0
+        var cursor: Cursor?
+        try {
+            cursor = db.rawQuery("SELECT COUNT(*) FROM Item", null)
+            cursor.moveToFirst()
+            ItemNum =  cursor.getInt(0)
+            cursor.close()
+        } catch (e: Exception) {
+            Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
         }
+        val values3 = ContentValues().apply {
+            // 组装数据
+            ItemNum ++
+            put("id",ItemNum)
+            put("userId", 1)
+            put("imageId","")
+            put("name",Item1.name)
+            put("description",Item1.description)
+            put("number", Item1.number)
+            put("productionDate",Item1.productionDate)
+            put("cupboardId", Item1.cupboardId)
+        }
+        db.insert("Item", null, values3)
+
     }
 
 }
