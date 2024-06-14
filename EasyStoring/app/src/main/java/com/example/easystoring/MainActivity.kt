@@ -31,13 +31,13 @@ class MainActivity : AppCompatActivity() {
         // 创建SQLite数据库
         val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
         val db = dbHelper.writableDatabase
+
         dbHelper.rebuildTable(db,"Cupboard")
 //        dbHelper.rebuildTable(db,"Item")
 
         var CupboardNum = 0
         var ItemNum = 0
         var cursor: Cursor?
-
 
         try {
             cursor = db.rawQuery("SELECT COUNT(*) FROM CupBoard", null)
