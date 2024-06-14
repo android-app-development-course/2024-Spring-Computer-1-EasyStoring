@@ -20,6 +20,9 @@
         android:theme="@style/Theme.EasyStoring"
         tools:targetApi="31">
         <activity
+            android:name=".logic.model.DBShow"
+            android:exported="false" />
+        <activity
             android:name=".ui.CupboardActivity"
             android:exported="false" />
         <activity
@@ -42,7 +45,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

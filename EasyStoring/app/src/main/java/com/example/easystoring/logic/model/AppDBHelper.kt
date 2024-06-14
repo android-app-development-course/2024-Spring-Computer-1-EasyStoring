@@ -1,6 +1,8 @@
 package com.example.easystoring.logic.model
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
@@ -19,7 +21,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
             " id integer primary key autoincrement," +
             " userId integer, " +
             " name text, " +
-            " description integer)"
+            " description text)"
     private val createItem = "create table Item(" +
             " id integer primary key autoincrement," +
             " userId integer, " +
@@ -40,6 +42,40 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
 
+    }
+    @SuppressLint("Range")
+    fun getAllFromMyTable(db: SQLiteDatabase, tableName: String, columns:Array<String>): List<Map<String, Any?>> {
+        val list = mutableListOf<Map<String, Any?>>()
+        val cursor: Cursor = db.query(tableName, columns,
+            null, null, null, null, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val row = mutableMapOf<String, Any?>()
+                for (columnName in columns) {
+                    row[columnName] = cursor.getString(cursor.getColumnIndex(columnName))
+                }
+                list.add(row)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return list
+    }
+
+    fun rebuildTable( db: SQLiteDatabase,tableName:String){
+        when(tableName){
+            "User"->{
+                db.execSQL("DROP TABLE IF EXISTS User")
+                db.execSQL(createUser)
+            }
+            "Cupboard"->{
+                db.execSQL("DROP TABLE IF EXISTS Cupboard")
+                db.execSQL(createCupboard)
+            }
+            "Item"->{
+                db.execSQL("DROP TABLE IF EXISTS Item")
+                db.execSQL(createItem)
+            }
+        }
     }
 
 }
