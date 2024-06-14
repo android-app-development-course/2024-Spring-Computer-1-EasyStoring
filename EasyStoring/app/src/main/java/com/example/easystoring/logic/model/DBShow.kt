@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import com.example.easystoring.Cupboard
 import com.example.easystoring.R
@@ -34,6 +35,11 @@ class DBShow : AppCompatActivity() {
             Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
         }
         db.close()
+
+        var back = findViewById<Button>(R.id.back)
+        back.setOnClickListener {
+            finish()
+        }
     }
 
 }

@@ -1,8 +1,8 @@
 package com.example.easystoring
 
 class Item(var userId:Int) {
-    var id: Long = 0
-    var imageId: Int = 0
+    var id: Int = 0
+    var imageId: String = ""
     var name: String = "Default name"
     var description: String = "Default description"
     var number: Int = 1

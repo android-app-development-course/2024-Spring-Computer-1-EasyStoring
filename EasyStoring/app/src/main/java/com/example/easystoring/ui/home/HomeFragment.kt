@@ -1,7 +1,10 @@
 package com.example.easystoring.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +20,9 @@ import com.example.easystoring.Item
 import com.example.easystoring.ItemAdapter
 import com.example.easystoring.R
 import com.example.easystoring.databinding.FragmentHomeBinding
+import com.example.easystoring.logic.model.AppDBHelper
 import com.example.easystoring.logic.model.DBShow
+import java.lang.Exception
 import kotlin.random.Random
 
 
@@ -40,10 +45,11 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        // 测试数据库是否正常
         val showSQLite = binding.showSQLite
         showSQLite.setOnClickListener {
             startActivity(Intent(requireContext(), DBShow::class.java))
-            Toast.makeText(requireContext(),"1111",Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(),"1111",Toast.LENGTH_SHORT).show()
         }
         initItem()
         val recyclerView : RecyclerView = binding.recyclerView
@@ -62,17 +68,39 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    // 从数据库中读取物品信息
+    @SuppressLint("Range")
     private fun initItem(){
-        for(i in 1..10) {
-            val item1:Item=Item(1)
-            item1.id = i.toLong()
-            item1.name = "Item$i"
-            item1.imageId = R.drawable.item_pic
-            item1.cupboardId = 1
-            item1.productionDate = "2024-2-25"
-            item1.number = Random.nextInt(10)
-            ItemList.add(item1)
+        val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+
+        val cursor = db.rawQuery("SELECT * FROM Item WHERE userId = ?", arrayOf("1"))
+
+        var ItemNum = 0
+        // 遍历查询结果
+        if (cursor.moveToFirst()) {
+            do {
+                ItemNum++
+                val item1:Item=Item(1)
+                item1.id = ItemNum
+                try {
+                    item1.userId = cursor.getInt(cursor.getColumnIndex("userId"))
+                    item1.name = cursor.getString(cursor.getColumnIndex("name"))
+                    item1.imageId = cursor.getString(cursor.getColumnIndex("imageId"))
+                    item1.cupboardId = cursor.getString(cursor.getColumnIndex("cupboardId")).toInt()
+                    item1.productionDate = cursor.getString(cursor.getColumnIndex("productionDate"))
+                    item1.number = cursor.getString(cursor.getColumnIndex("number")).toInt()
+                    ItemList.add(item1)
+                }catch (e:Exception)
+                {
+                    Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
+                }
+            } while (cursor.moveToNext())
         }
+
+        // 关闭游标和数据库
+        cursor.close()
+        db.close()
     }
 
     override fun onDestroyView() {

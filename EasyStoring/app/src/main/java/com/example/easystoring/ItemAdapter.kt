@@ -39,20 +39,6 @@ class ItemAdapter(val itemList:List<Item>) :
             .inflate(R.layout.item_item, parent, false)
         val viewHolder = ViewHolder(view)
 
-        // 计划从room中读取数据
-        // 现暂时用一个来测试
-        val user1: User = User("user1","12345")
-        user1.id = 1
-        userMap[user1.id] = user1
-        val cupboard1 :Cupboard = Cupboard(user1.id)
-        cupboard1.id = 1
-        cupboard1.name = "书架1"
-        val cupboard2 :Cupboard = Cupboard(user1.id)
-        cupboard2.id = 0
-        cupboard2.name = "书架2"
-        cupboardMap[cupboard1.id]=cupboard1
-        cupboardMap[cupboard2.id]=cupboard2
-
         // 点击整个事件
         viewHolder.itemView.setOnClickListener {
             val position = viewHolder.bindingAdapterPosition
@@ -74,7 +60,9 @@ class ItemAdapter(val itemList:List<Item>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
-        holder.ItemImage.setImageResource(item.imageId)
+
+//        holder.ItemImage.setImageResource(item.imageId)           //图片信息待修改
+
         holder.ItemName.text = item.name
         holder.ItemName.typeface = Typeface.DEFAULT_BOLD
         holder.productionDate.text = item.productionDate

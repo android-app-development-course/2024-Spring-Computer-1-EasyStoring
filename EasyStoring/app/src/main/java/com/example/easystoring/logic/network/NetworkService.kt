@@ -21,4 +21,10 @@ class NetworkService {
     fun syncToDevice(){
 
     }
+    // 返回表中所有数据
+//    fun pushDB(table:String):List<Map<String, String>>
+//    {
+//        var tableData:List<>
+//        return
+//    }
 }
