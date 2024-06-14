@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_pic"
+    android:background="@color/white"
     tools:context=".ui.assistant.AssistantFragment">
+
+
 
     <ImageView
         android:id="@+id/imageView2"
@@ -26,9 +28,9 @@
         android:layout_marginBottom="222dp"
         android:background="@color/white"
         android:ems="10"
-        android:text="【限量版初音未来FUFU玩偶】二手出售！可爱爆棚，手感柔软，绝对是初音粉的必藏品！经典造型，完美还原初音魅力，让你一秒爱上！机不可失，快来抢购，让初音陪你度过每一个美好瞬间！"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        android:text="【限量版初音未来FUFU玩偶】二手出售！可爱爆棚，手感柔软，绝对是初音粉的必藏品！经典造型，完美还原初音魅力，让你一秒爱上！机不可失，快来抢购，让初音陪你度过每一个美好瞬间！"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +55,9 @@
         android:layout_height="50dp"
         android:background="@drawable/button_shape1"
         android:text="生成描述"
+        android:textSize="20sp"
+
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -66,6 +71,8 @@
         android:layout_height="50dp"
         android:background="@drawable/button_shape2"
         android:text="复制描述"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

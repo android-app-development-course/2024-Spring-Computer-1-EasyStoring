@@ -2,7 +2,6 @@ package com.example.easystoring
 
 import ViewPager2Adapter
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
@@ -31,9 +30,11 @@ class MainActivity : AppCompatActivity() {
         // 创建SQLite数据库
         val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
         val db = dbHelper.writableDatabase
+
 //        dbHelper.rebuildTable(db,"User")
         dbHelper.rebuildTable(db,"Cupboard")
         dbHelper.rebuildTable(db,"Item")
+
 
         var UserNum = 0
         var CupboardNum = 0
@@ -99,6 +100,7 @@ class MainActivity : AppCompatActivity() {
 
         //将所有的Fragment添加到ViewPager2中
         val fragmentList: MutableList<Fragment> = ArrayList()
+//        fragmentList.add(TestFragment())
         fragmentList.add(HomeFragment())
         fragmentList.add(UserInformation())
         fragmentList.add(AssistantFragment())
@@ -145,7 +147,7 @@ class MainActivity : AppCompatActivity() {
         // 顶部导航栏相关设置
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
-        supportActionBar?.let{
+        supportActionBar?.let {
             it.setDisplayShowTitleEnabled(false)
         }
         toolbar.setNavigationIcon(R.mipmap.ic_sidebar)
@@ -160,10 +162,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.scan -> {
 //                    toolbar.showOverflowMenu()
 //                    Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
-                    if(binding.navViewpage2.currentItem==0)
-                        startActivity(Intent(this,AddActivity::class.java))
-                    else if(binding.navViewpage2.currentItem==1)
-                        startActivity(Intent(this,AddCupboardActivity::class.java))
+                    if (binding.navViewpage2.currentItem == 0)
+                        startActivity(Intent(this, AddActivity::class.java))
+                    else if (binding.navViewpage2.currentItem == 1)
+                        startActivity(Intent(this, AddCupboardActivity::class.java))
+                    else if (binding.navViewpage2.currentItem == 2)
+                        startActivity(Intent(this, AddActivity::class.java))
                 }
 
 //                R.id.item2 -> {
@@ -197,6 +201,14 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(
                         EasyStoringApplication.context,
                         "Family",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                R.id.settings -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "Settings",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

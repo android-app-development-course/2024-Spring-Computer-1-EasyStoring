@@ -5,6 +5,8 @@ from django.http import HttpResponse
 import pymongo
 import requests
 import re
+
+
 # import SparkApi
 # import BaiduApi
 
@@ -153,7 +155,7 @@ class DBManager:
     def queryAll(self):
         allUsers = self.collection.find()
         # for i in allUsers:
-            # print(i['username'], i['password'])
+        # print(i['username'], i['password'])
         # print(allUsers)
         return allUsers
 
@@ -171,9 +173,24 @@ def getUsername(request):
     #     result['message'] = 'success'
     # except:
     #     result['message'] = 'Error'
-    result=[{ "id": "5", "version": "1.1", "name": "222333" }]
+    # result=[{ "id": "5", "version": "1.1", "name": "222333" }]
+    # if request.method == 'GET':
+    #     return HttpResponse(json.dumps(result), content_type='application/json')
     if request.method == 'GET':
+        result = {"id": "5", "version": "1.1", "name": "222333"}
+        try:
+            for i, j in request.META.items():
+                print(i, j)
+        except Exception:
+            print(Exception)
         return HttpResponse(json.dumps(result), content_type='application/json')
+    elif request.method == 'POST':
+        try:
+            for i, j in request.POST:
+                print(i, j)
+        except Exception:
+            print(Exception)
+        return HttpResponse(json.dumps({'msg': 'success'}, content_type='application/json'))
 
 
 if __name__ == '__main__':
@@ -182,6 +199,6 @@ if __name__ == '__main__':
     # toDB(result)
     # print(generateURL())
     # getAnswer('你是谁', 'SparkV1')
-    db=DBManager()
+    db = DBManager()
     for i in db.queryAll():
         print(i)
