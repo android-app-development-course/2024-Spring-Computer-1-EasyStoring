@@ -13,6 +13,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.util.concurrent.TimeUnit
 
 
@@ -27,12 +28,14 @@ class NetworkService {
 
     }
 
-    fun userLogin(name: String, password: String) {
+    fun userLogin(name: String, password: String): Boolean {
         var statusCode = ""
         var userInformation: Map<String, String>? = null
+        var canLogin = false
         GlobalScope.launch {
             val getRequest =
-                Request.Builder().url("$baseURL/checkUser").header("username", name).get().build()
+                Request.Builder().url("$baseURL/checkUser").header("username", name).get()
+                    .build()
             val call = httpClient.newCall(getRequest)
             val response = withContext(Dispatchers.IO) {
                 call.execute()
@@ -48,9 +51,10 @@ class NetworkService {
                 if (statusCode == "1")
                     userInformation =
                         response.get("Message") as Map<String, String>?
-                Log.d("2333", statusCode)
-                for ((key, value) in userInformation!!)
-                    Log.d("2333", "$key $value")
+                Log.d("2333", "Log in status $statusCode")
+                if (userInformation != null)
+                    for ((key, value) in userInformation!!)
+                        Log.d("2333", "$key $value")
             }
             Looper.prepare()
             when (statusCode) {
@@ -65,46 +69,62 @@ class NetworkService {
 
                 "1" -> {
                     userInformation?.let {
-                        Toast.makeText(
+                        if (password == it.get("password")) {
+                            canLogin = true
+                            Toast.makeText(
+                                EasyStoringApplication.context,
+                                "登录成功",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.d("2333", "canLogin in Service $canLogin")
+                        } else Toast.makeText(
                             EasyStoringApplication.context,
-                            it.get("password"),
+                            "用户名或密码错误",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
 
-                "2" -> {
-                    Toast.makeText(EasyStoringApplication.context, "数据库错误", Toast.LENGTH_SHORT)
+                else -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "数据库错误",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
-
-                else -> {}
             }
             Looper.loop()
-
         }
+        return canLogin
     }
 
     fun userRegister(name: String, password: String) {
         var statusCode = ""
-        var userInformation = mapOf("name" to name, "password" to password)
+        var userInformation = mapOf("username" to name, "password" to password)
         GlobalScope.launch {
             val getRequest =
                 Request.Builder().url("$baseURL/checkUser").header("username", name).get().build()
             val call = httpClient.newCall(getRequest)
-            val response = withContext(Dispatchers.IO) {
-                call.execute()
+            var response: Response? = null
+            try {
+                response = withContext(Dispatchers.IO) {
+                    call.execute()
+                }
+                Log.d("2333", response.toString())
+                response.body?.string()?.let {
+                    Log.d("2333", it)
+                    val response: MutableMap<*, *> = Gson().fromJson(
+                        it,
+                        MutableMap::class.java
+                    )
+                    statusCode = response.get("StatusCode").toString()
+                    Log.d("2333", statusCode)
+                }
+            } catch (e: Exception) {
+                Log.d("2333", e.message!!)
             }
-            Log.d("2333", response.toString())
-            response.body?.string()?.let {
-                Log.d("2333", it)
-                val response: MutableMap<*, *> = Gson().fromJson(
-                    it,
-                    MutableMap::class.java
-                )
-                statusCode = response.get("StatusCode").toString()
-                Log.d("2333", statusCode)
-            }
+
             Looper.prepare()
             when (statusCode) {
                 "0" -> {
@@ -114,17 +134,34 @@ class NetworkService {
                     val jsonRequest =
                         Request.Builder().url("$baseURL/registerUser").post(jsonBody).build()
                     val call = httpClient.newCall(jsonRequest)
-                    val registerResponse = withContext(Dispatchers.IO){
-                        call.execute()
-                    }
-                    registerResponse.body?.string()?.let {
-                        Log.d("2333", it)
-                        val response: MutableMap<*, *> = Gson().fromJson(
-                            it,
-                            MutableMap::class.java
-                        )
-                        statusCode = response.get("StatusCode").toString()
-                        Log.d("2333", statusCode)
+                    var registerResponse: Response? = null
+                    try {
+                        registerResponse = withContext(Dispatchers.IO) {
+                            call.execute()
+                        }
+                        registerResponse.body?.string()?.let {
+                            Log.d("2333", it)
+                            val response: MutableMap<*, *> = Gson().fromJson(
+                                it,
+                                MutableMap::class.java
+                            )
+                            statusCode = response.get("StatusCode").toString()
+                            Log.d("2333", statusCode)
+                            if (statusCode == "1")
+                                Toast.makeText(
+                                    EasyStoringApplication.context,
+                                    "注册成功",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            else
+                                Toast.makeText(
+                                    EasyStoringApplication.context,
+                                    "注册失败",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                        }
+                    } catch (e: Exception) {
+                        Log.d("2333", e.message!!)
                     }
                 }
 
@@ -138,12 +175,10 @@ class NetworkService {
                     }
                 }
 
-                "2" -> {
+                else -> {
                     Toast.makeText(EasyStoringApplication.context, "数据库错误", Toast.LENGTH_SHORT)
                         .show()
                 }
-
-                else -> {}
             }
             Looper.loop()
 
