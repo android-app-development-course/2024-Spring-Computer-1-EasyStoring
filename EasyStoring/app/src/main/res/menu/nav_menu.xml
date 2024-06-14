@@ -6,14 +6,18 @@
         <item
             android:id="@+id/navFav"
             android:icon="@drawable/ic_favorite"
-            android:title="Favorite" />
+            android:title="收藏" />
         <item
             android:id="@+id/navHis"
             android:icon="@drawable/ic_history"
-            android:title="History" />
+            android:title="浏览历史" />
         <item
             android:id="@+id/navFam"
             android:icon="@drawable/ic_family"
-            android:title="Family" />
+            android:title="家庭" />
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/settings"
+            android:title="设置" />
     </group>
 </menu>
