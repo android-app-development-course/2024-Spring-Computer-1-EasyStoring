@@ -1,10 +1,11 @@
 import json
+import re
 import time
 import urllib
-from django.http import HttpResponse
+
 import pymongo
 import requests
-import re
+from django.http import HttpResponse
 
 
 # import SparkApi
@@ -153,11 +154,15 @@ class DBManager:
         self.collection = self.database['UserInformation']
 
     def queryAll(self):
-        allUsers = self.collection.find()
+        allUsers = [x for x in self.collection.find()]
         # for i in allUsers:
         # print(i['username'], i['password'])
         # print(allUsers)
         return allUsers
+
+    def queryOneUser(self, username):
+        result = [x for x in self.collection.find({'username': username}, {'_id': 0})]
+        return result, len(result)
 
 
 def getUsername(request):
@@ -194,11 +199,31 @@ def getUsername(request):
 
 
 if __name__ == '__main__':
-    # result = {'time': '2023/11/15 22:53:00', 'user': 'user: http://localhost:81/', 'question': '你好啊！',
-    #           'answer': 'Default Answer'}
-    # toDB(result)
-    # print(generateURL())
-    # getAnswer('你是谁', 'SparkV1')
     db = DBManager()
-    for i in db.queryAll():
-        print(i)
+    result, userNumber = db.queryOneUser('Alex')
+    print(result, userNumber)
+    print(json.dumps(result[0]))
+
+
+# result = {'time': '2023/11/15 22:53:00', 'user': 'user: http://localhost:81/', 'question': '你好啊！',
+#           'answer': 'Default Answer'}
+# toDB(result)
+# print(generateURL())
+# getAnswer('你是谁', 'SparkV1')
+
+
+def checkUser(request):
+    username = request.META['HTTP_USERNAME']
+    db = DBManager()
+    result, userNumber = db.queryOneUser(username)
+    print(result, userNumber)
+    print(json.dumps(result))
+    # if userNumber == 0:
+    #     return HttpResponse(json.dump({'StatusCode': 1, 'Message': 'No such user.'}),
+    #                         content_type='application/json')
+    # elif userNumber == 1:
+    #     return HttpResponse(json.dump({'StatusCode': 1, 'Message': result}),
+    #                         content_type='application/json')
+    # else:
+    #     return HttpResponse(json.dump({'StatusCode': 0, 'Message': 'Error in database'}),
+    #                         content_type='application/json')

@@ -12,15 +12,15 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.easystoring.EasyStoringApplication
 import com.example.easystoring.Item
 import com.example.easystoring.ItemAdapter
 import com.example.easystoring.R
 import com.example.easystoring.databinding.FragmentHomeBinding
 import com.example.easystoring.logic.model.AppDBHelper
+import com.example.easystoring.ui.AdditemActivity.AddActivity
 import com.example.easystoring.logic.model.DBShow
 import java.lang.Exception
 import kotlin.random.Random
@@ -58,7 +58,9 @@ class HomeFragment : Fragment() {
         val adapter = ItemAdapter(ItemList)     // 在这里修改物品栏显示的内容
         recyclerView.adapter = adapter
 
-
+        binding.addButton.setOnClickListener{
+            startActivity(Intent(EasyStoringApplication.context, AddActivity::class.java))
+        }
 
 
         homeViewModel.text.observe(viewLifecycleOwner) {

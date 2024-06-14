@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.utils.IMPLEMENTATION
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -68,4 +70,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")}
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.71")
+}
