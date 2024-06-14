@@ -25,7 +25,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
     private val createItem = "create table Item(" +
             " id integer primary key autoincrement," +
             " userId integer, " +
-            " imageId integer, " +
+            " imageId text, " +
             " name text, " +
             " description text, " +
             " number integer, " +
@@ -76,6 +76,25 @@ class AppDBHelper (val context: Context, name: String, version: Int):
                 db.execSQL(createItem)
             }
         }
+    }
+
+    // 获取MyTable中所有行的函数
+    fun getAllRowsFromMyTable(db: SQLiteDatabase, tableName:String): List<Map<String, Any?>> {
+        val list = mutableListOf<Map<String, Any?>>()
+        val cursor: Cursor = db.query(tableName, null, null, null, null, null, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val row = mutableMapOf<String, Any?>()
+                for (i in 0 until cursor.getColumnCount()) {
+                    row[cursor.getColumnName(i)] = cursor.getString(i) // 注意：这里为了简化，我们假设所有列都是String类型
+                }
+                list.add(row)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return list
     }
 
 }
