@@ -19,8 +19,6 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
     </com.google.android.material.appbar.AppBarLayout>
-
-
 <!--    <Button-->
 <!--        android:id="@+id/browse_button"-->
 <!--        android:layout_width="143dp"-->
@@ -62,7 +60,6 @@
 <!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
 <!--        app:layout_constraintVertical_bias="0.119"-->
 <!--        tools:ignore="MissingConstraints" />-->
-=======
     <Button
         android:id="@+id/browse_button"
         android:layout_width="143dp"
@@ -102,7 +99,6 @@
         app:layout_constraintVertical_bias="0.119"
         tools:ignore="MissingConstraints" />
 
-<!--    app:layout_constraintBottom_toTopOf="@+id/create_button"-->
 
 <!--    <Button-->
 <!--        android:id="@+id/browse3_button"-->
@@ -135,7 +131,43 @@
 <!--        android:paddingTop="20dp"-->
 <!--        android:paddingEnd="30dp"-->
 <!--        android:paddingBottom="20dp"-->
+
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/create_button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+
+<!--        app:layout_constraintHorizontal_bias="0.171"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.403"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/browse4_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="492dp"-->
+
+<!--        app:layout_constraintHorizontal_bias="0.839"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.401"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/browse5_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="200dp"-->
+
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
 <!--        android:text="数码"-->
+<!--        android:text="化妆品"-->
 <!--        android:textColor="@color/black"-->
 <!--        android:textSize="26sp"-->
 <!--        app:layout_constraintBottom_toTopOf="@+id/create_button"-->
@@ -151,11 +183,24 @@
 <!--        android:layout_width="143dp"-->
 <!--        android:layout_height="92dp"-->
 <!--        android:layout_marginTop="200dp"-->
+<!--        app:layout_constraintHorizontal_bias="0.171"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.67"-->
+<!--        tools:ignore="MissingConstraints,UnknownId" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/browse6_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="344dp"-->
+
 <!--        android:background="@drawable/button_shape1"-->
 <!--        android:paddingStart="30dp"-->
 <!--        android:paddingTop="20dp"-->
 <!--        android:paddingEnd="30dp"-->
 <!--        android:paddingBottom="20dp"-->
+
 <!--        android:text="化妆品"-->
 <!--        android:textColor="@color/black"-->
 <!--        android:textSize="26sp"-->
@@ -169,14 +214,7 @@
 
 <!--    <Button-->
 <!--        android:id="@+id/browse6_button"-->
-<!--        android:layout_width="143dp"-->
-<!--        android:layout_height="92dp"-->
-<!--        android:layout_marginTop="344dp"-->
-<!--        android:background="@drawable/button_shape1"-->
-<!--        android:paddingStart="30dp"-->
-<!--        android:paddingTop="20dp"-->
-<!--        android:paddingEnd="30dp"-->
-<!--        android:paddingBottom="20dp"-->
+
 <!--        android:text="包类"-->
 <!--        android:textColor="@color/black"-->
 <!--        android:textSize="26sp"-->
@@ -188,6 +226,7 @@
 
 <!--    <Button-->
 <!--        android:id="@+id/browse7_button"-->
+
 <!--        android:layout_width="143dp"-->
 <!--        android:layout_height="92dp"-->
 <!--        android:layout_marginTop="344dp"-->
@@ -196,14 +235,55 @@
 <!--        android:paddingTop="20dp"-->
 <!--        android:paddingEnd="30dp"-->
 <!--        android:paddingBottom="20dp"-->
+
+<!--        android:text="包类"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.839"-->
+
 <!--        android:text="食品"-->
 <!--        android:textColor="@color/black"-->
 <!--        android:textSize="26sp"-->
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintHorizontal_bias="0.171"-->
+
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
 <!--        tools:ignore="MissingConstraints" />-->
+
+<!--    <Button-->
+
+<!--        android:id="@+id/browse7_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="344dp"-->
+<!--        android:id="@+id/browse8_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="200dp"-->
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+
+<!--        android:text="食品"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.171"-->
+
+<!--        android:text="玩具"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.839"-->
+
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
 
 <!--    <Button-->
 <!--        android:id="@+id/browse8_button"-->

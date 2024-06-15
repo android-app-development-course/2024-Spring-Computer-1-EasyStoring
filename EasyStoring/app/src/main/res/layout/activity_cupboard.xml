@@ -39,7 +39,10 @@
         android:layout_marginTop="50dp"
         android:layout_marginBottom="42dp"
         android:text="书架"
+<<<<<<< Updated upstream
         android:textColor="@color/black"
+=======
+>>>>>>> Stashed changes
         android:textSize="20pt"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
         app:layout_constraintEnd_toEndOf="parent"

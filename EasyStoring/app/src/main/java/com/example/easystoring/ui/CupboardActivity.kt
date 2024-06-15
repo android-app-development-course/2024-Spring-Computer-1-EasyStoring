@@ -1,6 +1,7 @@
 package com.example.easystoring.ui
-
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -29,16 +30,14 @@ class CupboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         setContentView(R.layout.activity_cupboard)
-
 //        initItem()
         initStoryings()
-
         val toolbar:Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
-
+        initItem()
         val recyclerView : RecyclerView = findViewById<RecyclerView>(R.id.recyclerView2)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
@@ -77,21 +76,21 @@ class CupboardActivity : AppCompatActivity() {
             ItemList.add(item1)
         }
     }
-//<<<<<<< Updated upstream
 }
 
 class Storying(val name:String)
 
 class StoryingAdapter(val StoryingList:List<Storying>):
-        RecyclerView.Adapter<StoryingAdapter.ViewHolder>() {
+        RecyclerView.Adapter<StoryingAdapter.ViewHolder>(){
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val storyingName: TextView = view.findViewById(R.id.storyingName)
-    }
+   inner class ViewHolder(view:View):RecyclerView.ViewHolder(view){
+       val storyingName:TextView = view.findViewById(R.id.storyingName)
+   }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.storying__item, parent, false)
+            .inflate(R.layout.storying__item,parent,false)
+
         return ViewHolder(view)
     }
 
@@ -103,7 +102,7 @@ class StoryingAdapter(val StoryingList:List<Storying>):
     override fun getItemCount(): Int {
         return StoryingList.size
     }
-}
 
+}
 
 
