@@ -4,12 +4,15 @@ import ViewPager2Adapter
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -21,12 +24,32 @@ import com.example.easystoring.ui.UserInformation.UserInformation
 import com.example.easystoring.ui.assistant.AssistantFragment
 import com.example.easystoring.ui.home.HomeFragment
 import java.lang.Exception
+import android.Manifest
+import android.app.AlertDialog
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import androidx.annotation.RequiresApi
 
 class MainActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("RestrictedApi", "Recycle")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // 申请权限
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_MEDIA_IMAGES)
+            != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                1)
+        }else{
+            Toast.makeText(this,"success", Toast.LENGTH_SHORT).show()
+        }
+
 
         // 创建SQLite数据库
         val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
@@ -242,4 +265,33 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        return true
 //    }
+override fun onRequestPermissionsResult(requestCode: Int,
+                                        permissions: Array<String>,
+                                        grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode == 1) {
+        if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            Toast.makeText(this,"success",Toast.LENGTH_SHORT).show()
+        }else {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("需要授权访问储存")
+            val items = arrayOf("前往授权", "暂不授权")
+            builder.setItems(items) { dialog, which ->
+                when(items[which]){
+                    "前往授权"-> {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts("package", packageName, null)
+                        intent.data = uri
+                        startActivity(intent)
+                    }
+                    "暂不授权"->{
+                        Toast.makeText(this, "无访问通讯录权限", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            builder.create().show()
+        }
+    }
+
+}
 }

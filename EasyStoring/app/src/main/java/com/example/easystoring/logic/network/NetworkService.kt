@@ -15,8 +15,6 @@ import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.internal.wait
-import okio.IOException
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 

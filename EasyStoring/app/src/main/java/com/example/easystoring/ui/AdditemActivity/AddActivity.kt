@@ -1,14 +1,20 @@
 package com.example.easystoring.ui.AdditemActivity
 
 //import androidx.activity.enableEdgeToEdge
+import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.Intent
 import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.easystoring.Item
@@ -17,6 +23,8 @@ import com.example.easystoring.logic.model.AppDBHelper
 import java.lang.Exception
 
 class AddActivity : AppCompatActivity() {
+
+    private var ImageUri:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
@@ -40,20 +48,35 @@ class AddActivity : AppCompatActivity() {
         val edit_7: EditText = findViewById(R.id.editText7)
         val edit_8: EditText = findViewById(R.id.editText8)
 
-//        val ImageBtn_1: ImageButton = findViewById(R.id.imageButton1)
-//        val ImageBtn_2: ImageButton = findViewById(R.id.imageButton2)
-//        val ImageBtn_3: ImageButton = findViewById(R.id.imageButton3)
-//        val ImageBtn_4: ImageButton = findViewById(R.id.imageButton4)
+        val ImageBtn_1: ImageView = findViewById(R.id.imageView)
+        ImageBtn_1.setOnClickListener {
+            val intent =
+                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, 2)
+        }
 
-//        var use_item :Item = Item()
-//        button1.setOnClickListener {
-//            use_item.name = edit_1.getText().toString()
-//            use_item.number = Integer.parseInt(edit_2.getText().toString())
-//            use_item.decription = edit_7.getText().toString()
-//            use_item.belongTo = Integer.parseInt(edit_8.getText().toString())
-//            use_item.productionDate = edit_4.getText().toString()
-//            use_item.overdueDate = edit_5.getText().toString()
-//        }
+        var use_item :Item = Item(1)
+        // 确定按钮，将输入的值放到item中并存入数据库
+        button1.setOnClickListener {
+            val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
+            val db = dbHelper.writableDatabase
+            use_item.id  = dbHelper.getRowCount("Item")+1
+            use_item.name = edit_1.getText().toString()
+            use_item.number = Integer.parseInt(edit_2.getText().toString())
+            use_item.description = edit_7.getText().toString()
+            use_item.cupboardId = Integer.parseInt(edit_8.getText().toString())
+            use_item.productionDate = edit_4.getText().toString()
+            use_item.overdueDate = edit_5.getText().toString()
+            use_item.imageId = getImageUri()
+
+            dbHelper.insertItem(db,use_item)
+
+            val intent = Intent()
+            intent.putExtra("NewItemId", use_item.id)
+            setResult(RESULT_OK, intent)
+            finish()
+
+        }
 
         //读入图片
 //        ImageBtn_1.setOnClickListener{
@@ -62,34 +85,22 @@ class AddActivity : AppCompatActivity() {
 
     }
 
-    fun additem(Item1 :Item){
-
-        val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
-        val db = dbHelper.writableDatabase
-        var ItemNum = 0
-        var cursor: Cursor?
-        try {
-            cursor = db.rawQuery("SELECT COUNT(*) FROM Item", null)
-            cursor.moveToFirst()
-            ItemNum =  cursor.getInt(0)
-            cursor.close()
-        } catch (e: Exception) {
-            Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
+    @SuppressLint("Range")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 2) {
+            data?.dataString.let {
+                val imageView = findViewById<ImageView>(R.id.imageView)
+                imageView.setImageURI(Uri.parse(it))
+                if (it != null) {
+                    ImageUri = it
+                }
+            }
         }
-        val values3 = ContentValues().apply {
-            // 组装数据
-            ItemNum ++
-            put("id",ItemNum)
-            put("userId", 1)
-            put("imageId","")
-            put("name",Item1.name)
-            put("description",Item1.description)
-            put("number", Item1.number)
-            put("productionDate",Item1.productionDate)
-            put("cupboardId", Item1.cupboardId)
-        }
-        db.insert("Item", null, values3)
+    }
 
+    private fun getImageUri():String{
+        return ImageUri
     }
 
 }
