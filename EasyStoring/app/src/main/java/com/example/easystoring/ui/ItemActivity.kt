@@ -2,6 +2,7 @@ package com.example.easystoring.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -20,6 +21,15 @@ class ItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item)
+
+        val toolbar1:androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        toolbar1.setTitleTextColor(Color.BLACK)
+        toolbar1.setTitle("物品详情")
+        toolbar1.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+        setSupportActionBar(toolbar1)
+        toolbar1.setNavigationOnClickListener {
+            finish()
+        }
 
         val name = findViewById<TextView>(R.id.editText1)
         val num = findViewById<TextView>(R.id.editText2)
@@ -58,10 +68,6 @@ class ItemActivity : AppCompatActivity() {
         // 确认按钮
         val button1: Button = findViewById(R.id.button1)
         button1.setOnClickListener {
-            finish()
-        }
-        val button2:Button=findViewById(R.id.button2)
-        button2.setOnClickListener {
             finish()
         }
 
