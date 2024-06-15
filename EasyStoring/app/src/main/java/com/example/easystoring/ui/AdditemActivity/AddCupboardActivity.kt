@@ -1,6 +1,7 @@
 package com.example.easystoring.ui.AdditemActivity
 
 //import androidx.activity.enableEdgeToEdge
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -20,13 +21,19 @@ class AddCupboardActivity : AppCompatActivity() {
             insets
         }
 
+        val toolbar1:androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        toolbar1.setTitleTextColor(Color.BLACK)
+        toolbar1.setTitle("添加空间")
+        toolbar1.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+        setSupportActionBar(toolbar1)
+        toolbar1.setNavigationOnClickListener {
+            finish()
+        }
+
         val button1: Button = findViewById(R.id.button1)
         val edit_1: EditText = findViewById(R.id.editText1)
         val edit_2: EditText = findViewById(R.id.editText2)
-        val button2: Button = findViewById(R.id.button2)
-        button2.setOnClickListener {
-            finish()
-        }
+
 
 //        var use_Cupboard : Cupboard = Cupboard()
 //        button1.setOnClickListener {

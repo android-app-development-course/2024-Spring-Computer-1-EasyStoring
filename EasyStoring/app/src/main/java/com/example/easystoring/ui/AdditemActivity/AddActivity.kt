@@ -6,6 +6,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
@@ -45,11 +46,17 @@ class AddActivity : AppCompatActivity() {
             insets
         }
 
-        val button1: Button = findViewById(R.id.button1)
-        val button2:Button=findViewById(R.id.button2)
-        button2.setOnClickListener {
+        val toolbar1:androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        toolbar1.setTitleTextColor(Color.BLACK)
+        toolbar1.setTitle("添加物品")
+        toolbar1.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+        setSupportActionBar(toolbar1)
+        toolbar1.setNavigationOnClickListener {
             finish()
         }
+
+        val button1: Button = findViewById(R.id.button1)
+
 
         val edit_1: EditText = findViewById(R.id.editText1)
         val edit_2: EditText = findViewById(R.id.editText2)
