@@ -1,10 +1,12 @@
 import json
+import re
+import os
 import time
 import urllib
-from django.http import HttpResponse
+
 import pymongo
 import requests
-import re
+from django.http import HttpResponse
 
 
 # import SparkApi
@@ -153,11 +155,15 @@ class DBManager:
         self.collection = self.database['UserInformation']
 
     def queryAll(self):
-        allUsers = self.collection.find()
+        allUsers = [x for x in self.collection.find()]
         # for i in allUsers:
         # print(i['username'], i['password'])
         # print(allUsers)
         return allUsers
+
+    def queryOneUser(self, username):
+        result = [x for x in self.collection.find({'username': username}, {'_id': 0})]
+        return result, len(result)
 
 
 def getUsername(request):
@@ -193,12 +199,64 @@ def getUsername(request):
         return HttpResponse(json.dumps({'msg': 'success'}, content_type='application/json'))
 
 
+import requests
+
 if __name__ == '__main__':
+    db = DBManager()
+    result, userNumber = db.queryOneUser('Alex')
+    print(result, userNumber)
+    print(json.dumps(result[0]))
+
+# result = {'time': '2023/11/15 22:53:00', 'user': 'user: http://localhost:81/', 'question': '你好啊！',
+#           'answer': 'Default Answer'}
+# toDB(result)
+# print(generateURL())
+# getAnswer('你是谁', 'SparkV1')
+
+
+def checkUser(request):
+    username = request.META['HTTP_USERNAME']
+    db = DBManager()
+    result, userNumber = db.queryOneUser(username)
+    print(result, userNumber)
+    print(json.dumps(result))
+    # if userNumber == 0:
+    #     return HttpResponse(json.dump({'StatusCode': 1, 'Message': 'No such user.'}),
+    #                         content_type='application/json')
+    # elif userNumber == 1:
+    #     return HttpResponse(json.dump({'StatusCode': 1, 'Message': result}),
+    #                         content_type='application/json')
+    # else:
+    #     return HttpResponse(json.dump({'StatusCode': 0, 'Message': 'Error in database'}),
+    #                         content_type='application/json')
     # result = {'time': '2023/11/15 22:53:00', 'user': 'user: http://localhost:81/', 'question': '你好啊！',
     #           'answer': 'Default Answer'}
     # toDB(result)
     # print(generateURL())
     # getAnswer('你是谁', 'SparkV1')
-    db = DBManager()
-    for i in db.queryAll():
-        print(i)
+    # db = DBManager()
+    # for i in db.queryAll():
+    #     print(i)
+    # 本地图片文件路径
+    image_path = "ZH-CN7850329702_UHD.jpg"
+    print(os.access(image_path, os.R_OK))
+
+    # token值，需从实际来源获取（例如读取tokenList文件）
+    token = "1c17b11693cb5ec63859b091c5b9c1b2"
+
+    # 目标URL
+    url = "http://1.15.173.30:923/api/index.php"
+
+    # 构建请求参数
+    files = {'image': open(image_path, 'rb')}
+    data = {'token': token}
+
+    # 发送POST请求
+    response = requests.post(url, files=files, data=data)
+
+    # 检查响应状态码
+    if response.status_code == 200:
+        # print("Upload successful.")
+        print(response.json())
+    else:
+        print(f"Upload failed with status code {response.status_code}.")

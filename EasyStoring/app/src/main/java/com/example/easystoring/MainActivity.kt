@@ -2,11 +2,17 @@ package com.example.easystoring
 
 import ViewPager2Adapter
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -17,23 +23,109 @@ import com.example.easystoring.ui.AdditemActivity.AddCupboardActivity
 import com.example.easystoring.ui.UserInformation.UserInformation
 import com.example.easystoring.ui.assistant.AssistantFragment
 import com.example.easystoring.ui.home.HomeFragment
+import java.lang.Exception
+import android.Manifest
+import android.app.AlertDialog
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import androidx.annotation.RequiresApi
 
 class MainActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("RestrictedApi", "Recycle")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // 申请权限
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_MEDIA_IMAGES)
+            != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                1)
+        }else{
+            Toast.makeText(this,"success", Toast.LENGTH_SHORT).show()
+        }
+
+
         // 创建SQLite数据库
         val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
         val db = dbHelper.writableDatabase
-        var UserNum = 0
 
-        val cursor = db.query(
-            "User", null, null, null, null, null, null
-        )
+        dbHelper.rebuildTable(db,"Cupboard")
+        dbHelper.rebuildTable(db,"Item")
 
-        cursor.close()
+        var CupboardNum = 0
+        var ItemNum = 0
+        var cursor: Cursor?
+
+        try {
+            cursor = db.rawQuery("SELECT COUNT(*) FROM CupBoard", null)
+            cursor.moveToFirst()
+            CupboardNum =  cursor.getInt(0)
+            cursor = db.rawQuery("SELECT COUNT(*) FROM Item", null)
+            cursor.moveToFirst()
+            ItemNum =  cursor.getInt(0)
+            cursor.close()
+        } catch (e:Exception) {
+            Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
+        }
+        // 测试添加柜子
+        val values2 = ContentValues().apply {
+            // 组装数据
+            CupboardNum ++
+            put("id", CupboardNum)
+            put("userId", 1)
+            put("name","书架")
+            put("description","1234567")
+        }
+        db.insert("Cupboard", null, values2)
+
+//         测试添加物品
+        val ItemColumns = arrayOf("id", "userId","imageId","name", "description",
+            "number", "productionDate", "overdueDate", "cupboardId")
+        val values3 = ContentValues().apply {
+            // 组装数据
+            ItemNum ++
+            put("id",ItemNum)
+            put("userId", 1)
+            put("imageId","")
+            put("name","book1")
+            put("description","第一行代码")
+            put("number", 1)
+            put("productionDate","2023-3-29")
+            put("cupboardId", 1)
+        }
+        db.insert("Item", null, values3)
+        val values4 = ContentValues().apply {
+            // 组装数据
+            ItemNum ++
+            put("id",ItemNum)
+            put("userId", 1)
+            put("imageId","")
+            put("name","book3")
+            put("description","第二行代码")
+            put("number", 2)
+            put("productionDate","2023-3-29")
+            put("cupboardId", 2)
+        }
+        db.insert("Item", null, values4)
+        val values5 = ContentValues().apply {
+            // 组装数据
+            ItemNum ++
+            put("id",ItemNum)
+            put("userId", 2)
+            put("imageId","")
+            put("name","book1")
+            put("description","第三行代码")
+            put("number", 3)
+            put("productionDate","2023-3-29")
+            put("cupboardId", 14)
+        }
+        db.insert("Item", null, values5)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -105,12 +197,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.scan -> {
 //                    toolbar.showOverflowMenu()
 //                    Toast.makeText(this, "Scan", Toast.LENGTH_SHORT).show()
-                    if (binding.navViewpage2.currentItem == 0)
-                        startActivity(Intent(this, AddActivity::class.java))
-                    else if (binding.navViewpage2.currentItem == 1)
-                        startActivity(Intent(this, AddCupboardActivity::class.java))
-                    else if (binding.navViewpage2.currentItem == 2)
-                        startActivity(Intent(this, AddActivity::class.java))
+                    when (binding.navViewpage2.currentItem) {
+                        0 -> startActivity(Intent(this, AddActivity::class.java))
+                        1 -> startActivity(Intent(this, AddCupboardActivity::class.java))
+                        2 -> startActivity(Intent(this, AddActivity::class.java))
+                    }
                 }
 
 //                R.id.item2 -> {
@@ -174,4 +265,33 @@ class MainActivity : AppCompatActivity() {
 //        }
 //        return true
 //    }
+override fun onRequestPermissionsResult(requestCode: Int,
+                                        permissions: Array<String>,
+                                        grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode == 1) {
+        if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            Toast.makeText(this,"success",Toast.LENGTH_SHORT).show()
+        }else {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("需要授权访问储存")
+            val items = arrayOf("前往授权", "暂不授权")
+            builder.setItems(items) { dialog, which ->
+                when(items[which]){
+                    "前往授权"-> {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts("package", packageName, null)
+                        intent.data = uri
+                        startActivity(intent)
+                    }
+                    "暂不授权"->{
+                        Toast.makeText(this, "无访问通讯录权限", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            builder.create().show()
+        }
+    }
+
+}
 }
