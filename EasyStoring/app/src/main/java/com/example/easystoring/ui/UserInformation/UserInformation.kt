@@ -42,13 +42,13 @@ class UserInformation : Fragment() {
 
         val binding = FragmentUserInformationBinding.inflate(layoutInflater)
 
-        binding.browseButton.setOnClickListener {
-            startActivity(Intent(EasyStoringApplication.context, CupboardActivity::class.java))
-        }
+//        binding.browseButton.setOnClickListener {
+//            startActivity(Intent(EasyStoringApplication.context, CupboardActivity::class.java))
+//        }
 
-        binding.addButton.setOnClickListener{
-            startActivity(Intent(EasyStoringApplication.context,AddCupboardActivity::class.java))
-        }
+//        binding.addButton.setOnClickListener{
+//            startActivity(Intent(EasyStoringApplication.context,AddCupboardActivity::class.java))
+//        }
 
         return binding.root
 
