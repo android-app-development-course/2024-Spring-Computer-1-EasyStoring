@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.easystoring.Cupboard
 import com.example.easystoring.EasyStoringApplication
 import com.example.easystoring.Item
 import com.example.easystoring.ItemAdapter
@@ -45,6 +46,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val ItemList = ArrayList<Item>()
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -180,7 +182,6 @@ class HomeFragment : Fragment() {
                                         )
                                             .show()
                                     }
-
                                     "1" -> {
                                         Toast.makeText(
                                             EasyStoringApplication.context,
@@ -188,7 +189,6 @@ class HomeFragment : Fragment() {
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
-
                                     else -> {
                                         Toast.makeText(
                                             EasyStoringApplication.context,
@@ -200,7 +200,6 @@ class HomeFragment : Fragment() {
                                 }
                             }
                         }
-
                         else -> {
                             Toast.makeText(
                                 EasyStoringApplication.context,
@@ -368,7 +367,31 @@ class HomeFragment : Fragment() {
             } catch (e: Exception) {
                 Log.d("2333", "Exception: ${e.message}")
             }
+            val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
+            val db = dbHelper.writableDatabase
             if (items != null && cupboards != null) {
+                for (map in items!!) {
+                    val item = Item(map["userId"].toString().toInt())
+                    item.id = map["id"].toString().toInt()
+                    item.imageId = map["imageId"].toString()
+                    item.name = map["name"].toString()
+                    item.number = map["number"].toString().toInt()
+                    item.description = map["description"].toString()
+                    item.cupboardId = map["cupboardId"].toString().toInt()
+                    item.productionDate = map["productionDate"].toString()
+                    item.overdueDate = map["overdueDate"].toString()
+                    dbHelper.insertItem(db, item)
+                }
+
+                for (map in cupboards!!) {
+                    val cupboard = Cupboard(map["userId"].toString().toInt())
+                    cupboard.id = map["id"].toString().toInt()
+                    cupboard.name = map["name"].toString()
+                    cupboard.description = map["description"].toString()
+                    dbHelper.insertCupboard(db, cupboard)
+                }
+                initItem()
+                adapter.notifyDataSetChanged() // 刷新RecyclerView的UI
                 for (i in items!!)
                     Log.d("2333", "$i")
                 for (i in cupboards!!)
@@ -382,6 +405,7 @@ class HomeFragment : Fragment() {
     // 从数据库中读取物品信息
     @SuppressLint("Range")
     private fun initItem() {
+        ItemList.clear()
         val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
         val db = dbHelper.writableDatabase
 
