@@ -1,12 +1,17 @@
 package com.example.easystoring.ui
 
 import android.os.Bundle
+<<<<<<< Updated upstream
 import android.view.LayoutInflater
+=======
+import android.view.MenuItem
+>>>>>>> Stashed changes
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -25,15 +30,28 @@ class CupboardActivity : AppCompatActivity() {
 
     private val ItemList = ArrayList<Item>()
 
+<<<<<<< Updated upstream
     private val StoryingList = ArrayList<Storying>()
 
+=======
+>>>>>>> Stashed changes
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         setContentView(R.layout.activity_cupboard)
 
+<<<<<<< Updated upstream
 //        initItem()
         initStoryings()
+=======
+        val toolbar:Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+
+        initItem()
+>>>>>>> Stashed changes
         val recyclerView : RecyclerView = findViewById<RecyclerView>(R.id.recyclerView2)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
@@ -72,6 +90,7 @@ class CupboardActivity : AppCompatActivity() {
             ItemList.add(item1)
         }
     }
+<<<<<<< Updated upstream
 }
 
 class Storying(val name:String)
@@ -99,3 +118,17 @@ class StoryingAdapter(val StoryingList:List<Storying>):
     }
 
         }
+=======
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+}
+>>>>>>> Stashed changes
