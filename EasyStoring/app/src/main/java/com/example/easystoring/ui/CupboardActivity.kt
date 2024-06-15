@@ -1,11 +1,8 @@
 package com.example.easystoring.ui
 
 import android.os.Bundle
-<<<<<<< Updated upstream
 import android.view.LayoutInflater
-=======
 import android.view.MenuItem
->>>>>>> Stashed changes
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -26,32 +23,22 @@ import com.example.easystoring.ui.home.HomeViewModel
 import kotlin.random.Random
 
 class CupboardActivity : AppCompatActivity() {
-
-
     private val ItemList = ArrayList<Item>()
-
-<<<<<<< Updated upstream
     private val StoryingList = ArrayList<Storying>()
-
-=======
->>>>>>> Stashed changes
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         setContentView(R.layout.activity_cupboard)
 
-<<<<<<< Updated upstream
 //        initItem()
         initStoryings()
-=======
+
         val toolbar:Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
-        initItem()
->>>>>>> Stashed changes
         val recyclerView : RecyclerView = findViewById<RecyclerView>(R.id.recyclerView2)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
@@ -90,21 +77,21 @@ class CupboardActivity : AppCompatActivity() {
             ItemList.add(item1)
         }
     }
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 }
 
 class Storying(val name:String)
 
 class StoryingAdapter(val StoryingList:List<Storying>):
-        RecyclerView.Adapter<StoryingAdapter.ViewHolder>(){
+        RecyclerView.Adapter<StoryingAdapter.ViewHolder>() {
 
-   inner class ViewHolder(view:View):RecyclerView.ViewHolder(view){
-       val storyingName:TextView = view.findViewById(R.id.storyingName)
-   }
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val storyingName: TextView = view.findViewById(R.id.storyingName)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.storying__item,parent,false)
+            .inflate(R.layout.storying__item, parent, false)
         return ViewHolder(view)
     }
 
@@ -116,19 +103,7 @@ class StoryingAdapter(val StoryingList:List<Storying>):
     override fun getItemCount(): Int {
         return StoryingList.size
     }
-
-        }
-=======
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
 }
->>>>>>> Stashed changes
+
+
+

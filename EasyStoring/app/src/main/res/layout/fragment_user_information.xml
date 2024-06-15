@@ -21,7 +21,6 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-<<<<<<< Updated upstream
 <!--    <Button-->
 <!--        android:id="@+id/browse_button"-->
 <!--        android:layout_width="143dp"-->
@@ -96,14 +95,14 @@
         android:text="家具"
         android:textColor="@color/black"
         android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/create_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.839"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
         app:layout_constraintVertical_bias="0.119"
         tools:ignore="MissingConstraints" />
->>>>>>> Stashed changes
+
+<!--    app:layout_constraintBottom_toTopOf="@+id/create_button"-->
 
 <!--    <Button-->
 <!--        android:id="@+id/browse3_button"-->
