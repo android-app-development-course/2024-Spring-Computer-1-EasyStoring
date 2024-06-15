@@ -78,7 +78,10 @@ class LoginActivity : AppCompatActivity() {
 
                         "1" -> {
                             userInformation?.let {
-                                if (binding.password.text.toString() == it.get("password")) {
+                                if (binding.password.text.toString() == it["password"]) {
+                                    it["userId"]?.let { ID ->
+                                        EasyStoringApplication.userID = ID
+                                    }
                                     Toast.makeText(
                                         EasyStoringApplication.context,
                                         "登录成功",

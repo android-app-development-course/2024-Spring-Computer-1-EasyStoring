@@ -7,6 +7,7 @@ import com.example.easystoring.EasyStoringApplication
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -22,10 +23,6 @@ class NetworkService {
         val httpClient = OkHttpClient().newBuilder().connectTimeout(2, TimeUnit.SECONDS)
             .writeTimeout(2, TimeUnit.SECONDS).readTimeout(2, TimeUnit.SECONDS).build()
         val baseURL = "http://1.15.173.30:8997"
-    }
-
-    fun userRegister() {
-
     }
 
     fun userLogin(name: String, password: String): Boolean {
@@ -128,6 +125,7 @@ class NetworkService {
             Looper.prepare()
             when (statusCode) {
                 "0" -> {
+                    delay(100)
                     val jsonString = Gson().toJson(userInformation)
                     val jsonBody =
                         jsonString.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
@@ -245,7 +243,6 @@ class NetworkService {
     }
 
     fun syncToDevice() {
-
     }
     // 返回表中所有数据
 //    fun pushDB(table:String):List<Map<String, String>>
