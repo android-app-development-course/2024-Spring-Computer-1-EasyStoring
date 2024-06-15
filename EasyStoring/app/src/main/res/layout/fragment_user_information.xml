@@ -8,7 +8,11 @@
     android:background="@color/white"
     android:tag="usf"
     tools:context=".ui.UserInformation.UserInformation">
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
@@ -17,16 +21,59 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+<<<<<<< Updated upstream
+<!--    <Button-->
+<!--        android:id="@+id/browse_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="48dp"-->
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+<!--        android:text="书架1"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/create_button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.171"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.127"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/browse2_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="48dp"-->
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+<!--        android:text="书架2"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/create_button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.839"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.119"-->
+<!--        tools:ignore="MissingConstraints" />-->
+=======
     <Button
         android:id="@+id/browse_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@drawable/button_shape1"
+        android:background="@color/Yumen"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
         android:paddingBottom="20dp"
-        android:text="书架1"
+        android:text="书架"
         android:textColor="@color/black"
         android:textSize="26sp"
         app:layout_constraintBottom_toTopOf="@+id/create_button"
@@ -41,12 +88,12 @@
         android:id="@+id/browse2_button"
         android:layout_width="143dp"
         android:layout_height="92dp"
-        android:background="@drawable/button_shape1"
+        android:background="@color/Yumen"
         android:paddingStart="30dp"
         android:paddingTop="20dp"
         android:paddingEnd="30dp"
         android:paddingBottom="20dp"
-        android:text="书架2"
+        android:text="家具"
         android:textColor="@color/black"
         android:textSize="26sp"
         app:layout_constraintBottom_toTopOf="@+id/create_button"
@@ -56,136 +103,140 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
         app:layout_constraintVertical_bias="0.119"
         tools:ignore="MissingConstraints" />
+>>>>>>> Stashed changes
 
-    <Button
-        android:id="@+id/browse3_button"
-        android:layout_width="143dp"
-        android:layout_height="92dp"
-        android:background="@drawable/button_shape1"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="20dp"
-        android:text="装饰品"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/create_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.403"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/browse3_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="492dp"-->
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+<!--        android:text="装饰品"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/create_button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.171"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.403"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <Button
-        android:id="@+id/browse4_button"
-        android:layout_width="143dp"
-        android:layout_height="92dp"
-        android:background="@drawable/button_shape1"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="20dp"
-        android:text="数码"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/create_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.839"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.401"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/browse4_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="492dp"-->
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+<!--        android:text="数码"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/create_button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.839"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.401"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <Button
-        android:id="@+id/browse5_button"
-        android:layout_width="143dp"
-        android:layout_height="92dp"
-        android:background="@drawable/button_shape1"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="20dp"
-        android:text="化妆品"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/create_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.67"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/browse5_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="200dp"-->
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+<!--        android:text="化妆品"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/create_button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.171"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        app:layout_constraintVertical_bias="0.67"-->
+<!--        tools:ignore="MissingConstraints,UnknownId" />-->
 
-    <Button
-        android:id="@+id/browse6_button"
-        android:layout_width="143dp"
-        android:layout_height="92dp"
-        android:background="@drawable/button_shape1"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="20dp"
-        android:text="包类"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.839"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.665"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/browse6_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="344dp"-->
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+<!--        android:text="包类"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.839"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <Button
-        android:id="@+id/browse7_button"
-        android:layout_width="143dp"
-        android:layout_height="92dp"
-        android:background="@drawable/button_shape1"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="20dp"
-        android:text="食品"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.171"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.932"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/browse7_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="344dp"-->
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+<!--        android:text="食品"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.171"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <Button
-        android:id="@+id/browse8_button"
-        android:layout_width="143dp"
-        android:layout_height="92dp"
-        android:background="@drawable/button_shape1"
-        android:paddingStart="30dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="20dp"
-        android:text="玩具"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.839"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"
-        app:layout_constraintVertical_bias="0.932"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:id="@+id/browse8_button"-->
+<!--        android:layout_width="143dp"-->
+<!--        android:layout_height="92dp"-->
+<!--        android:layout_marginTop="200dp"-->
+<!--        android:background="@drawable/button_shape1"-->
+<!--        android:paddingStart="30dp"-->
+<!--        android:paddingTop="20dp"-->
+<!--        android:paddingEnd="30dp"-->
+<!--        android:paddingBottom="20dp"-->
+<!--        android:text="玩具"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="26sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.839"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="110dp"
-        android:src="@drawable/baseline_add_24"
-        app:fabSize="normal"
-        android:backgroundTint="@color/Canglang"
-        app:rippleColor="@color/Cangliang"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/addButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_marginEnd="24dp"-->
+<!--        android:layout_marginBottom="68dp"-->
+<!--        android:backgroundTint="@color/Canglang"-->
+<!--        android:src="@drawable/baseline_add_24"-->
+<!--        app:fabSize="normal"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:rippleColor="@color/Cangliang" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
