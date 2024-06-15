@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 import com.example.easystoring.Item
+import com.example.easystoring.Cupboard
 
 class AppDBHelper (val context: Context, name: String, version: Int):
     SQLiteOpenHelper(context,name, null, version){
@@ -128,6 +129,17 @@ class AppDBHelper (val context: Context, name: String, version: Int):
             put("cupboardId", Item1.cupboardId)
         }
         db.insert("Item", null, values)
+    }
+
+    fun insertCupboard(db: SQLiteDatabase, cupboard: Cupboard) {
+        val values = ContentValues().apply {
+            // 组装数据
+            put("id",cupboard.id)
+            put("userId", cupboard.userId)
+            put("name",cupboard.name)
+            put("description",cupboard.description)
+        }
+        db.insert("Cupboard", null, values)
     }
 
 
