@@ -58,9 +58,9 @@ class LoginActivity : AppCompatActivity() {
                                     userInformation =
                                         response.get("Message") as Map<String, String>?
                                 Log.d("2333", "Log in status $temp")
-                                if (userInformation != null)
-                                    for ((key, value) in userInformation!!)
-                                        Log.d("2333", "$key $value")
+//                                if (userInformation != null)
+//                                    for ((key, value) in userInformation!!)
+//                                        Log.d("2333", "$key $value")
                             }
                         }
                         temp
@@ -80,7 +80,8 @@ class LoginActivity : AppCompatActivity() {
                             userInformation?.let {
                                 if (binding.password.text.toString() == it["password"]) {
                                     it["userId"]?.let { ID ->
-                                        EasyStoringApplication.userID = ID
+                                        Log.d("ws_test","ID=$ID")
+//                                        EasyStoringApplication.userID = ID.toInt().toString()
                                     }
                                     Toast.makeText(
                                         EasyStoringApplication.context,
