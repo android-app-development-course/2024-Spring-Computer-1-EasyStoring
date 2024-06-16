@@ -13,6 +13,8 @@ class EasyStoringApplication : Application() {
         // 所有Items和Cupboards,全局变量
         var items: List<Map<String, Any>>? = null
         var cupboards: List<Map<String, Any>>? = null
+        lateinit var username: String
+
     }
 
     override fun onCreate() {
