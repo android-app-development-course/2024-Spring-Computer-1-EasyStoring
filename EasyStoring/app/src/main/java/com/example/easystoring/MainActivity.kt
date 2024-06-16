@@ -236,6 +236,15 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                 }
 
+                R.id.logout -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "账号已退出",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                }
+
             }
             true
         }
