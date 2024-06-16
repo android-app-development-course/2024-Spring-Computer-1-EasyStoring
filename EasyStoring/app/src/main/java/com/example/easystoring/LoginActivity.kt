@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             if (binding.password.text.toString() != "" && binding.username.text.toString() != "") {
                 runBlocking {
-                    var userInformation: Map<String, String>? = null
+                    var userInformation: Map<String, Any>? = null
                     var statusCode = async {
                         var temp = ""
                         runBlocking {
@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
                                 Log.d("2333", "Log in status $temp")
                                 if (userInformation != null)
                                     for ((key, value) in userInformation!!)
-                                        Log.d("2333", "$key $value")
+                                        Log.d("2333", "$key ${value::class}")
                             }
                         }
                         temp
@@ -78,10 +78,10 @@ class LoginActivity : AppCompatActivity() {
 
                         "1" -> {
                             userInformation?.let {
-                                if (binding.password.text.toString() == it["password"]) {
-                                    it["userId"]?.let { ID ->
-                                        EasyStoringApplication.userID = ID
-                                    }
+                                if (binding.password.text.toString() == it["password"] && it["userId"] != null) {
+                                    val userID = it["userId"] as Double
+                                    EasyStoringApplication.userID = userID.toInt().toString()
+                                    Log.d("2333",userID.toInt().toString())
                                     Toast.makeText(
                                         EasyStoringApplication.context,
                                         "登录成功",
