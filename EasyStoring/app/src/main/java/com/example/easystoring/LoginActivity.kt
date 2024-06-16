@@ -58,9 +58,9 @@ class LoginActivity : AppCompatActivity() {
                                     userInformation =
                                         response.get("Message") as Map<String, String>?
                                 Log.d("2333", "Log in status $temp")
-                                if (userInformation != null)
-                                    for ((key, value) in userInformation!!)
-                                        Log.d("2333", "$key ${value::class}")
+//                                if (userInformation != null)
+//                                    for ((key, value) in userInformation!!)
+//                                        Log.d("2333", "$key $value")
                             }
                         }
                         temp
