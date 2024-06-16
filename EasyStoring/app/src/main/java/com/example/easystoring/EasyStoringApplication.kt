@@ -10,6 +10,7 @@ class EasyStoringApplication : Application() {
         lateinit var context: Context
         // 当前登录用户ID
         lateinit var userID: String
+        lateinit var username: String
     }
 
     override fun onCreate() {
