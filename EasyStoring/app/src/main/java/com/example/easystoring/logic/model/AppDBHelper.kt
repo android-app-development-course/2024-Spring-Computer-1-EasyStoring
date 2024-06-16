@@ -6,9 +6,22 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.widget.Toast
 import com.example.easystoring.Item
 import com.example.easystoring.Cupboard
+import com.example.easystoring.EasyStoringApplication
+import com.example.easystoring.logic.network.NetworkService
+import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+
 
 class AppDBHelper (val context: Context, name: String, version: Int):
     SQLiteOpenHelper(context,name, null, version){
@@ -140,6 +153,321 @@ class AppDBHelper (val context: Context, name: String, version: Int):
             put("description",cupboard.description)
         }
         db.insert("Cupboard", null, values)
+    }
+
+    fun DeviceToSever(db: SQLiteDatabase){
+        val allCupboards = this.getAllRowsFromMyTable(db, "Cupboard")
+        val allItems = this.getAllRowsFromMyTable(db, "Item")
+        for (i in allItems)
+            Log.d("2333", i.toString())
+        for (i in allCupboards)
+            Log.d("2333", i.toString())
+        // 同步Items
+        try {
+            runBlocking {
+                var statusCode = async {
+                    var temp = ""
+                    runBlocking {
+                        val jsonString = Gson().toJson(allItems)
+                        val jsonBody =
+                            jsonString.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                        val postRequest =
+                            Request.Builder().url("${NetworkService.baseURL}/syncFromDevice")
+                                .header("userID", EasyStoringApplication.userID).header("tableName", "Items")
+                                .post(jsonBody)
+                                .build()
+                        val call = NetworkService.httpClient.newCall(postRequest)
+                        val response = withContext(Dispatchers.IO) {
+                            call.execute()
+                        }
+                        Log.d("2333", response.toString())
+                        response.body?.string()?.let {
+                            Log.d("2333", it)
+                            val response: MutableMap<*, *> = Gson().fromJson(
+                                it,
+                                MutableMap::class.java
+                            )
+                            temp = response.get("StatusCode").toString()
+                            Log.d("2333", "SyncFromDevice status $temp")
+                            response.get("Message")?.toString().let {
+                                Log.d("2333", "SyncFromDevice message $it")
+                            }
+                        }
+                    }
+                    temp
+                }.await()
+                when (statusCode) {
+                    "0" -> {
+                        Toast.makeText(
+                            EasyStoringApplication.context,
+                            "云同步到服务器失败",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+
+                    "1" -> {
+                        // 同步Cupboards
+                        delay(100)
+                        runBlocking {
+                            var statusCode = async {
+                                var temp = ""
+                                runBlocking {
+                                    val jsonString = Gson().toJson(allCupboards)
+                                    val jsonBody =
+                                        jsonString.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                                    val postRequest =
+                                        Request.Builder()
+                                            .url("${NetworkService.baseURL}/syncFromDevice")
+                                            .header("userID", EasyStoringApplication.userID)
+                                            .header("tableName", "Cupboards")
+                                            .post(jsonBody)
+                                            .build()
+                                    val call = NetworkService.httpClient.newCall(postRequest)
+                                    val response = withContext(Dispatchers.IO) {
+                                        call.execute()
+                                    }
+                                    Log.d("2333", response.toString())
+                                    response.body?.string()?.let {
+                                        Log.d("2333", it)
+                                        val response: MutableMap<*, *> = Gson().fromJson(
+                                            it,
+                                            MutableMap::class.java
+                                        )
+                                        temp = response.get("StatusCode").toString()
+                                        Log.d("2333", "SyncFromDevice status $temp")
+                                        response.get("Message")?.toString().let {
+                                            Log.d("2333", "SyncFromDevice message $it")
+                                        }
+                                    }
+                                }
+                                temp
+                            }.await()
+                            when (statusCode) {
+                                "0" -> {
+                                    Toast.makeText(
+                                        EasyStoringApplication.context,
+                                        "云同步到服务器失败",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                }
+
+                                "1" -> {
+                                    Toast.makeText(
+                                        EasyStoringApplication.context,
+                                        "云同步到服务器成功",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+                                else -> {
+                                    Toast.makeText(
+                                        EasyStoringApplication.context,
+                                        "数据库错误",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                }
+                            }
+                        }
+                    }
+
+                    else -> {
+                        Toast.makeText(
+                            EasyStoringApplication.context,
+                            "数据库错误",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("2333", "Exception: ${e.message}")
+        }
+    }
+
+    fun SeverToDevice(db: SQLiteDatabase){
+        try {
+            runBlocking {
+                var itemsResponse = async {
+                    var res: MutableMap<*, *>? = null
+                    runBlocking {
+                        val getRequest =
+                            Request.Builder().header("userID", EasyStoringApplication.userID)
+                                .header("tableName", "Items")
+                                .url("${NetworkService.baseURL}/syncFromServer")
+                                .get()
+                                .build()
+                        val call = NetworkService.httpClient.newCall(getRequest)
+                        val response = withContext(Dispatchers.IO) {
+                            call.execute()
+                        }
+                        Log.d("2333", response.toString())
+                        response.body?.string()?.let {
+                            Log.d("2333", it)
+                            res = Gson().fromJson(
+                                it,
+                                MutableMap::class.java
+                            )
+                        }
+                    }
+                    res
+                }.await()
+                if (itemsResponse == null) {
+                    Log.d("2333", "Null response in syncFromServer")
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "云同步到设备失败",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                } else {
+                    val statusCode = itemsResponse["StatusCode"]
+                    val message = itemsResponse["Message"]
+                    Log.d("2333", "syncFromServer status code: $statusCode, message: $message")
+                    when (statusCode) {
+                        "0" -> {
+                            Toast.makeText(
+                                EasyStoringApplication.context,
+                                "云同步到设备失败",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+
+                        "1" -> {
+                            // 服务器拉取的当前用户ID的所有Items
+                            EasyStoringApplication.items = itemsResponse["Data"]?.let {
+                                it as List<Map<String, Any>>
+                            }
+                            delay(100)
+                            // 拉取当前用户ID的所有Cupboards
+                            runBlocking {
+                                var cupboardsResponse = async {
+                                    var res: MutableMap<*, *>? = null
+                                    runBlocking {
+                                        val getRequest =
+                                            Request.Builder().header("userID", EasyStoringApplication.userID)
+                                                .header("tableName", "Cupboards")
+                                                .url("${NetworkService.baseURL}/syncFromServer")
+                                                .get()
+                                                .build()
+                                        val call = NetworkService.httpClient.newCall(getRequest)
+                                        val response = withContext(Dispatchers.IO) {
+                                            call.execute()
+                                        }
+                                        Log.d("2333", response.toString())
+                                        response.body?.string()?.let {
+                                            Log.d("2333", it)
+                                            res = Gson().fromJson(
+                                                it,
+                                                MutableMap::class.java
+                                            )
+                                        }
+                                    }
+                                    res
+                                }.await()
+                                if (cupboardsResponse == null) {
+                                    Log.d("2333", "Null response in syncFromServer")
+                                    Toast.makeText(
+                                        EasyStoringApplication.context,
+                                        "云同步到设备失败",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                } else {
+                                    val statusCode = cupboardsResponse["StatusCode"]
+                                    val message = cupboardsResponse["Message"]
+                                    Log.d(
+                                        "2333",
+                                        "syncFromServer status code: $statusCode, message: $message"
+                                    )
+                                    when (statusCode) {
+                                        "0" -> {
+                                            Toast.makeText(
+                                                EasyStoringApplication.context,
+                                                "云同步到设备失败",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                        }
+
+                                        "1" -> {
+                                            EasyStoringApplication.cupboards = cupboardsResponse["Data"]?.let {
+                                                it as List<Map<String, Any>>
+                                            }
+                                            if (EasyStoringApplication.cupboards != null) {
+                                                Toast.makeText(
+                                                    EasyStoringApplication.context,
+                                                    "云同步到设备成功",
+                                                    Toast.LENGTH_SHORT
+                                                )
+                                                    .show()
+                                            } else
+                                                Toast.makeText(
+                                                    EasyStoringApplication.context,
+                                                    "云同步到设备失败",
+                                                    Toast.LENGTH_SHORT
+                                                )
+                                                    .show()
+                                        }
+
+                                        else -> {
+                                            Toast.makeText(
+                                                EasyStoringApplication.context,
+                                                "数据库错误",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        else -> {
+                            Toast.makeText(
+                                EasyStoringApplication.context,
+                                "数据库错误",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("2333", "Exception: ${e.message}")
+        }
+        if (EasyStoringApplication.items != null && EasyStoringApplication.cupboards != null) {
+            for (map in EasyStoringApplication.items!!) {
+                val item = Item(map["userId"].toString().toInt())
+                item.id = map["id"].toString().toInt()
+                item.imageId = map["imageId"].toString()
+                item.name = map["name"].toString()
+                item.number = map["number"].toString().toInt()
+                item.description = map["description"].toString()
+                item.cupboardId = map["cupboardId"].toString().toInt()
+                item.productionDate = map["productionDate"].toString()
+                item.overdueDate = map["overdueDate"].toString()
+                this.insertItem(db, item)
+            }
+
+            for (map in EasyStoringApplication.cupboards!!) {
+                val cupboard = Cupboard(map["userId"].toString().toInt())
+                cupboard.id = map["id"].toString().toInt()
+                cupboard.name = map["name"].toString()
+                cupboard.description = map["description"].toString()
+                this.insertCupboard(db, cupboard)
+            }
+
+            for (i in EasyStoringApplication.items!!)
+                Log.d("2333", "$i")
+            for (i in EasyStoringApplication.cupboards!!)
+                Log.d("2333", "$i")
+        }
     }
 
 

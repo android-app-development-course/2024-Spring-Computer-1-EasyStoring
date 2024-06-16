@@ -60,59 +60,59 @@ class MainActivity : AppCompatActivity() {
         } catch (e:Exception) {
             Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
         }
-        // 测试添加柜子
-        val values2 = ContentValues().apply {
-            // 组装数据
-            CupboardNum ++
-            put("id", CupboardNum)
-            put("userId", 1)
-            put("name","书架")
-            put("description","1234567")
-        }
-        db.insert("Cupboard", null, values2)
-
-//         测试添加物品
-        val ItemColumns = arrayOf("id", "userId","imageId","name", "description",
-            "number", "productionDate", "overdueDate", "cupboardId")
-        val values3 = ContentValues().apply {
-            // 组装数据
-            ItemNum ++
-            put("id",ItemNum)
-            put("userId", 1)
-            put("imageId","")
-            put("name","book1")
-            put("description","第一行代码")
-            put("number", 1)
-            put("productionDate","2023-3-29")
-            put("cupboardId", 1)
-        }
-        db.insert("Item", null, values3)
-        val values4 = ContentValues().apply {
-            // 组装数据
-            ItemNum ++
-            put("id",ItemNum)
-            put("userId", 1)
-            put("imageId","")
-            put("name","book3")
-            put("description","第二行代码")
-            put("number", 2)
-            put("productionDate","2023-3-29")
-            put("cupboardId", 2)
-        }
-        db.insert("Item", null, values4)
-        val values5 = ContentValues().apply {
-            // 组装数据
-            ItemNum ++
-            put("id",ItemNum)
-            put("userId", 2)
-            put("imageId","")
-            put("name","book1")
-            put("description","第三行代码")
-            put("number", 3)
-            put("productionDate","2023-3-29")
-            put("cupboardId", 14)
-        }
-        db.insert("Item", null, values5)
+//        // 测试添加柜子
+//        val values2 = ContentValues().apply {
+//            // 组装数据
+//            CupboardNum ++
+//            put("id", CupboardNum)
+//            put("userId", 1)
+//            put("name","书架")
+//            put("description","1234567")
+//        }
+//        db.insert("Cupboard", null, values2)
+//
+////         测试添加物品
+//        val ItemColumns = arrayOf("id", "userId","imageId","name", "description",
+//            "number", "productionDate", "overdueDate", "cupboardId")
+//        val values3 = ContentValues().apply {
+//            // 组装数据
+//            ItemNum ++
+//            put("id",ItemNum)
+//            put("userId", 1)
+//            put("imageId","")
+//            put("name","book1")
+//            put("description","第一行代码")
+//            put("number", 1)
+//            put("productionDate","2023-3-29")
+//            put("cupboardId", 1)
+//        }
+//        db.insert("Item", null, values3)
+//        val values4 = ContentValues().apply {
+//            // 组装数据
+//            ItemNum ++
+//            put("id",ItemNum)
+//            put("userId", 1)
+//            put("imageId","")
+//            put("name","book3")
+//            put("description","第二行代码")
+//            put("number", 2)
+//            put("productionDate","2023-3-29")
+//            put("cupboardId", 2)
+//        }
+//        db.insert("Item", null, values4)
+//        val values5 = ContentValues().apply {
+//            // 组装数据
+//            ItemNum ++
+//            put("id",ItemNum)
+//            put("userId", 2)
+//            put("imageId","")
+//            put("name","book1")
+//            put("description","第三行代码")
+//            put("number", 3)
+//            put("productionDate","2023-3-29")
+//            put("cupboardId", 14)
+//        }
+//        db.insert("Item", null, values5)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
