@@ -7,7 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -387,9 +392,9 @@ class HomeFragment : Fragment() {
         if (cursor.moveToFirst()) {
             do {
                 ItemNum++
-                val item1: Item = Item(1)
-                item1.id = ItemNum
+                val item1:Item=Item(1)
                 try {
+                    item1.id =cursor.getInt(cursor.getColumnIndex("id"))
                     item1.userId = cursor.getInt(cursor.getColumnIndex("userId"))
                     item1.name = cursor.getString(cursor.getColumnIndex("name"))
                     item1.imageId = cursor.getString(cursor.getColumnIndex("imageId"))
@@ -411,5 +416,38 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    // 从AddActivity中获取新增的Title
+    @SuppressLint("Range", "Recycle")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode){
+            1-> if (resultCode == AppCompatActivity.RESULT_OK){
+                val NewItemId = data?.getStringExtra("NewItemId")
+                val NewItem = Item(1)
+                val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
+                val db = dbHelper.writableDatabase
+                if (NewItemId != null) {
+                    val cursor = db.rawQuery("SELECT * FROM Item WHERE id = ?", arrayOf(NewItemId))
+                    cursor.moveToFirst()
+                    NewItem.id = NewItemId.toInt()
+                    NewItem.name = cursor.getString(cursor.getColumnIndex("name"))
+                    NewItem.imageId = cursor.getString(cursor.getColumnIndex("imageId"))
+                    NewItem.number = cursor.getString(cursor.getColumnIndex("number")).toInt()
+                    NewItem.description = cursor.getString(cursor.getColumnIndex("description"))
+                    NewItem.productionDate = cursor.getString(cursor.getColumnIndex("productionDate"))
+                    NewItem.overdueDate = cursor.getString(cursor.getColumnIndex("overdueDate"))
+                    NewItem.cupboardId = cursor.getString(cursor.getColumnIndex("cupboardId")).toInt()
+                    ItemList.add(NewItem)
+                    // 刷新列表
+                    val recyclerView : RecyclerView = binding.recyclerView
+                    val layoutManager = LinearLayoutManager(requireContext())
+                    recyclerView.layoutManager =  layoutManager
+                    val adapter = ItemAdapter(ItemList)     // 在这里修改物品栏显示的内容
+                    recyclerView.adapter = adapter
+                }
+            }
+        }
     }
 }

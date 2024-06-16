@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +16,11 @@ import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easystoring.ui.ItemActivity
+import java.lang.Exception
 
 class ItemAdapter(val itemList:List<Item>) :
     // 这个函数修改显示的内容
@@ -44,10 +48,16 @@ class ItemAdapter(val itemList:List<Item>) :
             val position = viewHolder.bindingAdapterPosition
             val item = itemList[position]
             // 点击事件后，跳转界面，传信息
-            val intent = Intent(viewHolder.itemView.context, ItemActivity::class.java).apply {
-                putExtra("position", position.toString())
+            try {
+                val intent = Intent(viewHolder.itemView.context, ItemActivity::class.java).apply {
+                    putExtra("position", position.toString())
+                    putExtra("itemId",item.id.toString())
+                }
+                viewHolder.itemView.context.startActivity(intent)
             }
-            viewHolder.itemView.context.startActivity(intent)
+            catch (e:Exception){
+                Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
+            }
         }
         // 点击图片
         viewHolder.ItemImage.setOnClickListener {
@@ -60,9 +70,12 @@ class ItemAdapter(val itemList:List<Item>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
-
-//        holder.ItemImage.setImageResource(item.imageId)           //图片信息待修改
-
+        try {
+            holder.ItemImage.setImageURI(item.imageId.toUri())
+        }catch (e:Exception)
+        {
+            Log.d("error",e.message!!)
+        }
         holder.ItemName.text = item.name
         holder.ItemName.typeface = Typeface.DEFAULT_BOLD
         holder.productionDate.text = item.productionDate

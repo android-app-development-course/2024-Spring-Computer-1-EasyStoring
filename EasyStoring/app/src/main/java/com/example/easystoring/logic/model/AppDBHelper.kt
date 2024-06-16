@@ -1,11 +1,13 @@
 package com.example.easystoring.logic.model
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
+import com.example.easystoring.Item
 
 class AppDBHelper (val context: Context, name: String, version: Int):
     SQLiteOpenHelper(context,name, null, version){
@@ -96,5 +98,37 @@ class AppDBHelper (val context: Context, name: String, version: Int):
         cursor.close()
         return list
     }
+    // 获取指定表的行数
+    fun getRowCount(tableName: String): Int {
+        val db = this.readableDatabase
+        val cursor: Cursor
+        try {
+            cursor = db.rawQuery("SELECT COUNT(*) FROM $tableName", null)
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0)
+            }
+            cursor.close()
+        } finally {
+            db.close()
+        }
+        // 如果没有行，返回0
+        return 0
+    }
+    fun insertItem(db: SQLiteDatabase, Item1: Item){
+        val values = ContentValues().apply {
+            // 组装数据
+            put("id",Item1.id)
+            put("userId", Item1.userId)
+            put("imageId",Item1.imageId)
+            put("name",Item1.name)
+            put("description",Item1.description)
+            put("number", Item1.number)
+            put("productionDate",Item1.productionDate)
+            put("overdueDate", Item1.overdueDate)
+            put("cupboardId", Item1.cupboardId)
+        }
+        db.insert("Item", null, values)
+    }
+
 
 }

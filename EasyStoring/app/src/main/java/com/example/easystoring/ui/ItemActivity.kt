@@ -1,18 +1,61 @@
 package com.example.easystoring.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.easystoring.R
+import com.example.easystoring.logic.model.AppDBHelper
+import java.lang.Exception
 
 class ItemActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "Range", "CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item)
 
+        val name = findViewById<TextView>(R.id.editText1)
+        val num = findViewById<TextView>(R.id.editText2)
+        val description = findViewById<TextView>(R.id.editText7)
+        val pdate = findViewById<TextView>(R.id.editText4)
+        val vdate = findViewById<TextView>(R.id.editText5)
+        val location = findViewById<TextView>(R.id.editText8)
+
+        val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+        val itemId = intent.getStringExtra("itemId")
+        var cursor = db.rawQuery("SELECT * FROM Item WHERE id = ?", arrayOf(itemId))
+        cursor.moveToFirst()
+        val nameText = cursor.getString(cursor.getColumnIndex("name"))
+        val imageIDText = cursor.getString(cursor.getColumnIndex("imageId"))
+        val number = cursor.getString(cursor.getColumnIndex("number"))
+        val descriptionText = cursor.getString(cursor.getColumnIndex("description"))
+        val pdateText = cursor.getString(cursor.getColumnIndex("productionDate"))
+        val vdateText = cursor.getString(cursor.getColumnIndex("overdueDate"))
+        val cupboardId = cursor.getString(cursor.getColumnIndex("cupboardId"))
+
+        try {
+            name.setText(nameText)
+            num.setText(number)
+            description.setText(descriptionText)
+            pdate.setText(pdateText)
+            vdate.setText(vdateText)
+            cursor = db.rawQuery("SELECT * FROM Cupboard WHERE id = ?", arrayOf(cupboardId))
+            cursor.moveToFirst()
+            location.setText(cursor.getString(cursor.getColumnIndex("name")))
+        }catch (e: Exception)
+        {
+            Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
+        }
+
+        // 确认按钮
         val button1: Button = findViewById(R.id.button1)
         button1.setOnClickListener {
             finish()
@@ -22,16 +65,7 @@ class ItemActivity : AppCompatActivity() {
             finish()
         }
 
-//        val edit_1: EditText = findViewById(R.id.editText1)
-//        val edit_2: EditText = findViewById(R.id.editText2)
-//        val edit_4: EditText = findViewById(R.id.editText4)
-//        val edit_5: EditText = findViewById(R.id.editText5)
-//        val edit_7: EditText = findViewById(R.id.editText7)
-//        val edit_8: EditText = findViewById(R.id.editText8)
-
-        val ImageBtn_1: ImageButton = findViewById(R.id.imageButton1)
-        val ImageBtn_2: ImageButton = findViewById(R.id.imageButton2)
-        val ImageBtn_3: ImageButton = findViewById(R.id.imageButton3)
-        val ImageBtn_4: ImageButton = findViewById(R.id.imageButton4)
     }
+
+
 }

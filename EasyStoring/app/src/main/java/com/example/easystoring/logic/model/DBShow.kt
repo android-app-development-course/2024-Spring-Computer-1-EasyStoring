@@ -28,9 +28,7 @@ class DBShow : AppCompatActivity() {
             val userData = dbHelper.getAllFromMyTable(db,"User",userColumns)
             val cupboardData = dbHelper.getAllFromMyTable(db,"Cupboard",cupboardColumns)
             val ItemData = dbHelper.getAllFromMyTable(db,"Item",ItemColumns)
-            dbShowText.text ="User:\n" + userData.toString() +
-                    "\nCupboard:\n" + cupboardData +
-                    "\nItem:\n" + ItemData
+            dbShowText.text ="Item:\n" + ItemData
         }catch (e: Exception) { // 指定捕获 Exception 类型
             Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
         }
