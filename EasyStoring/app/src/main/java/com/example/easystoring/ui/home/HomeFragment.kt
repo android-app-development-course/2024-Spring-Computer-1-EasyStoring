@@ -7,12 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +42,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val ItemList = ArrayList<Item>()
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -103,7 +100,7 @@ class HomeFragment : Fragment() {
                                 jsonString.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
                             val postRequest =
                                 Request.Builder().url("${NetworkService.baseURL}/syncFromDevice")
-                                    .header("userID", "1").header("tableName", "Items")
+                                    .header("userID", EasyStoringApplication.userID).header("tableName", "Items")
                                     .post(jsonBody)
                                     .build()
                             val call = NetworkService.httpClient.newCall(postRequest)
@@ -149,7 +146,7 @@ class HomeFragment : Fragment() {
                                         val postRequest =
                                             Request.Builder()
                                                 .url("${NetworkService.baseURL}/syncFromDevice")
-                                                .header("userID", "1")
+                                                .header("userID", EasyStoringApplication.userID)
                                                 .header("tableName", "Cupboards")
                                                 .post(jsonBody)
                                                 .build()
@@ -182,6 +179,7 @@ class HomeFragment : Fragment() {
                                         )
                                             .show()
                                     }
+
                                     "1" -> {
                                         Toast.makeText(
                                             EasyStoringApplication.context,
@@ -189,6 +187,7 @@ class HomeFragment : Fragment() {
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
+
                                     else -> {
                                         Toast.makeText(
                                             EasyStoringApplication.context,
@@ -200,6 +199,7 @@ class HomeFragment : Fragment() {
                                 }
                             }
                         }
+
                         else -> {
                             Toast.makeText(
                                 EasyStoringApplication.context,
@@ -222,7 +222,8 @@ class HomeFragment : Fragment() {
                         var res: MutableMap<*, *>? = null
                         runBlocking {
                             val getRequest =
-                                Request.Builder().header("userID", "1").header("tableName", "Items")
+                                Request.Builder().header("userID", EasyStoringApplication.userID)
+                                    .header("tableName", "Items")
                                     .url("${NetworkService.baseURL}/syncFromServer")
                                     .get()
                                     .build()
@@ -275,7 +276,7 @@ class HomeFragment : Fragment() {
                                         var res: MutableMap<*, *>? = null
                                         runBlocking {
                                             val getRequest =
-                                                Request.Builder().header("userID", "1")
+                                                Request.Builder().header("userID", EasyStoringApplication.userID)
                                                     .header("tableName", "Cupboards")
                                                     .url("${NetworkService.baseURL}/syncFromServer")
                                                     .get()
@@ -416,9 +417,9 @@ class HomeFragment : Fragment() {
         if (cursor.moveToFirst()) {
             do {
                 ItemNum++
-                val item1:Item=Item(1)
+                val item1: Item = Item(1)
                 try {
-                    item1.id =cursor.getInt(cursor.getColumnIndex("id"))
+                    item1.id = cursor.getInt(cursor.getColumnIndex("id"))
                     item1.userId = cursor.getInt(cursor.getColumnIndex("userId"))
                     item1.name = cursor.getString(cursor.getColumnIndex("name"))
                     item1.imageId = cursor.getString(cursor.getColumnIndex("imageId"))
@@ -446,8 +447,8 @@ class HomeFragment : Fragment() {
     @SuppressLint("Range", "Recycle")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode){
-            1-> if (resultCode == AppCompatActivity.RESULT_OK){
+        when (requestCode) {
+            1 -> if (resultCode == AppCompatActivity.RESULT_OK) {
                 val NewItemId = data?.getStringExtra("NewItemId")
                 val NewItem = Item(1)
                 val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
@@ -460,14 +461,16 @@ class HomeFragment : Fragment() {
                     NewItem.imageId = cursor.getString(cursor.getColumnIndex("imageId"))
                     NewItem.number = cursor.getString(cursor.getColumnIndex("number")).toInt()
                     NewItem.description = cursor.getString(cursor.getColumnIndex("description"))
-                    NewItem.productionDate = cursor.getString(cursor.getColumnIndex("productionDate"))
+                    NewItem.productionDate =
+                        cursor.getString(cursor.getColumnIndex("productionDate"))
                     NewItem.overdueDate = cursor.getString(cursor.getColumnIndex("overdueDate"))
-                    NewItem.cupboardId = cursor.getString(cursor.getColumnIndex("cupboardId")).toInt()
+                    NewItem.cupboardId =
+                        cursor.getString(cursor.getColumnIndex("cupboardId")).toInt()
                     ItemList.add(NewItem)
                     // 刷新列表
-                    val recyclerView : RecyclerView = binding.recyclerView
+                    val recyclerView: RecyclerView = binding.recyclerView
                     val layoutManager = LinearLayoutManager(requireContext())
-                    recyclerView.layoutManager =  layoutManager
+                    recyclerView.layoutManager = layoutManager
                     val adapter = ItemAdapter(ItemList)     // 在这里修改物品栏显示的内容
                     recyclerView.adapter = adapter
                 }
