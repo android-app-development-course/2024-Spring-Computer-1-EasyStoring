@@ -8,6 +8,16 @@
     android:background="@color/white"
     tools:context=".ui.CupboardActivity">
 
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="@android:color/white"
+        tools:ignore="MissingConstraints" />
+<!--    app:popupTheme="@style/AppTheme.PopupOverlay"-->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
         android:layout_width="346dp"
@@ -29,6 +39,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginBottom="42dp"
         android:text="书架"
+
         android:textColor="@color/black"
         android:textSize="20pt"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
