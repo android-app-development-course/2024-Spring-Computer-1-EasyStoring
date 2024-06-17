@@ -187,6 +187,10 @@ class EasyStoringApplication : Application() {
 }
 ```
 
+实现效果（App开屏界面、注册、登录）
+
+<img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181733.png" alt="" width="209"><img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181908.png" alt="" width="209"><img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181946.png" alt="" width="209">
+
 #### 云同步用户数据
 
 为了实现用户数据换多设备同步而实现的功能，分为前端实现和后端实现两部分，使用 OkHTTP3 网络功能和网络数据库交互，并写有完善的异常处理机制和大量调试输出，最终实现的效果很完美，可以很好实现跨设备同步用户数据。前端数据库共有两张表存储当前登录用户的物品和收纳柜信息，后端数据库共有两个集合存储所有用户的物品和收纳柜信息。
