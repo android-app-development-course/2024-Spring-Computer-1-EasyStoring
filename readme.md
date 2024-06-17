@@ -108,7 +108,7 @@ by 2024 春季课程第一组
 
 5. 初步 UI 逻辑设计
 
-   ![](.\resources\UI%20Design.jpg)
+   ![](/resources/UI%20Design.jpg)
 
 ### 推广方案
 
@@ -191,9 +191,9 @@ class EasyStoringApplication : Application() {
 
 为了实现用户数据换多设备同步而实现的功能，分为前端实现和后端实现两部分，使用 OkHTTP3 网络功能和网络数据库交互，并写有完善的异常处理机制和大量调试输出，最终实现的效果很完美，可以很好实现跨设备同步用户数据。前端数据库共有两张表存储当前登录用户的物品和收纳柜信息，后端数据库共有两个集合存储所有用户的物品和收纳柜信息。
 
-![](.\resources\2024-06-16-22-42-09-image.png)
+![](/resources/2024-06-16-22-42-09-image.png)
 
-![](.\resources\2024-06-16-22-42-23-image.png)
+![](/resources/2024-06-16-22-42-23-image.png)
 
 #### AI 二手交易辅助
 
@@ -207,7 +207,7 @@ class EasyStoringApplication : Application() {
 
 登录界面                                                           AI 交易助手界面
 
-<img title="" src="C:/Users/Administrator/AppData/Roaming/marktext/images/2024-06-16-19-00-19-image.png" alt="" width="319"><img title="" src="C:/Users/Administrator/AppData/Roaming/marktext/images/2024-06-16-19-01-40-image.png" alt="" width="320">
+<img title="" src="resources/2024-06-16-19-00-19-image.png" alt="" width="319"><img title="" src="resources/2024-06-16-19-01-40-image.png" alt="" width="320">
 
 物品记录界面                                                              物品记录详情
 
@@ -215,7 +215,7 @@ class EasyStoringApplication : Application() {
 
 #### 顶栏设计
 
-![](.\resources\2024-06-16-19-03-58-image.png)
+![](resources/2024-06-16-19-03-58-image.png)
 
 使用 Toolbar 实现，设置图标标识出侧拉菜单功能和添加功能
 
@@ -227,7 +227,7 @@ class EasyStoringApplication : Application() {
 
 #### 底部导航栏设计
 
-![](.\resources\2024-06-16-19-07-28-image.png)
+![](resources/2024-06-16-19-07-28-image.png)
 
 使用 BottomNavigationView+ViewPager2 实现，可以切换嵌套在 MainActivity 中的三个 Fragment，并自定义了图标和文字选中时的效果。
 
@@ -237,7 +237,7 @@ class EasyStoringApplication : Application() {
 
 [iconfont-阿里巴巴矢量图标库](https://www.iconfont.cn/collections/detail?cid=13720)
 
-![](.\resources\2024-06-16-19-15-05-image.png)
+![](resources/2024-06-16-19-15-05-image.png)
 
 #### 应用配色设计
 
@@ -263,11 +263,11 @@ colors.xml 文件中定义的颜色：
 
 选用配色：
 
-![](.\resources\2024-06-16-19-23-29-ebe0c21655f5b14338de9b45c6b459f.jpg)
+![](resources/2024-06-16-19-23-29-ebe0c21655f5b14338de9b45c6b459f.jpg)
 
 #### 应用图标设计
 
-![](D:\2024-Spring-Computer-1-EasyStoring\resources\ic_icon.png)
+![](resources/ic_icon.png)
 
 选用现有插画，能用明亮的配色表现出我们 App 的主要功能和使用范围。
 

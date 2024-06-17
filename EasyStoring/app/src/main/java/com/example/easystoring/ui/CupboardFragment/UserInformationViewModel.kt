@@ -1,4 +1,4 @@
-package com.example.easystoring.ui.UserInformation
+package com.example.easystoring.ui.CupboardFragment
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

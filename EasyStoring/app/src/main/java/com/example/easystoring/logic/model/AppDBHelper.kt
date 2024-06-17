@@ -102,7 +102,6 @@ class AppDBHelper (val context: Context, name: String, version: Int):
     }
     // 获取指定表的行数
     fun getRowCount(db: SQLiteDatabase,tableName: String): Int {
-        val db = this.readableDatabase
         val cursor: Cursor
         try {
             cursor = db.rawQuery("SELECT COUNT(*) FROM $tableName", null)
@@ -145,6 +144,9 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
     fun delItemById(db: SQLiteDatabase,id: Int){
         db.delete("Item", "id = ?", arrayOf(id.toString()))
+    }
+    fun delCupboardById(db: SQLiteDatabase,id: Int){
+        db.delete("Cupboard", "id = ?", arrayOf(id.toString()))
     }
     fun updateItem(db: SQLiteDatabase, Item1: Item){
         val values = ContentValues().apply {
@@ -293,7 +295,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
                 }
             }
         } catch (e: Exception) {
-            Log.d("2333", "Exception: ${e.message}")
+            Log.d("2333error", "Exception: ${e.message}")
         }
     }
 
@@ -448,7 +450,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
                 }
             }
         } catch (e: Exception) {
-            Log.d("2333", "Exception: ${e.message}")
+            Log.d("2333error", "Exception: ${e.message}")
         }
         if (EasyStoringApplication.items != null && EasyStoringApplication.cupboards != null) {
             for (map in EasyStoringApplication.items!!) {

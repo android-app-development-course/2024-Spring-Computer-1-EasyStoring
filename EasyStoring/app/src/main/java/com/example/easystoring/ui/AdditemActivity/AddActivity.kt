@@ -37,6 +37,7 @@ import kotlin.Exception
 class AddActivity : AppCompatActivity() {
 
     private var ImageUri:String = ""
+    @SuppressLint("Range", "Recycle")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
@@ -85,23 +86,25 @@ class AddActivity : AppCompatActivity() {
             }
             overlay.visibility = View.GONE
         }
-        // 设置点击Fragment之外隐藏Fragment的逻辑
-        // 这可以通过设置Fragment的setCancelable(true)和FragmentTransaction的addToBackStack(null)来实现
-        // 或者在Activity中覆盖onTouchEvent方法来检测点击事件
-
-        var use_item :Item = Item(EasyStoringApplication.userID.toInt())
+        val use_item :Item = Item(EasyStoringApplication.userID.toInt())
         // 确定按钮，将输入的值放到item中并存入数据库
         button1.setOnClickListener {
             try {
                 val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
                 val db = dbHelper.writableDatabase
+                val cursor = db.rawQuery("SELECT * FROM Cupboard WHERE name = ?",
+                    arrayOf(edit_8.text.toString()))
+                var cupboardId = -1
+                if (cursor.moveToFirst()) {
+                    cupboardId = cursor.getString(cursor.getColumnIndex("id")).toInt()
+                }
                 use_item.id = dbHelper.getRowCount(db,"Item") + 1
-                use_item.name = edit_1.getText().toString()
-                use_item.number = Integer.parseInt(edit_2.getText().toString())
-                use_item.description = edit_7.getText().toString()
-                use_item.cupboardId = Integer.parseInt(edit_8.getText().toString())
-                use_item.productionDate = edit_4.getText().toString()
-                use_item.overdueDate = edit_5.getText().toString()
+                use_item.name = edit_1.text.toString()
+                use_item.number = Integer.parseInt(edit_2.text.toString())
+                use_item.description = edit_7.text.toString()
+                use_item.cupboardId = cupboardId
+                use_item.productionDate = edit_4.text.toString()
+                use_item.overdueDate = edit_5.text.toString()
                 use_item.imageId = getImageUri()
 
                 dbHelper.insertItem(db, use_item)
