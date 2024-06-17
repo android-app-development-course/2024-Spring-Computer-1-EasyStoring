@@ -19,8 +19,8 @@ import java.util.concurrent.TimeUnit
 
 class NetworkService {
     companion object {
-        val httpClient = OkHttpClient().newBuilder().connectTimeout(2, TimeUnit.SECONDS)
-            .writeTimeout(2, TimeUnit.SECONDS).readTimeout(2, TimeUnit.SECONDS).build()
+        val httpClient = OkHttpClient().newBuilder().connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build()
         val baseURL = "http://1.15.173.30:8997"
     }
 
