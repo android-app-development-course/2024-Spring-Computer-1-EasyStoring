@@ -86,7 +86,6 @@ class HomeFragment : Fragment() {
         val db = dbHelper.writableDatabase
 
         val cursor = db.rawQuery("SELECT * FROM Item WHERE userId = ?", arrayOf(EasyStoringApplication.userID))
-
         var ItemNum = 0
         // 遍历查询结果
         if (cursor.moveToFirst()) {
