@@ -1,8 +1,10 @@
 # # 2024-Spring-Computer-1-EasyStoring
 
+# <img src="resources/ic_icon.png" title="" alt="" data-align="center">
+
 # 收纳易
 
-by 2024春季课程第一组
+by 2024 春季课程第一组
 
 # 系统开发说明文件
 
@@ -38,21 +40,21 @@ by 2024春季课程第一组
 
 #### **1.2** **行业市场及同类产品分析**
 
-目前应用商店上架的同类产品App有“收纳先生”“收纳狮”等，以下是分析：
+目前应用商店上架的同类产品 App 有“收纳先生”“收纳狮”等，以下是分析：
 
 #### **收纳狮**
 
-“收纳狮”App有记录物品、金额统计、条形码录入等功能。可以自定义物品的属性进行记录物品；还能按照物品的金额和数量统计以了解物品开销；还能通过扫描商品的条形码录入物品。此应用是深圳市励铭软件有限公司开发，在oppo应用市场有近50次下载，在vivo应用市场有约1000次下载。
+“收纳狮”App 有记录物品、金额统计、条形码录入等功能。可以自定义物品的属性进行记录物品；还能按照物品的金额和数量统计以了解物品开销；还能通过扫描商品的条形码录入物品。此应用是深圳市励铭软件有限公司开发，在 oppo 应用市场有近 50 次下载，在 vivo 应用市场有约 1000 次下载。
 
 缺点是缺少对物品的位置、类型等的归类功能，用户无法用它来管理各个收纳箱的各种物品；金额统计和条形码录入功能限制较多，必须填写金额才能纳入统计以及必须有条形码的商品才能够录入；还缺少二手交易辅助功能，这是我们的优势。
 
 #### **收纳先生**
 
-“收纳先生”App有物品识别、物品查找、物品统计、物品定位、物品提醒、物品搭配等功能，可以对物品进行按类型、按空间分类和查找，还能通过扫描商品条形码导入物品、以及按照需求将几个物品搭配成一个组合，此外还有提醒物品的保质期/有效期/保修期等的功能。此应用是广州市四象限软件科技有限公司开发，在oppo应用市场有约3.2万次下载，在vivo应用市场有约3.7万次下载。
+“收纳先生”App 有物品识别、物品查找、物品统计、物品定位、物品提醒、物品搭配等功能，可以对物品进行按类型、按空间分类和查找，还能通过扫描商品条形码导入物品、以及按照需求将几个物品搭配成一个组合，此外还有提醒物品的保质期/有效期/保修期等的功能。此应用是广州市四象限软件科技有限公司开发，在 oppo 应用市场有约 3.2 万次下载，在 vivo 应用市场有约 3.7 万次下载。
 
 缺点是用户逻辑不是很符合通常的使用习惯，各个功能放在一起，主界面较为复杂，操作较为不便；部分功能描述不清或者没有合适的教程引导用户使用，难以上手。
 
-但该软件功能已经较为完善，值得我们学习，并在此基础上新增一些我们独有的功能，例如利用ai智能识别物品和二手交易辅助等功能。
+但该软件功能已经较为完善，值得我们学习，并在此基础上新增一些我们独有的功能，例如利用 ai 智能识别物品和二手交易辅助等功能。
 
 #### 总结
 
@@ -78,35 +80,35 @@ by 2024春季课程第一组
 
 ### 产品内容总策划
 
-#### 第一阶段（4月1日，第六周）
+#### 第一阶段（4 月 1 日，第六周）
 
 完成产品方案设计。
 
-#### 第二阶段（4月29日，第十周）
+#### 第二阶段（4 月 29 日，第十周）
 
-完成UI部分的开发，制作文档和视频，重点展示UI和界面动效。
+完成 UI 部分的开发，制作文档和视频，重点展示 UI 和界面动效。
 
-#### 第三阶段（6月3日，第十五周）
+#### 第三阶段（6 月 3 日，第十五周）
 
-完成App主要功能并进行多种测试，准备汇报材料。
+完成 App 主要功能并进行多种测试，准备汇报材料。
 
-#### 结题（6月11日前）
+#### 结题（6 月 11 日前）
 
 以项目组为单位提交项目文档，完成个人课程设计报告上传。
 
 ### 技术解决方案
 
-1. 物品记录与位置追踪以及收纳柜管理等功能：实现较为简单，可以使用Kotlin语言，使用Android Studio直接开发。
+1. 物品记录与位置追踪以及收纳柜管理等功能：实现较为简单，可以使用 Kotlin 语言，使用 Android Studio 直接开发。
 
 2. 用户指导：使用动图或视频等方式引导用户学习使用软件。
 
-3. 二手交易辅助功能：根据物品生成对应的描述，可以使用内容生成式人工智能，例如ChatGPT、文心一言等接口。
+3. 二手交易辅助功能：根据物品生成对应的描述，可以使用内容生成式人工智能，例如 ChatGPT、文心一言等接口。
 
 4. 云端同步功能：使用云服务器功能，已有搭建好的腾讯云服务器。
 
-5. 初步UI逻辑设计
-   
-   ![](resources/UI%20Design.jpg)
+5. 初步 UI 逻辑设计
+
+   ![](/resources/UI%20Design.jpg)
 
 ### 推广方案
 
@@ -114,7 +116,7 @@ by 2024春季课程第一组
 
 1. 社交媒体：在微博、抖音、微信公众号等平台发布产品介绍、使用教程、收纳技巧等内容，增加产品曝光度；
 2. 论坛、社区：在豆瓣、知乎等论坛、社区发布产品广告，吸引用户关注；
-3. 合作推广：与家居、生活类APP或平台合作，进行互推。
+3. 合作推广：与家居、生活类 APP 或平台合作，进行互推。
 
 #### 推广内容
 
@@ -138,11 +140,11 @@ by 2024春季课程第一组
 
 2. 定期更新收纳技巧、资讯等内容，满足用户需求；
 
-3. 加强与其他家居、生活类APP或平台的合作，更新更多实用功能。
+3. 加强与其他家居、生活类 APP 或平台的合作，更新更多实用功能。
 
 #### 用户运营
 
-1. 建立用户社群，如微信群、QQ群等，方便用户交流收纳心得，增强产品粘性；
+1. 建立用户社群，如微信群、QQ 群等，方便用户交流收纳心得，增强产品粘性；
 
 2. 举办线上活动，如收纳大赛、晒家活动等，激发用户参与度；
 
@@ -166,7 +168,7 @@ by 2024春季课程第一组
 
 #### 用户注册和登录
 
-后端建有用户信息数据库存储用户用户名、ID和密码等信息，进入应用时通过用户名和密码核实用户信息登录或注册，并使用应用类中的静态变量记录当前登录用户信息。
+后端建有用户信息数据库存储用户用户名、ID 和密码等信息，进入应用时通过用户名和密码核实用户信息登录或注册，并使用应用类中的静态变量记录当前登录用户信息。
 
 ```kotlin
 class EasyStoringApplication : Application() {
@@ -187,45 +189,47 @@ class EasyStoringApplication : Application() {
 
 #### 云同步用户数据
 
-为了实现用户数据换多设备同步而实现的功能，分为前端实现和后端实现两部分，使用OkHTTP3网络功能和网络数据库交互，并写有完善的异常处理机制和大量调试输出，最终实现的效果很完美，可以很好实现跨设备同步用户数据。前端数据库共有两张表存储当前登录用户的物品和收纳柜信息，后端数据库共有两个集合存储所有用户的物品和收纳柜信息。
+为了实现用户数据换多设备同步而实现的功能，分为前端实现和后端实现两部分，使用 OkHTTP3 网络功能和网络数据库交互，并写有完善的异常处理机制和大量调试输出，最终实现的效果很完美，可以很好实现跨设备同步用户数据。前端数据库共有两张表存储当前登录用户的物品和收纳柜信息，后端数据库共有两个集合存储所有用户的物品和收纳柜信息。
 
-![](resources/2024-06-16-22-42-09-image.png)
+![](/resources/2024-06-16-22-42-09-image.png)
 
-![](resources/2024-06-16-22-42-23-image.png)
+![](/resources/2024-06-16-22-42-23-image.png)
 
-#### AI二手交易辅助
+#### AI 二手交易辅助
 
-调用后端服务器的API实现，服务器调用文心一言API来获得二手物品描述。
+调用后端服务器的 API 实现，服务器调用文心一言 API 来获得二手物品描述，并可以一键复制描述到剪贴板，方便去其它二手交易平台进行交易。
 
-### 2.UI界面设计
+<img src="resources/Screenshot_20240617_121306.png" title="" alt="" width="307"><img title="" src="resources/Screenshot_20240617_121241.png" alt="" width="307">
+
+### 2.UI 界面设计
 
 #### 主要界面设计
 
-                            登录界面                                                             交易助手界面
+登录界面                                                           AI 交易助手界面
 
 <img title="" src="resources/2024-06-16-19-00-19-image.png" alt="" width="319"><img title="" src="resources/2024-06-16-19-01-40-image.png" alt="" width="320">
 
-                        物品记录界面                                                            物品记录详情
+物品记录界面                                                              物品记录详情
 
-                        收纳柜管理界面                                                        收纳柜详情
+收纳柜管理界面                                                          收纳柜详情
 
 #### 顶栏设计
 
 ![](resources/2024-06-16-19-03-58-image.png)
 
-使用Toolbar实现，设置图标标识出侧拉菜单功能和添加功能
+使用 Toolbar 实现，设置图标标识出侧拉菜单功能和添加功能
 
 #### 侧拉菜单设计
 
-<img title="" src="resources/2024-06-16-19-05-23-image.png" alt="" width="313">
+<img title="" src="./resources/2024-06-16-19-05-23-image.png" alt="" width="313">
 
-使用DrawerLayout实现，包含和账户相关的一些操作和用户名、用户头像和邮箱的显示
+使用 DrawerLayout 实现，包含和账户相关的一些操作和用户名、用户头像和邮箱的显示
 
 #### 底部导航栏设计
 
 ![](resources/2024-06-16-19-07-28-image.png)
 
-使用BottomNavigationView+ViewPager2实现，可以切换嵌套在MainActivity中的三个Fragment，并自定义了图标和文字选中时的效果。
+使用 BottomNavigationView+ViewPager2 实现，可以切换嵌套在 MainActivity 中的三个 Fragment，并自定义了图标和文字选中时的效果。
 
 #### 应用图标设计
 
@@ -239,7 +243,7 @@ class EasyStoringApplication : Application() {
 
 认真学了学配色，感觉故宫的配色比较顶级，所以借了故宫配色的书籍，直接选了四组有浅有深的蓝绿配色，可以在按钮或其它很多地方成套使用，非常方便。
 
-colors.xml文件中定义的颜色：
+colors.xml 文件中定义的颜色：
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -261,13 +265,19 @@ colors.xml文件中定义的颜色：
 
 ![](resources/2024-06-16-19-23-29-ebe0c21655f5b14338de9b45c6b459f.jpg)
 
+#### 应用图标设计
+
+![](resources/ic_icon.png)
+
+选用现有插画，能用明亮的配色表现出我们 App 的主要功能和使用范围。
+
 ### 3.关键技术和技术难点
 
 #### 数据库功能实现
 
-##### 前端数据库SQLite
+##### 前端数据库 SQLite
 
-##### 后端数据库MongoDB
+##### 后端数据库 MongoDB
 
 数据库类实现：
 
@@ -314,7 +324,7 @@ class DBManager:
 
 **底部导航栏：**
 
-使用BottomNavigationView+ViewPager2方案实现Fragment切换进而达到切换页面的效果。
+使用 BottomNavigationView+ViewPager2 方案实现 Fragment 切换进而达到切换页面的效果。
 
 实现代码
 
@@ -371,36 +381,37 @@ val binding = ActivityMainBinding.inflate(layoutInflater)
 ```
 
 ```html
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar"
-            tools:context=".MainActivity">
+<androidx.constraintlayout.widget.ConstraintLayout
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_below="@id/toolbar"
+  tools:context=".MainActivity"
+>
+  <com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/nav_view"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="0dp"
+    android:background="#ffffff"
+    app:itemTextColor="@color/nav_bottom_txt_select"
+    app:labelVisibilityMode="labeled"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:menu="@menu/bottom_nav_menu"
+  />
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/nav_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-                android:background="#ffffff"
-                app:itemTextColor="@color/nav_bottom_txt_select"
-                app:labelVisibilityMode="labeled"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:menu="@menu/bottom_nav_menu" />
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/nav_viewpage2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toTopOf="@id/nav_view"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+  <androidx.viewpager2.widget.ViewPager2
+    android:id="@+id/nav_viewpage2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintBottom_toTopOf="@id/nav_view"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+  />
+</androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
 ```xml
@@ -422,7 +433,7 @@ val binding = ActivityMainBinding.inflate(layoutInflater)
         android:icon="@drawable/ic_assistant"
         android:title="交易助手" />
 
-</menu> 
+</menu>
 ```
 
 ```xml
@@ -435,7 +446,7 @@ val binding = ActivityMainBinding.inflate(layoutInflater)
 
 **侧滑菜单：**
 
-使用DrawerLayout实现侧栏，并自定义NavigationView实现用户操作菜单，自定义nav_header实现用户信息展示布局。
+使用 DrawerLayout 实现侧栏，并自定义 NavigationView 实现用户操作菜单，自定义 nav_header 实现用户信息展示布局。
 
 ```xml
     <com.google.android.material.navigation.NavigationView
@@ -511,9 +522,103 @@ val binding = ActivityMainBinding.inflate(layoutInflater)
 </menu>
 ```
 
-#### AI二手交易辅助实现
+#### AI 二手交易辅助实现
 
 **前端实现**
+
+根据商品名称生成一段提示词并提供给 GPT 的 API 接口，由 GPT（此处选用讯飞星火 V3.5 大模型）生成描述（暂未实现选择商品）
+
+```kotlin
+        binding.generateButton.setOnClickListener {
+            try {
+                runBlocking {
+                    var answer: Map<String, Any>? = null
+                    var statusCode: String? = null
+                    var response = async {
+                        var temp: Response? = null
+                        runBlocking {
+                            // 需要EncodeURI为UTF-8格式
+                            // 现在我想卖出一个二手${binding.textView10.text}，请写一个二手商品描述，要能吸引人购买
+                            // 现在我想卖出一个二手${binding.textView10.text}，请写一个二手商品描述，要能吸引人购买，100字以内即可
+                            val URLString = URLEncoder.encode(
+                                "现在我想卖出一个二手${binding.textView10.text}，请写一个二手商品描述，要能吸引人购买，100字以内即可",
+                                "utf-8"
+                            )
+                            Log.d("2333", "$URLString, ${URLDecoder.decode(URLString, "utf-8")}")
+                            val getRequest =
+                                Request.Builder().url("${NetworkService.baseURL}/askGPT")
+                                    .header("content", URLString).header("GPTType", "SparkV3")
+                                    .header("time", "2333").get()
+                                    .build()
+                            val call = NetworkService.httpClient.newCall(getRequest)
+                            temp = withContext(Dispatchers.IO) {
+                                call.execute()
+                            }
+                            Log.d("2333", temp.toString())
+                        }
+                        temp
+                    }.await()
+                    response?.body?.string()?.let {
+                        Log.d("2333", it)
+                        answer = Gson().fromJson(
+                            it,
+                            Map::class.java
+                        ) as Map<String, Any>?
+                        Log.d("2333", "AI generating answer: $answer")
+                        binding.editTextTextMultiLine.setText(answer?.get("answer").toString())
+                        statusCode = answer?.get("StatusCode").toString()
+                    }
+                    Log.d("2333", "status code $statusCode")
+                    when (statusCode) {
+                        "0" -> {
+                            Toast.makeText(
+                                EasyStoringApplication.context,
+                                "生成失败",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+
+                        "1" -> {
+                            Toast.makeText(
+                                EasyStoringApplication.context,
+                                "生成成功",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+
+                        else -> {
+                            Toast.makeText(
+                                EasyStoringApplication.context,
+                                "服务器错误",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "生成失败 请重试", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
+                Log.d("2333", "AI generating ${e.stackTrace}")
+            }
+        }
+```
+
+复制到剪贴板
+
+```kotlin
+binding.copyButton.setOnClickListener {
+            val clipboard =
+                requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip: ClipData =
+                ClipData.newPlainText("Description", binding.editTextTextMultiLine.text)
+            Log.d("2333", "copy content: ${binding.editTextTextMultiLine.text}")
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(requireContext(), "已复制到剪贴板", Toast.LENGTH_SHORT).show()
+        }
+```
 
 **后端实现**
 
@@ -549,23 +654,15 @@ def askGPT(request):
     if request.method == 'GET':
         return HttpResponse(json.dumps(result), content_type='application/json')
 
-def getWenxinV4Answer(question):
-    url = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions_pro?access_token=" + get_access_token()
-
-    payload = json.dumps({
-        "messages": [
-            {
-                "role": "user",
-                "content": question
-            },
-        ]
-    })
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    response = requests.request("POST", url, headers=headers, data=payload)
-
-    return json.loads(response.text)['result']
+def getSparkV3Answer(question):
+    wsParam = Ws_Param(appid, api_key, api_secret, Spark_urlV3)
+    websocket.enableTrace(False)
+    wsUrl = wsParam.create_url()
+    ws = websocket.WebSocketApp(wsUrl, on_message=on_message, on_error=on_error, on_close=on_close, on_open=on_open)
+    ws.appid = appid
+    ws.question = question
+    ws.domain = domainV3
+    ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
 ```
 
 #### 云同步功能实现
@@ -898,7 +995,7 @@ def getWenxinV4Answer(question):
 
 **后端实现**
 
-后端服务器主要是用Python的网络项目Django做的，数据库选用的是MongoDB，简洁好用，可以自动生成主键。
+后端服务器主要是用 Python 的网络项目 Django 做的，数据库选用的是 MongoDB，简洁好用，可以自动生成主键。
 
 接收从设备同步来的数据：
 
