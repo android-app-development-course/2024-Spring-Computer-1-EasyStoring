@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
@@ -19,10 +20,11 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.easystoring.logic.model.AppDBHelper
 import com.example.easystoring.ui.ItemActivity
 import java.lang.Exception
 
-class ItemAdapter(val itemList:List<Item>) :
+class ItemAdapter(private val context: Context, val itemList:MutableList<Item>) :
     // 这个函数修改显示的内容
     RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
@@ -31,11 +33,10 @@ class ItemAdapter(val itemList:List<Item>) :
         val belongTo: TextView = view.findViewById(R.id.item_belongTo)
         val productionDate: TextView = view.findViewById(R.id.item_productionDate)
         val ItemNum: TextView = view.findViewById(R.id.item_num)
+        val del:Button = view.findViewById(R.id.button7)
 
 //        var ItemBelongTo:
     }
-    // 用户字典
-    var userMap  = mutableMapOf<Int, User>()
     // 收纳柜字典
     var cupboardMap  = mutableMapOf<Int, Cupboard>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -63,6 +64,14 @@ class ItemAdapter(val itemList:List<Item>) :
         viewHolder.ItemImage.setOnClickListener {
 
         }
+
+        viewHolder.del.setOnClickListener {
+            val position = viewHolder.bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                // 通知Adapter删除该项
+                this.removeItem(position)
+            }
+        }
         return viewHolder
     }
 
@@ -85,4 +94,23 @@ class ItemAdapter(val itemList:List<Item>) :
     }
 
     override fun getItemCount()=itemList.size
+    fun removeItem(position: Int) {
+        // 检查位置是否有效
+        if (position in 0 until itemCount) {
+            // 从列表中移除项并从数据库中删除
+            val delItem = itemList.removeAt(position)
+            val ItemId = delItem.id
+            val dbHelper = AppDBHelper(context, "EasyStoring.db", 1)
+            val db = dbHelper.writableDatabase
+            dbHelper.delItemById(db, ItemId)
+            dbHelper.DeviceToSever(db)
+            // 通知RecyclerView项已被移除
+            notifyItemRemoved(position)
+
+            // 如果列表为空，可能还需要通知数据集变化
+            if (itemList.isEmpty()) {
+                notifyDataSetChanged()
+            }
+        }
+    }
 }

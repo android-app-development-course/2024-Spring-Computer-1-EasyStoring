@@ -26,12 +26,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentContainer
+import com.example.easystoring.EasyStoringApplication
 import com.example.easystoring.Item
 import com.example.easystoring.R
 import com.example.easystoring.logic.model.AppDBHelper
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
+import kotlin.Exception
 
 class AddActivity : AppCompatActivity() {
 
@@ -88,25 +89,30 @@ class AddActivity : AppCompatActivity() {
         // 这可以通过设置Fragment的setCancelable(true)和FragmentTransaction的addToBackStack(null)来实现
         // 或者在Activity中覆盖onTouchEvent方法来检测点击事件
 
-        var use_item :Item = Item(1)
+        var use_item :Item = Item(EasyStoringApplication.userID.toInt())
         // 确定按钮，将输入的值放到item中并存入数据库
         button1.setOnClickListener {
-            val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
-            val db = dbHelper.writableDatabase
-            use_item.id  = dbHelper.getRowCount("Item")+1
-            use_item.name = edit_1.getText().toString()
-            use_item.number = Integer.parseInt(edit_2.getText().toString())
-            use_item.description = edit_7.getText().toString()
-            use_item.cupboardId = Integer.parseInt(edit_8.getText().toString())
-            use_item.productionDate = edit_4.getText().toString()
-            use_item.overdueDate = edit_5.getText().toString()
-            use_item.imageId = getImageUri()
+            try {
+                val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
+                val db = dbHelper.writableDatabase
+                use_item.id = dbHelper.getRowCount(db,"Item") + 1
+                use_item.name = edit_1.getText().toString()
+                use_item.number = Integer.parseInt(edit_2.getText().toString())
+                use_item.description = edit_7.getText().toString()
+                use_item.cupboardId = Integer.parseInt(edit_8.getText().toString())
+                use_item.productionDate = edit_4.getText().toString()
+                use_item.overdueDate = edit_5.getText().toString()
+                use_item.imageId = getImageUri()
 
-            dbHelper.insertItem(db,use_item)
+                dbHelper.insertItem(db, use_item)
+                dbHelper.DeviceToSever(db)
 
-            val intent = Intent()
-            intent.putExtra("NewItemId", use_item.id)
-            setResult(RESULT_OK, intent)
+                val intent = Intent()
+                intent.putExtra("NewItemId", use_item.id.toString())
+                setResult(RESULT_OK, intent)
+            }catch (e:Exception){
+                Log.d("error",e.message!!)
+            }
             finish()
 
         }

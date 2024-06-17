@@ -26,13 +26,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class AppDBHelper (val context: Context, name: String, version: Int):
     SQLiteOpenHelper(context,name, null, version){
 
-    private val createUser = "create table User(" +
-            " id integer primary key autoincrement," +
-            " username text, " +
-            " password text, " +
-            " firstName text, "+
-            " lastName text," +
-            " age integer)"
     private val createCupboard = "create table Cupboard(" +
             " id integer primary key autoincrement," +
             " userId integer, " +
@@ -50,7 +43,6 @@ class AppDBHelper (val context: Context, name: String, version: Int):
             " cupboardId integer)"
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL(createUser)
         db.execSQL(createCupboard)
         db.execSQL(createItem)
         Toast.makeText(context, "Create Succeeded", Toast.LENGTH_SHORT).show()
@@ -79,10 +71,6 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
     fun rebuildTable( db: SQLiteDatabase,tableName:String){
         when(tableName){
-            "User"->{
-                db.execSQL("DROP TABLE IF EXISTS User")
-                db.execSQL(createUser)
-            }
             "Cupboard"->{
                 db.execSQL("DROP TABLE IF EXISTS Cupboard")
                 db.execSQL(createCupboard)
@@ -113,7 +101,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
         return list
     }
     // 获取指定表的行数
-    fun getRowCount(tableName: String): Int {
+    fun getRowCount(db: SQLiteDatabase,tableName: String): Int {
         val db = this.readableDatabase
         val cursor: Cursor
         try {
@@ -122,8 +110,8 @@ class AppDBHelper (val context: Context, name: String, version: Int):
                 return cursor.getInt(0)
             }
             cursor.close()
-        } finally {
-            db.close()
+        } catch (e:Exception) {
+            Log.d("error",e.message!!)
         }
         // 如果没有行，返回0
         return 0
@@ -153,6 +141,27 @@ class AppDBHelper (val context: Context, name: String, version: Int):
             put("description",cupboard.description)
         }
         db.insert("Cupboard", null, values)
+    }
+
+    fun delItemById(db: SQLiteDatabase,id: Int){
+        db.delete("Item", "id = ?", arrayOf(id.toString()))
+    }
+    fun updateItem(db: SQLiteDatabase, Item1: Item){
+        val values = ContentValues().apply {
+            // 组装数据
+            put("id",Item1.id)
+            put("userId", Item1.userId)
+            put("imageId",Item1.imageId)
+            put("name",Item1.name)
+            put("description",Item1.description)
+            put("number", Item1.number)
+            put("productionDate",Item1.productionDate)
+            put("overdueDate", Item1.overdueDate)
+            put("cupboardId", Item1.cupboardId)
+        }
+        // 执行更新操作
+        val updatedRows = db.update("Item", values, "id=?",
+            arrayOf(Item1.id.toString()))
     }
 
     fun DeviceToSever(db: SQLiteDatabase){

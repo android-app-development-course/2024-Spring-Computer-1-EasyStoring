@@ -64,11 +64,11 @@ class HomeFragment : Fragment() {
         val recyclerView: RecyclerView = binding.recyclerView
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        val adapter = ItemAdapter(ItemList)     // 在这里修改物品栏显示的内容
+        val adapter = ItemAdapter(requireContext(), ItemList)     // 在这里修改物品栏显示的内容
         recyclerView.adapter = adapter
 
         binding.addButton.setOnClickListener {
-            startActivity(Intent(EasyStoringApplication.context, AddActivity::class.java))
+            startActivityForResult(Intent(EasyStoringApplication.context, AddActivity::class.java),1)
         }
 
 
@@ -161,9 +161,18 @@ class HomeFragment : Fragment() {
                     val recyclerView: RecyclerView = binding.recyclerView
                     val layoutManager = LinearLayoutManager(requireContext())
                     recyclerView.layoutManager = layoutManager
-                    val adapter = ItemAdapter(ItemList)     // 在这里修改物品栏显示的内容
+                    val adapter = ItemAdapter(requireContext(), ItemList)     // 在这里修改物品栏显示的内容
                     recyclerView.adapter = adapter
                 }
+            }
+            else->{
+                // 刷新列表
+                initItem()
+                val recyclerView: RecyclerView = binding.recyclerView
+                val layoutManager = LinearLayoutManager(requireContext())
+                recyclerView.layoutManager = layoutManager
+                val adapter = ItemAdapter(requireContext(), ItemList)     // 在这里修改物品栏显示的内容
+                recyclerView.adapter = adapter
             }
         }
     }

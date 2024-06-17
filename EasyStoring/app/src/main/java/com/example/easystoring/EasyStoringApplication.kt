@@ -10,11 +10,11 @@ class EasyStoringApplication : Application() {
         lateinit var context: Context
         // 当前登录用户ID
         lateinit var userID: String
+        lateinit var username: String
+
         // 所有Items和Cupboards,全局变量
         var items: List<Map<String, Any>>? = null
         var cupboards: List<Map<String, Any>>? = null
-        lateinit var username: String
-
     }
 
     override fun onCreate() {
