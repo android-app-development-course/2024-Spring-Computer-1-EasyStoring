@@ -270,7 +270,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
 在收纳柜列表界面点击“+”按钮，跳转到添加空间界面，输入名称和描述后点击确定可以新增收纳柜。    
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718641713453.jpg" title="" alt="" width="194">        <img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/cc4fe2b7e857018437b9cfc415b06f4.jpg" title="" alt="" width="186">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/9e4e90127053cd2dbbce7d91d5061dd.jpg" alt="" width="185">
+<img src="resources/1718641713453.jpg" title="" alt="" width="194">        <img src="resources/cc4fe2b7e857018437b9cfc415b06f4.jpg" title="" alt="" width="186">        <img title="" src="resources/9e4e90127053cd2dbbce7d91d5061dd.jpg" alt="" width="185">
 
 同样点击“删除”按钮可以删除收纳柜
 
