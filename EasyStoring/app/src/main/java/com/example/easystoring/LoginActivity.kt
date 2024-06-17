@@ -209,7 +209,7 @@ class LoginActivity : AppCompatActivity() {
                                                 ).show()
                                         }
                                     } catch (e: Exception) {
-                                        Log.d("2333", e.message!!)
+                                        Log.d("error 2333", e.message!!)
                                     }
                                 }
 
@@ -237,7 +237,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     } catch (e: Exception) {
                         for(i in e.stackTrace)
-                        Log.d("2333", "$i")
+                        Log.d("error1 2333", "$i")
                     }
                 }
 //        runBlocking {
@@ -297,7 +297,7 @@ class LoginActivity : AppCompatActivity() {
                 else Toast.makeText(this, "用户名和密码不可为空", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Toast.makeText(this, "注册失败 请重试", Toast.LENGTH_SHORT).show()
-                Log.d("2333", "Register error ${e.message}")
+                Log.d("error2 2333", "Register error ${e.message}")
             }
         }
     }

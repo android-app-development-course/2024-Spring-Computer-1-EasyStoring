@@ -3,27 +3,15 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.easystoring.Cupboard
 import com.example.easystoring.EasyStoringApplication
 import com.example.easystoring.Item
 import com.example.easystoring.ItemAdapter
 import com.example.easystoring.R
-import com.example.easystoring.databinding.FragmentHomeBinding
 import com.example.easystoring.logic.model.AppDBHelper
-import kotlin.random.Random
 
 class CupboardActivity : AppCompatActivity() {
     private val ItemList = ArrayList<Item>()
