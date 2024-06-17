@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EasyStoring</string>
+    <string name="app_name">收纳易</string>
     <string name="title_activity_navi_bar">NaviBar</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
