@@ -1,4 +1,5 @@
 package com.example.easystoring.logic.network
+
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
@@ -117,68 +118,71 @@ class NetworkService {
                     statusCode = response.get("StatusCode").toString()
                     Log.d("2333", statusCode)
                 }
+
+                Looper.prepare()
+                when (statusCode) {
+                    "0" -> {
+                        delay(100)
+                        val jsonString = Gson().toJson(userInformation)
+                        val jsonBody =
+                            jsonString.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                        val jsonRequest =
+                            Request.Builder().url("$baseURL/registerUser").post(jsonBody).build()
+                        val call = httpClient.newCall(jsonRequest)
+                        var registerResponse: Response? = null
+                        try {
+                            registerResponse = withContext(Dispatchers.IO) {
+                                call.execute()
+                            }
+                            registerResponse.body?.string()?.let {
+                                Log.d("2333", it)
+                                val response: MutableMap<*, *> = Gson().fromJson(
+                                    it,
+                                    MutableMap::class.java
+                                )
+                                statusCode = response.get("StatusCode").toString()
+                                Log.d("2333", statusCode)
+                                if (statusCode == "1")
+                                    Toast.makeText(
+                                        EasyStoringApplication.context,
+                                        "注册成功",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                else
+                                    Toast.makeText(
+                                        EasyStoringApplication.context,
+                                        "注册失败",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                            }
+                        } catch (e: Exception) {
+                            Log.d("2333", e.message!!)
+                        }
+                    }
+
+                    "1" -> {
+                        userInformation?.let {
+                            Toast.makeText(
+                                EasyStoringApplication.context,
+                                "该用户已存在，请直接登录",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    else -> {
+                        Toast.makeText(
+                            EasyStoringApplication.context,
+                            "数据库错误",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+                Looper.loop()
             } catch (e: Exception) {
                 Log.d("2333", e.message!!)
             }
-
-            Looper.prepare()
-            when (statusCode) {
-                "0" -> {
-                    delay(100)
-                    val jsonString = Gson().toJson(userInformation)
-                    val jsonBody =
-                        jsonString.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-                    val jsonRequest =
-                        Request.Builder().url("$baseURL/registerUser").post(jsonBody).build()
-                    val call = httpClient.newCall(jsonRequest)
-                    var registerResponse: Response? = null
-                    try {
-                        registerResponse = withContext(Dispatchers.IO) {
-                            call.execute()
-                        }
-                        registerResponse.body?.string()?.let {
-                            Log.d("2333", it)
-                            val response: MutableMap<*, *> = Gson().fromJson(
-                                it,
-                                MutableMap::class.java
-                            )
-                            statusCode = response.get("StatusCode").toString()
-                            Log.d("2333", statusCode)
-                            if (statusCode == "1")
-                                Toast.makeText(
-                                    EasyStoringApplication.context,
-                                    "注册成功",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            else
-                                Toast.makeText(
-                                    EasyStoringApplication.context,
-                                    "注册失败",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                        }
-                    } catch (e: Exception) {
-                        Log.d("2333", e.message!!)
-                    }
-                }
-
-                "1" -> {
-                    userInformation?.let {
-                        Toast.makeText(
-                            EasyStoringApplication.context,
-                            "该用户已存在，请直接登录",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                else -> {
-                    Toast.makeText(EasyStoringApplication.context, "数据库错误", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-            Looper.loop()
-
         }
 //        runBlocking {
 //            val getRequest =
