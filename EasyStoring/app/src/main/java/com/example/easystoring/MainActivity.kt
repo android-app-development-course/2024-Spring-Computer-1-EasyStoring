@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         init()
         // 导入测试数据（本地测试数据）
 //        testInit()
+
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -160,6 +161,15 @@ class MainActivity : AppCompatActivity() {
                         "Settings",
                         Toast.LENGTH_SHORT
                     ).show()
+                }
+
+                R.id.logout -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "账号已退出",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
                 }
 
             }
