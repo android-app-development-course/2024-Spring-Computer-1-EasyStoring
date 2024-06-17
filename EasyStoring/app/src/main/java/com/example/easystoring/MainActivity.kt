@@ -25,7 +25,7 @@ import com.example.easystoring.databinding.ActivityMainBinding
 import com.example.easystoring.logic.model.AppDBHelper
 import com.example.easystoring.ui.AdditemActivity.AddActivity
 import com.example.easystoring.ui.AdditemActivity.AddCupboardActivity
-import com.example.easystoring.ui.UserInformation.UserInformation
+import com.example.easystoring.ui.CupboardFragment.CupboardFragment
 import com.example.easystoring.ui.assistant.AssistantFragment
 import com.example.easystoring.ui.home.HomeFragment
 import com.squareup.picasso.Picasso
@@ -38,86 +38,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 创建SQLite数据库
-        val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
-        val db = dbHelper.writableDatabase
-
-        dbHelper.rebuildTable(db, "Cupboard")
-        dbHelper.rebuildTable(db, "Item")
-        //同步到本地
-        dbHelper.SeverToDevice(db)
-
-        var CupboardNum = 0
-        var ItemNum = 0
-        var cursor: Cursor?
-
-        try {
-            cursor = db.rawQuery("SELECT COUNT(*) FROM CupBoard", null)
-            cursor.moveToFirst()
-            CupboardNum = cursor.getInt(0)
-            cursor = db.rawQuery("SELECT COUNT(*) FROM Item", null)
-            cursor.moveToFirst()
-            ItemNum = cursor.getInt(0)
-            cursor.close()
-        } catch (e: Exception) {
-            Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
-        }
-//
-//        // 测试添加柜子
-//        val values2 = ContentValues().apply {
-//            // 组装数据
-//            CupboardNum++
-//            put("id", CupboardNum)
-//            put("userId", 1)
-//            put("name", "书架")
-//            put("description", "1234567")
-//        }
-//        db.insert("Cupboard", null, values2)
-//
-////         测试添加物品
-//        val ItemColumns = arrayOf(
-//            "id", "userId", "imageId", "name", "description",
-//            "number", "productionDate", "overdueDate", "cupboardId"
-//        )
-//        val values3 = ContentValues().apply {
-//            // 组装数据
-//            ItemNum++
-//            put("id", ItemNum)
-//            put("userId", 1)
-//            put("imageId", "")
-//            put("name", "book1")
-//            put("description", "第一行代码")
-//            put("number", 1)
-//            put("productionDate", "2023-3-29")
-//            put("cupboardId", 1)
-//        }
-//        db.insert("Item", null, values3)
-//        val values4 = ContentValues().apply {
-//            // 组装数据
-//            ItemNum++
-//            put("id", ItemNum)
-//            put("userId", 1)
-//            put("imageId", "")
-//            put("name", "book3")
-//            put("description", "第二行代码")
-//            put("number", 2)
-//            put("productionDate", "2023-3-29")
-//            put("cupboardId", 1)
-//        }
-//        db.insert("Item", null, values4)
-//        val values5 = ContentValues().apply {
-//            // 组装数据
-//            ItemNum++
-//            put("id", ItemNum)
-//            put("userId", 2)
-//            put("imageId", "")
-//            put("name", "book1")
-//            put("description", "第三行代码")
-//            put("number", 3)
-//            put("productionDate", "2023-3-29")
-//            put("cupboardId", 1)
-//        }
-//        db.insert("Item", null, values5)
+        // 初始化本地数据库（云端同步到本地）
+        init()
+        // 导入测试数据（本地测试数据）
+//        testInit()
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -128,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentList: MutableList<Fragment> = ArrayList()
 //        fragmentList.add(TestFragment())
         fragmentList.add(HomeFragment())
-        fragmentList.add(UserInformation())
+        fragmentList.add(CupboardFragment())
         fragmentList.add(AssistantFragment())
 //        fragmentList.add(AssistantFragment())
         binding.navViewpage2.adapter = ViewPager2Adapter(this, fragmentList)
@@ -281,6 +205,128 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun init(){
+        // 创建SQLite数据库
+        val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+
+        dbHelper.rebuildTable(db, "Cupboard")
+        dbHelper.rebuildTable(db, "Item")
+        //同步到本地
+        dbHelper.SeverToDevice(db)
+
+        var CupboardNum = 0
+        var ItemNum = 0
+        var cursor: Cursor?
+
+        try {
+            cursor = db.rawQuery("SELECT COUNT(*) FROM CupBoard", null)
+            cursor.moveToFirst()
+            CupboardNum = cursor.getInt(0)
+            cursor = db.rawQuery("SELECT COUNT(*) FROM Item", null)
+            cursor.moveToFirst()
+            ItemNum = cursor.getInt(0)
+            cursor.close()
+        } catch (e: Exception) {
+            Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
+        }
+        // 添加默认收纳柜
+        val values = ContentValues().apply {
+            put("id", -1)
+            put("userId",EasyStoringApplication.userID.toInt())
+            put("name","默认收纳柜")
+            put("description","默认未绑定收纳柜")
+        }
+        db.insert("Cupboard", null, values)
+    }
+
+    fun testInit(){
+// 创建SQLite数据库
+        val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+
+        dbHelper.rebuildTable(db, "Cupboard")
+        dbHelper.rebuildTable(db, "Item")
+        //同步到本地
+        //dbHelper.SeverToDevice(db)
+
+        var CupboardNum = 0
+        var ItemNum = 0
+        var cursor: Cursor?
+
+        try {
+            cursor = db.rawQuery("SELECT COUNT(*) FROM CupBoard", null)
+            cursor.moveToFirst()
+            CupboardNum = cursor.getInt(0)
+            cursor = db.rawQuery("SELECT COUNT(*) FROM Item", null)
+            cursor.moveToFirst()
+            ItemNum = cursor.getInt(0)
+            cursor.close()
+        } catch (e: Exception) {
+            Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
+        }
+        // 添加默认收纳柜
+        val values = ContentValues().apply {
+            put("id", -1)
+            put("userId",EasyStoringApplication.userID.toInt())
+            put("name","默认收纳柜")
+            put("description","默认未绑定收纳柜")
+        }
+        db.insert("Cupboard", null, values)
+        // 测试用数据
+        val values2 = ContentValues().apply {
+            // 组装数据
+            CupboardNum++
+            put("id", CupboardNum)
+            put("userId", 1)
+            put("name", "书架")
+            put("description", "1234567")
+        }
+        val values3 = ContentValues().apply {
+            // 组装数据
+            ItemNum++
+            put("id", ItemNum)
+            put("userId", 1)
+            put("imageId", "")
+            put("name", "book1")
+            put("description", "第一行代码")
+            put("number", 1)
+            put("productionDate", "2023-3-29")
+            put("cupboardId", 1)
+        }
+        val values4 = ContentValues().apply {
+            // 组装数据
+            ItemNum++
+            put("id", ItemNum)
+            put("userId", 1)
+            put("imageId", "")
+            put("name", "book3")
+            put("description", "第二行代码")
+            put("number", 2)
+            put("productionDate", "2023-3-29")
+            put("cupboardId", 1)
+        }
+        val values5 = ContentValues().apply {
+            // 组装数据
+            ItemNum++
+            put("id", ItemNum)
+            put("userId", 2)
+            put("imageId", "")
+            put("name", "book1")
+            put("description", "第三行代码")
+            put("number", 3)
+            put("productionDate", "2023-3-29")
+            put("cupboardId", 1)
+        }
+
+        // 测试添加柜子
+        db.insert("Cupboard", null, values2)
+
+        // 测试添加物品
+        db.insert("Item", null, values3)
+        db.insert("Item", null, values4)
+        db.insert("Item", null, values5)
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar, menu)
         return true
@@ -317,7 +363,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         "暂不授权" -> {
-                            Toast.makeText(this, "无访问通讯录权限", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "无权限", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

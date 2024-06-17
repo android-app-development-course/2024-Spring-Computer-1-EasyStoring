@@ -36,13 +36,11 @@ import okhttp3.RequestBody.Companion.toRequestBody
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-
     private val ItemList = ArrayList<Item>()
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ItemAdapter
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,10 +59,10 @@ class HomeFragment : Fragment() {
 //            Toast.makeText(requireContext(),"1111",Toast.LENGTH_SHORT).show()
         }
         initItem()
-        val recyclerView: RecyclerView = binding.recyclerView
+        recyclerView = binding.recyclerView
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        val adapter = ItemAdapter(requireContext(), ItemList)     // 在这里修改物品栏显示的内容
+        adapter = ItemAdapter(requireContext(), ItemList)     // 在这里修改物品栏显示的内容
         recyclerView.adapter = adapter
 
         binding.addButton.setOnClickListener {
@@ -76,19 +74,19 @@ class HomeFragment : Fragment() {
 
         }
 
-        binding.button4.setOnClickListener {
-            val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
-            val db = dbHelper.writableDatabase
-            dbHelper.DeviceToSever(db)
-        }
-
-        binding.button5.setOnClickListener {
-            val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
-            val db = dbHelper.writableDatabase
-            dbHelper.SeverToDevice(db)
-            initItem()
-            adapter.notifyDataSetChanged() // 刷新RecyclerView的UI
-        }
+//        binding.button4.setOnClickListener {
+//            val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
+//            val db = dbHelper.writableDatabase
+//            dbHelper.DeviceToSever(db)
+//        }
+//
+//        binding.button5.setOnClickListener {
+//            val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
+//            val db = dbHelper.writableDatabase
+//            dbHelper.SeverToDevice(db)
+//            initItem()
+//            adapter.notifyDataSetChanged() // 刷新RecyclerView的UI
+//        }
 
         return root
     }
@@ -107,7 +105,7 @@ class HomeFragment : Fragment() {
         if (cursor.moveToFirst()) {
             do {
                 ItemNum++
-                val item1: Item = Item(1)
+                val item1: Item = Item(EasyStoringApplication.userID.toInt())
                 try {
                     item1.id = cursor.getInt(cursor.getColumnIndex("id"))
                     item1.userId = cursor.getInt(cursor.getColumnIndex("userId"))
@@ -115,10 +113,12 @@ class HomeFragment : Fragment() {
                     item1.imageId = cursor.getString(cursor.getColumnIndex("imageId"))
                     item1.cupboardId = cursor.getString(cursor.getColumnIndex("cupboardId")).toInt()
                     item1.productionDate = cursor.getString(cursor.getColumnIndex("productionDate"))
+                    item1.overdueDate = cursor.getString(cursor.getColumnIndex("overdueDate"))
+                    item1.description = cursor.getString(cursor.getColumnIndex("description"))
                     item1.number = cursor.getString(cursor.getColumnIndex("number")).toInt()
                     ItemList.add(item1)
                 } catch (e: Exception) {
-                    Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
+                    Log.d("error1", "An error occurred: " + e.message) // 最好包括异常的消息
                 }
             } while (cursor.moveToNext())
         }
@@ -133,14 +133,22 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    // 从AddActivity中获取新增的Title
-    @SuppressLint("Range", "Recycle")
+//     当 Fragment 变得可见时调用
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onResume() {
+        super.onResume()
+        initItem()
+        adapter.notifyDataSetChanged()
+    }
+
+    // 从AddActivity中获取新增的Item的id
+    @SuppressLint("Range", "Recycle", "NotifyDataSetChanged")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             1 -> if (resultCode == AppCompatActivity.RESULT_OK) {
                 val NewItemId = data?.getStringExtra("NewItemId")
-                val NewItem = Item(1)
+                val NewItem = Item(EasyStoringApplication.userID.toInt())
                 val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
                 val db = dbHelper.writableDatabase
                 if (NewItemId != null) {
@@ -158,21 +166,8 @@ class HomeFragment : Fragment() {
                         cursor.getString(cursor.getColumnIndex("cupboardId")).toInt()
                     ItemList.add(NewItem)
                     // 刷新列表
-                    val recyclerView: RecyclerView = binding.recyclerView
-                    val layoutManager = LinearLayoutManager(requireContext())
-                    recyclerView.layoutManager = layoutManager
-                    val adapter = ItemAdapter(requireContext(), ItemList)     // 在这里修改物品栏显示的内容
-                    recyclerView.adapter = adapter
+                    adapter.notifyDataSetChanged()
                 }
-            }
-            else->{
-                // 刷新列表
-                initItem()
-                val recyclerView: RecyclerView = binding.recyclerView
-                val layoutManager = LinearLayoutManager(requireContext())
-                recyclerView.layoutManager = layoutManager
-                val adapter = ItemAdapter(requireContext(), ItemList)     // 在这里修改物品栏显示的内容
-                recyclerView.adapter = adapter
             }
         }
     }
