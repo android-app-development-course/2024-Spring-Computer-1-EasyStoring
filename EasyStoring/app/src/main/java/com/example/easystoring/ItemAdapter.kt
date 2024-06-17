@@ -91,12 +91,6 @@ class ItemAdapter(private val context: Context, val itemList:MutableList<Item>) 
     @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
-        try {
-            holder.ItemImage.setImageURI(item.imageId.toUri())
-        }catch (e:Exception)
-        {
-            Log.d("error",e.message!!)
-        }
         holder.ItemName.text = item.name
         holder.ItemName.typeface = Typeface.DEFAULT_BOLD
         holder.productionDate.text = item.productionDate
@@ -105,7 +99,6 @@ class ItemAdapter(private val context: Context, val itemList:MutableList<Item>) 
         else{
             holder.belongTo.text ="默认收纳柜"
             itemList[position].cupboardId = -1
-            notifyDataSetChanged()
         }
         holder.ItemNum.text = "×${item.number}"
     }
