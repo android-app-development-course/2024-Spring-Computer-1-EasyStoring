@@ -248,25 +248,25 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
 在物品列表界面，点击recycleView的任意项，可查看物品详情，详情界面可以上下滑动查看信息，以下是长截屏
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemInfomation.jpg" title="" alt="" width="121">
+<img src="resources/ItemInfomation.jpg" title="" alt="" width="121">
 
 在物品列表界面或顶栏点击“+”可以跳转到添加物品界面新增物品；新增的物品会添加到本地数据库，并同步到云端。物品列表界面会从本地数据库中将新增的物品添加到物品列表的recycleView中。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718641125684.jpg" title="" alt="" width="187">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemList.jpg" alt="" width="177">
+<img src="resources/1718641125684.jpg" title="" alt="" width="187">        <img title="" src="resources/ItemList.jpg" alt="" width="177">
 
 在物品详情界面修改后点击“确定”按钮可以更新物品信息；用户点击确定后会检查物品详情界面的EditTextView是否改变，若改变则会更新本地数据库和ItemList，并提醒recycleView更新数据。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/c9a1b97b019aec66a70b336f04d6069.jpg" title="" alt="" width="158">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/39daee81570c1a48e0a5d1fef460b21.jpg" alt="" width="199">
+<img src="resources/c9a1b97b019aec66a70b336f04d6069.jpg" title="" alt="" width="158">        <img title="" src="resources/39daee81570c1a48e0a5d1fef460b21.jpg" alt="" width="199">
 
 点击物品列表中的“删除”按钮可以删除物品；物品的被ItemAdater从列表中移除并从本地数据库中删除，同时同步到云端数据库。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718640821337.jpg" title="" alt="" width="340">
+<img src="resources/1718640821337.jpg" title="" alt="" width="340">
 
 #### 收纳柜的查看，新增，删除
 
 在收纳柜列表界面，点击recycleView的任意项，可查看收纳柜中的物品，同样可以点击物品项查看物品详情，点击“删除”删除物品
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/SelectCupboard.jpg" title="" alt="" width="182">
+<img src="resources/SelectCupboard.jpg" title="" alt="" width="182">
 
 在收纳柜列表界面点击“+”按钮，跳转到添加空间界面，输入名称和描述后点击确定可以新增收纳柜。    
 
@@ -294,13 +294,13 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
 （使用recycleView实现）                             
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemList.jpg" title="" alt="" width="175">           <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemInfomation.jpg" alt="" width="131">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/AddItem.jpg" alt="" width="133">
+<img src="resources/ItemList.jpg" title="" alt="" width="175">           <img title="" src="resources/ItemInfomation.jpg" alt="" width="131">        <img title="" src="resources/AddItem.jpg" alt="" width="133">
 
 收纳柜管理界面                         收纳柜详情                              收纳柜添加
 
 使用recycleView实现                使用recycleView实现
 
-<img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/cupboardList.jpg" alt="cupboardList.jpg" width="178">       <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/SelectCupboard.jpg" alt="" width="178">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/addCupboard.jpg" alt="" width="169">
+<img title="" src="resources/cupboardList.jpg" alt="cupboardList.jpg" width="178">       <img title="" src="resources/SelectCupboard.jpg" alt="" width="178">        <img title="" src="resources/addCupboard.jpg" alt="" width="169">
 
 #### 顶栏设计
 
@@ -1424,7 +1424,7 @@ def syncFromServer(request):
 
 用户A：界面整体看起来很清爽。在不同设备上登录同一个账号也能够同步账号的信息，很方便。但好像搜索功能不能用，希望能够实现以下，方便到时候东西多了后快速查找。物品的日期那里，可不可以改成选择日期，不想手动输入。像下面这样：
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/5baaf2aee120d0d3da725ce089641688_.jpg" title="" alt="" width="198">
+<img src="resources/5baaf2aee120d0d3da725ce089641688_.jpg" title="" alt="" width="198">
 
         分析：搜索功能由于时间和技术问题，没有实现，今后会多多研究，争取将搜索功能实现，才能更方便用户在收纳更多的东西时快速查找。日期输入确实是没有考虑到用户的体验优化，之后会研究添加一个日期选择器。
 
@@ -1432,39 +1432,39 @@ def syncFromServer(request):
 
         删除默认收纳柜，但物品位置还是在默认收纳柜中
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20012958.png" title="" alt="屏幕截图 2024-06-18 012958.png" width="400">
+<img src="resources/屏幕截图%202024-06-18%20012958.png" title="" alt="屏幕截图 2024-06-18 012958.png" width="400">
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013743.png" title="" alt="屏幕截图 2024-06-18 013743.png" width="190"><img src="file:///C:/Users/阿卡特兰/AppData/Roaming/marktext/images/2024-06-18-01-38-21-image.png" title="" alt="" width="224">
+<img src="resources/屏幕截图%202024-06-18%20013743.png" title="" alt="屏幕截图 2024-06-18 013743.png" width="190"><img src="file:///C:/Users/阿卡特兰/AppData/Roaming/marktext/images/2024-06-18-01-38-21-image.png" title="" alt="" width="224">
 
         收纳柜重名问题
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013241.png" title="" alt="屏幕截图 2024-06-18 013241.png" width="406">
+<img src="resources/屏幕截图%202024-06-18%20013241.png" title="" alt="屏幕截图 2024-06-18 013241.png" width="406">
 
         数量合法性问题
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013502.png" title="" alt="屏幕截图 2024-06-18 013502.png" width="231">
+<img src="resources/屏幕截图%202024-06-18%20013502.png" title="" alt="屏幕截图 2024-06-18 013502.png" width="231">
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013637.png" title="" alt="屏幕截图 2024-06-18 013637.png" width="182">
+<img src="resources/屏幕截图%202024-06-18%20013637.png" title="" alt="屏幕截图 2024-06-18 013637.png" width="182">
 
         分析：由于物品的实现逻辑需要每个物品都有对应的收纳柜，因此将默认收纳柜设置为不可删除，避免用户将默认收纳柜删除后，无法在收纳柜列表中找到存放于默认收纳柜中的物品。
 
         收纳柜同名确实会造成冲突，经过测试，同名时，只有最早创建的收纳柜中会有物品，后创建的同名收纳柜为空。在收纳柜新建时检查重名，如重名则提示“新建失败，已有此数据库”，应该就可以解决问题。而数据确实缺少合法性检查，应用的健壮性不足，应多考虑用户非法输入的情况。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013407.png" title="" alt="屏幕截图 2024-06-18 013407.png" width="441">
+<img src="resources/屏幕截图%202024-06-18%20013407.png" title="" alt="屏幕截图 2024-06-18 013407.png" width="441">
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013149.png" title="" alt="屏幕截图 2024-06-18 013149.png" width="446">
+<img src="resources/屏幕截图%202024-06-18%20013149.png" title="" alt="屏幕截图 2024-06-18 013149.png" width="446">
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013542.png" title="" alt="屏幕截图 2024-06-18 013542.png" width="422">
+<img src="resources/屏幕截图%202024-06-18%20013542.png" title="" alt="屏幕截图 2024-06-18 013542.png" width="422">
 
         用户C：好像注册时有点问题，我点注册就闪退了，再注册时提示“用户已存在”，结果发现可以直接登录了。用户界面的默认头像很可爱，还有交易辅助界面的fufu玩偶也可爱，只可惜不能选自己添加的物品，不过可以自动生成物品的描述，期待选择物品生成描述的功能真正实现的时候。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/cb3aa9b9f0eafdd20c763c58d972ab2.jpg" title="" alt="" width="157">    <img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20015252.png" title="" alt="" width="189">
+<img src="resources/cb3aa9b9f0eafdd20c763c58d972ab2.jpg" title="" alt="" width="157">    <img src="resources/屏幕截图%202024-06-18%20015252.png" title="" alt="" width="189">
 
         分析：注册时有概率闪退，目前还不清楚原因，但第一次注册成功并登录后，再进行注册就不会闪退了，这种概率性遇到的bug很难找到原因，由于时间关系，且问题不影响使用，会在之后尽力排查原因。AI交易辅助界面的物品选择暂时还没有完成，会在后续的开发和学习中实现。
 
         用户D：应用很不错，挺实用的，给年龄大的人用，给东西多的上班族用都可以。不过添加物品时遇到问题了，数量不填或填非数字时会添加失败。希望加多点说明
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20020051.png" title="" alt="屏幕截图 2024-06-18 020051.png" width="312">
+<img src="resources/屏幕截图%202024-06-18%20020051.png" title="" alt="屏幕截图 2024-06-18 020051.png" width="312">
 
 <img src="file:///C:/Users/阿卡特兰/AppData/Roaming/marktext/images/2024-06-18-02-03-47-image.png" title="" alt="" width="313">
 
@@ -1514,11 +1514,11 @@ def syncFromServer(request):
 
 1.获取apk文件后（项目根目录下的app-release.apk），使用浏览器打开，点击安装。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/89fa77750683dc0c1155c632b996c39.jpg" title="" alt="89fa77750683dc0c1155c632b996c39.jpg" width="191">
+<img src="resources/89fa77750683dc0c1155c632b996c39.jpg" title="" alt="89fa77750683dc0c1155c632b996c39.jpg" width="191">
 
 2.由于本应用暂时没有上架任何应用商店，也未进行备案，在安装时会提示风险，但本应用一定没有任何窃取隐私、投放病毒等威胁用户信息安全的行为，无视风险安装即可。安装完成即可打开应用。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/6017e4260a432d6e08155d89622bd52.jpg" title="" alt="6017e4260a432d6e08155d89622bd52.jpg" width="191">
+<img src="resources/6017e4260a432d6e08155d89622bd52.jpg" title="" alt="6017e4260a432d6e08155d89622bd52.jpg" width="191">
 
 ### 使用说明
 
@@ -1526,46 +1526,46 @@ def syncFromServer(request):
 
 打开应用后，若已有账号，输入账号密码登录即可；若第一次使用本应用，输入新的账号和密码，点击注册按钮，等待注册成功后再登录即可，无需绑定手机号等个人信息。
 
-<img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/2024-06-16-19-00-19-image.png" alt="2024-06-16-19-00-19-image.png" width="168">            <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181946.png" alt="" width="168">
+<img title="" src="resources/2024-06-16-19-00-19-image.png" alt="2024-06-16-19-00-19-image.png" width="168">            <img title="" src="resources/Screenshot_20240617_181946.png" alt="" width="168">
 
 ##### 下方导航栏与左侧侧栏
 
 登录成功后，点击下方导航栏可以切换“物品记录”、“收纳柜管理”、“交易助手”等界面。点击屏幕左上图标可以弹出侧栏，点击侧栏的“退出账号”可以退出当前用户，其余功能暂未实现。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/2024-06-16-19-07-28-image.png" title="" alt="2024-06-16-19-07-28-image.png" width="358">
+<img src="resources/2024-06-16-19-07-28-image.png" title="" alt="2024-06-16-19-07-28-image.png" width="358">
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/2024-06-16-19-05-23-image.png" title="" alt="2024-06-16-19-05-23-image.png" width="166">
+<img src="resources/2024-06-16-19-05-23-image.png" title="" alt="2024-06-16-19-05-23-image.png" width="166">
 
 ##### 物品记录界面
 
 在物品记录界面可查看所有物品列表。点击任意一项可以查看物品详细信息；点击任意一项的删除按钮可以删除该项；点击右上角或右下角“+”按钮可以添加物品。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718652158211.jpg" title="" alt="1718652158211.jpg" width="163">
+<img src="resources/1718652158211.jpg" title="" alt="1718652158211.jpg" width="163">
 
         查看物品详情时，可以修改物品的信息，点击确定后会返回物品记录界面，并更新物品的信息。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718652518264.jpg" title="" alt="1718652518264.jpg" width="166">
+<img src="resources/1718652518264.jpg" title="" alt="1718652518264.jpg" width="166">
 
         添加物品时，可以输入物品信息，信息无误后点击确定，可成功添加物品。注意：数量一栏必须填写，且必须填写整数，否则会添加失败；位置一栏应填写已有的收纳柜名字，若填写其它，也可以成功添加物品，但位置一栏会自动变为“默认收纳柜”。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718652798961.jpg" title="" alt="1718652798961.jpg" width="166">
+<img src="resources/1718652798961.jpg" title="" alt="1718652798961.jpg" width="166">
 
 ##### 收纳柜界面
 
 在收纳柜界面可以查看所有收纳柜列表。点击任意一项收纳柜可以查看收纳柜中的物品列表；点击任意一项收纳柜的删除按钮可以删除该项收纳柜；点击右下角“+”按钮可以添加收纳柜。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718652975883.jpg" title="" alt="1718652975883.jpg" width="194">
+<img src="resources/1718652975883.jpg" title="" alt="1718652975883.jpg" width="194">
 
         查看收纳柜中的物品列表时，与物品记录界面类似，点击任意一项可以查看物品详细信息、点击任意一项的删除按钮可以删除该物品。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718653064137.jpg" title="" alt="1718653064137.jpg" width="198">
+<img src="resources/1718653064137.jpg" title="" alt="1718653064137.jpg" width="198">
 
         添加收纳柜时，可以输入收纳柜信息，信息无误后点击确定可成功添加收纳柜。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718653173523.jpg" title="" alt="1718653173523.jpg" width="194">
+<img src="resources/1718653173523.jpg" title="" alt="1718653173523.jpg" width="194">
 
 ##### 交易助手界面
 
 在交易助手界面，点击“生成描述”按钮，AI会生成对物品的描述，以便进行二手交易；点击“复制描述”可以将生成的描述复制到剪贴板，以便粘贴到二手交易平台。选择物品进行描述的功能暂未实现。
 
-<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718653343901.jpg" title="" alt="1718653343901.jpg" width="194">
+<img src="resources/1718653343901.jpg" title="" alt="1718653343901.jpg" width="194">
