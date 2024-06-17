@@ -1,16 +1,13 @@
 import json
-import re
-import os
 import time
 import urllib
-
+from django.http import HttpResponse
 import pymongo
 import requests
-from django.http import HttpResponse
-
-
-# import SparkApi
-# import BaiduApi
+import re
+import random
+import SparkApi
+import BaiduApi
 
 
 def getlist(request):
@@ -59,15 +56,22 @@ def askGPT(request):
             result['user'] = request.META['REMOTE_ADDR']
         else:
             result['user'] = 'TestUser'
-    except:
-        result = {'time': request.META['HTTP_TIME'], 'answer': 'Error at API'}
+        result['StatusCode']='1'
+    except BaseException as e:
+        # 打印异常的详细信息
+        print("捕获到异常:", e)
+        print("异常的类型是:", type(e))
+        print("异常发生的跟踪记录:")
+        import traceback
+        traceback.print_exc()
+        result = {'StatusCode':'0','time': request.META['HTTP_TIME'], 'answer':"Error in API" }
     # for i, j in result.items():
     #     print('{}: {}'.format(i, j))
     if request.method == 'GET':
         return HttpResponse(json.dumps(result), content_type='application/json')
 
 
-# 存储对话到数据库
+# 存储到数据库
 # 接受前端header格式: {
 #                   time: formattedTime,//字符串,格式化的时间,有个严格的格式要求,详见前端
 #                   GPTType: this.value1,//字符串,GPT类型,目前是SparkV1,SparkV2,WenxinV3,WenxinV4
@@ -112,30 +116,30 @@ def saveToDB(request):
 
 def getAnswer(questionContent, option):
     answerContent = ''
-    # if option == 'SparkV1':
-    #     SparkApi.answer = ''
-    #     SparkApi.getSparkV1Answer([{'role': 'user', 'content': questionContent}])
-    #     answerContent = SparkApi.answer
-    # elif option == 'SparkV2':
-    #     SparkApi.answer = ''
-    #     SparkApi.getSparkV2Answer([{'role': 'user', 'content': questionContent}])
-    #     answerContent = SparkApi.answer
-    # elif option == 'SparkV3':
-    #     SparkApi.answer = ''
-    #     SparkApi.getSparkV3Answer([{'role': 'user', 'content': questionContent}])
-    #     answerContent = SparkApi.answer
-    # elif option == 'WenxinV3':
-    #     answerContent = BaiduApi.getWenxinV3Answer(questionContent)
-    # elif option == 'WenxinV4':
-    #     answerContent = BaiduApi.getWenxinV4Answer(questionContent)
-    # # print(answerContent)
-    # answerContent = answerContent.replace('*', '')
+    if option == 'SparkV1':
+        SparkApi.answer = ''
+        SparkApi.getSparkV1Answer([{'role': 'user', 'content': questionContent}])
+        answerContent = SparkApi.answer
+    elif option == 'SparkV2':
+        SparkApi.answer = ''
+        SparkApi.getSparkV2Answer([{'role': 'user', 'content': questionContent}])
+        answerContent = SparkApi.answer
+    elif option == 'SparkV3':
+        SparkApi.answer = ''
+        SparkApi.getSparkV3Answer([{'role': 'user', 'content': questionContent}])
+        answerContent = SparkApi.answer
+    elif option == 'WenxinV3':
+        answerContent = BaiduApi.getWenxinV3Answer(questionContent)
+    elif option == 'WenxinV4':
+        answerContent = BaiduApi.getWenxinV4Answer(questionContent)
+    # print(answerContent)
+    answerContent = answerContent.replace('*', '')
     return answerContent
 
 
 def toDB(dialog):
     # 连接数据库 URI: mongodb://用户名:密码@host:端口
-    instance = pymongo.MongoClient('mongodb://NLSearch:xNHfNw6X8TnchKZ8@1.15.173.30:27017/nlsearch', )
+    instance = pymongo.MongoClient('mongodb://************:******************@************:27017/*********', )
     # instance为实例,示例包含多个数据库,每个数据库可以包括多个集合(类似SQL的表)
     # 集合含有多个文档(类似SQL的行,一个集合,键只能是字符串而值可以是各种类型
     # 选择数据库nlsearch
@@ -150,20 +154,41 @@ def toDB(dialog):
 
 class DBManager:
     def __init__(self):
-        self.DBInstance = pymongo.MongoClient('mongodb://User:k3PnJ3FBxFseb5tH@1.15.173.30:27017/user', )
+        self.DBInstance = pymongo.MongoClient('mongodb://****:******************@**************:27017/****', )
         self.database = self.DBInstance['user']
         self.collection = self.database['UserInformation']
 
     def queryAll(self):
-        allUsers = [x for x in self.collection.find()]
+        allUsers = self.collection.find()
         # for i in allUsers:
-        # print(i['username'], i['password'])
+            # print(i['username'], i['password'])
         # print(allUsers)
         return allUsers
-
+    
     def queryOneUser(self, username):
         result = [x for x in self.collection.find({'username': username}, {'_id': 0})]
         return result, len(result)
+    
+    def insertOneUser(self,userInfo):
+        self.collection.insert_one(userInfo)
+    
+    def syncToServer(self,userID,tableName,newDocs):
+        currrentCollection=self.database[tableName]
+        deletedData=currrentCollection.delete_many({'userId':userID})
+        print(deletedData.deleted_count,'已被删除')
+        currrentCollection.insert_many(newDocs)
+    
+    def syncToDevice(self,userID,tableName):
+        currrentCollection=self.database[tableName]
+        allData=currrentCollection.find({'userId':userID},{'_id':0})
+        return allData
+    
+    def checkUserIDExist(self,userID):
+        if(len([x for x in self.collection.find({'userId':str(userID)})])==0):
+            return False
+        else:
+            return True
+
 
 
 def getUsername(request):
@@ -179,84 +204,105 @@ def getUsername(request):
     #     result['message'] = 'success'
     # except:
     #     result['message'] = 'Error'
-    # result=[{ "id": "5", "version": "1.1", "name": "222333" }]
-    # if request.method == 'GET':
-    #     return HttpResponse(json.dumps(result), content_type='application/json')
     if request.method == 'GET':
-        result = {"id": "5", "version": "1.1", "name": "222333"}
-        try:
-            for i, j in request.META.items():
-                print(i, j)
-        except Exception:
-            print(Exception)
-        return HttpResponse(json.dumps(result), content_type='application/json')
+        # result = {"id": "5", "version": "1.1", "name": "222333"}
+        # try:
+        #     for i, j in request.META.items():
+        #         print(i, j)
+        # except Exception:
+        #     print(Exception)
+        # return HttpResponse(json.dumps(result), content_type='application/json')
+        return HttpResponse("Get请求")
     elif request.method == 'POST':
+        result = {"id": "2", "version": "1.1", "name": "111111"}
         try:
-            for i, j in request.POST:
-                print(i, j)
+            print(json.loads(request.body))
+            # for i, j in request.POST:
+            #     print(i, j)
         except Exception:
             print(Exception)
-        return HttpResponse(json.dumps({'msg': 'success'}, content_type='application/json'))
-
-
-import requests
-
-if __name__ == '__main__':
-    db = DBManager()
-    result, userNumber = db.queryOneUser('Alex')
-    print(result, userNumber)
-    print(json.dumps(result[0]))
-
-# result = {'time': '2023/11/15 22:53:00', 'user': 'user: http://localhost:81/', 'question': '你好啊！',
-#           'answer': 'Default Answer'}
-# toDB(result)
-# print(generateURL())
-# getAnswer('你是谁', 'SparkV1')
-
-
+        finally:
+        # return HttpResponse(json.dumps(result, content_type='application/json'))
+            return HttpResponse("Post请求")
+            
 def checkUser(request):
     username = request.META['HTTP_USERNAME']
     db = DBManager()
     result, userNumber = db.queryOneUser(username)
-    print(result, userNumber)
-    print(json.dumps(result))
-    # if userNumber == 0:
-    #     return HttpResponse(json.dump({'StatusCode': 1, 'Message': 'No such user.'}),
-    #                         content_type='application/json')
-    # elif userNumber == 1:
-    #     return HttpResponse(json.dump({'StatusCode': 1, 'Message': result}),
-    #                         content_type='application/json')
-    # else:
-    #     return HttpResponse(json.dump({'StatusCode': 0, 'Message': 'Error in database'}),
-    #                         content_type='application/json')
+    if userNumber == 0:
+        return HttpResponse(json.dumps({'StatusCode': '0', 'Message': 'No such user.'}))
+    elif userNumber == 1:
+        return HttpResponse(json.dumps({'StatusCode': '1', 'Message': result[0]}))
+    else:
+        return HttpResponse(json.dumps({'StatusCode': '2', 'Message': 'Error in database'}))
+
+def registerUser(request):
+    try:
+        db=DBManager()
+        print('Request body is ',json.loads(request.body))
+        newUserID=random.randint(1,1000000)
+        while(db.checkUserIDExist(newUserID)):
+            newUserID+=1
+        newUserInformation={'userId':str(newUserID)}
+        for i,j in json.loads(request.body).items():
+            newUserInformation[i]=j
+        print('New user information is ',newUserInformation)
+        DBManager().insertOneUser(newUserInformation)
+        return HttpResponse(json.dumps({'StatusCode': '1', 'Message': 'registerUser success'}))
+    except BaseException as e:
+        # 打印异常的详细信息
+        print("捕获到异常:", e)
+        print("异常的类型是:", type(e))
+        print("异常发生的跟踪记录:")
+        import traceback
+        traceback.print_exc()
+        return HttpResponse(json.dumps({'StatusCode':'0','Message':e}))
+
+def syncFromDevice(request):
+    try:
+        print(json.loads(request.body))
+        if 'HTTP_USERID' in request.META.keys():
+            print('userID',request.META['HTTP_USERID'])
+        if 'HTTP_TABLENAME' in request.META.keys():
+            print('tableName', request.META['HTTP_TABLENAME'])
+        DBManager().syncToServer(request.META['HTTP_USERID'],request.META['HTTP_TABLENAME'],json.loads(request.body))
+        return HttpResponse(json.dumps({'StatusCode':'1','Message':'Success syncFromDevice.'}))
+    except BaseException as e:
+        # 打印异常的详细信息
+        print("捕获到异常:", e)
+        print("异常的类型是:", type(e))
+        print("异常发生的跟踪记录:")
+        import traceback
+        traceback.print_exc()
+        return HttpResponse(json.dumps({'StatusCode':'0','Message':e}))
+    
+def syncFromServer(request):
+    try:
+        if 'HTTP_USERID' in request.META.keys():
+            print('userID',request.META['HTTP_USERID'])
+        if 'HTTP_TABLENAME' in request.META.keys():
+            print('tableName', request.META['HTTP_TABLENAME'])
+        allDataCursor=DBManager().syncToDevice(request.META['HTTP_USERID'],request.META['HTTP_TABLENAME'])
+        allData=[]
+        for i in allDataCursor:
+            allData.append(i)
+        print('All data return',allData)
+        return HttpResponse(json.dumps({'StatusCode':'1','Message':'Success SyncFromServer.','Data':allData}))
+    except BaseException as e:
+        # 打印异常的详细信息
+        print("捕获到异常:", e)
+        print("异常的类型是:", type(e))
+        print("异常发生的跟踪记录:")
+        import traceback
+        traceback.print_exc()
+        return HttpResponse(json.dumps({'StatusCode':'0','Message':e}))
+
+if __name__ == '__main__':
     # result = {'time': '2023/11/15 22:53:00', 'user': 'user: http://localhost:81/', 'question': '你好啊！',
     #           'answer': 'Default Answer'}
     # toDB(result)
     # print(generateURL())
     # getAnswer('你是谁', 'SparkV1')
-    # db = DBManager()
-    # for i in db.queryAll():
-    #     print(i)
-    # 本地图片文件路径
-    image_path = "ZH-CN7850329702_UHD.jpg"
-    print(os.access(image_path, os.R_OK))
-
-    # token值，需从实际来源获取（例如读取tokenList文件）
-    token = "1c17b11693cb5ec63859b091c5b9c1b2"
-
-    # 目标URL
-    url = "http://1.15.173.30:923/api/index.php"
-
-    # 构建请求参数
-    files = {'image': open(image_path, 'rb')}
-    data = {'token': token}
-
-    # 发送POST请求
-    response = requests.post(url, files=files, data=data)
-
-    # 检查响应状态码
-    if response.status_code == 200:
-        # print("Upload successful.")
-        print(response.json())
-    else:
-        print(f"Upload failed with status code {response.status_code}.")
+    db=DBManager()
+    for i in db.queryAll():
+        print(i)
