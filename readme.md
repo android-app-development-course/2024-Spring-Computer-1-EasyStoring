@@ -238,11 +238,11 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
 物品表
 
-![屏幕截图 2024-06-17 234548.png](D:\2024-Spring-Computer-1-EasyStoring\resources\屏幕截图%202024-06-17%20234548.png)
+![屏幕截图 2024-06-17 234548.png](\resources\屏幕截图%202024-06-17%20234548.png)
 
 收纳柜表
 
-![屏幕截图 2024-06-17 234617.png](D:\2024-Spring-Computer-1-EasyStoring\resources\屏幕截图%202024-06-17%20234617.png)
+![屏幕截图 2024-06-17 234617.png](\resources\屏幕截图%202024-06-17%20234617.png)
 
 #### 物品的查看、新增、修改、删除
 
@@ -274,7 +274,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
 同样点击“删除”按钮可以删除收纳柜
 
-![](D:\2024-Spring-Computer-1-EasyStoring\resources\1718642254357.jpg)
+![](\resources\1718642254357.jpg)
 
 #### AI 二手交易辅助
 
@@ -1500,11 +1500,11 @@ def syncFromServer(request):
 
 采用腾讯云测服务，共测试了38款机型，其中只有2款失败，原因是安装失败，设备名称为“小米 MIX4”和“realme V11”，通过率为94.74%
 
-![屏幕截图 2024-06-18 055833.png](D:\2024-Spring-Computer-1-EasyStoring\resources\屏幕截图%202024-06-18%20055833.png)
+![屏幕截图 2024-06-18 055833.png](\resources\屏幕截图%202024-06-18%20055833.png)
 
-![屏幕截图 2024-06-18 060349.png](D:\2024-Spring-Computer-1-EasyStoring\resources\屏幕截图%202024-06-18%20060349.png)
+![屏幕截图 2024-06-18 060349.png](\resources\屏幕截图%202024-06-18%20060349.png)
 
-![屏幕截图 2024-06-18 060604.png](D:\2024-Spring-Computer-1-EasyStoring\resources\屏幕截图%202024-06-18%20060604.png)
+![屏幕截图 2024-06-18 060604.png](\resources\屏幕截图%202024-06-18%20060604.png)
 
 
 
