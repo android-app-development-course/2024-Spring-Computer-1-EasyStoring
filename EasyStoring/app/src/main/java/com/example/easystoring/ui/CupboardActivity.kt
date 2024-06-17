@@ -1,5 +1,8 @@
 package com.example.easystoring.ui
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,93 +16,92 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.easystoring.Cupboard
+import com.example.easystoring.EasyStoringApplication
 import com.example.easystoring.Item
 import com.example.easystoring.ItemAdapter
 import com.example.easystoring.R
 import com.example.easystoring.databinding.FragmentHomeBinding
-import com.example.easystoring.ui.home.HomeViewModel
+import com.example.easystoring.logic.model.AppDBHelper
 import kotlin.random.Random
 
 class CupboardActivity : AppCompatActivity() {
     private val ItemList = ArrayList<Item>()
-    private val StoryingList = ArrayList<Storying>()
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ItemAdapter
+    var cupboardId:Int = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
         setContentView(R.layout.activity_cupboard)
-//        initItem()
-        initStoryings()
-        val toolbar:Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
-        initItem()
-        val recyclerView : RecyclerView = findViewById<RecyclerView>(R.id.recyclerView2)
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
-        val adapter = StoryingAdapter(StoryingList)
-//        val adapter = ItemAdapter(ItemList)     // 在这里修改物品栏显示的内容
-        recyclerView.adapter = adapter
-
-        val button2: Button =findViewById(R.id.button2)
-        button2.setOnClickListener {
+        cupboardId = intent.getStringExtra("cupboardId").toString().toInt()
+        val cupboardName = intent.getStringExtra("cupboardName").toString()
+        val toolbar1:androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        toolbar1.setTitleTextColor(Color.BLACK)
+        toolbar1.setTitle("收纳柜")
+        toolbar1.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+        setSupportActionBar(toolbar1)
+        toolbar1.setNavigationOnClickListener {
             finish()
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        val cupboardNameText = findViewById<TextView>(R.id.cupboardName)
+        cupboardNameText.setText(cupboardName)
+
+        initItem(cupboardId)
+        recyclerView = findViewById(R.id.recyclerView2)
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        adapter = ItemAdapter(this, ItemList)     // 在这里修改物品栏显示的内容
+        recyclerView.adapter = adapter
+
+    }
+    @SuppressLint("Range")
+    private fun initItem(cupboardId: Int) {
+        ItemList.clear()
+        val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+
+        val cursor = db.rawQuery("SELECT * FROM Item WHERE userId = ? and cupboardId = ?",
+            arrayOf(EasyStoringApplication.userID,
+                cupboardId.toString()))
+
+        var ItemNum = 0
+        // 遍历查询结果
+        if (cursor.moveToFirst()) {
+            do {
+                ItemNum++
+                val item1: Item = Item(EasyStoringApplication.userID.toInt())
+                try {
+                    item1.id = cursor.getInt(cursor.getColumnIndex("id"))
+                    item1.userId = cursor.getInt(cursor.getColumnIndex("userId"))
+                    item1.name = cursor.getString(cursor.getColumnIndex("name"))
+                    item1.imageId = cursor.getString(cursor.getColumnIndex("imageId"))
+                    item1.cupboardId = cursor.getString(cursor.getColumnIndex("cupboardId")).toInt()
+                    item1.productionDate = cursor.getString(cursor.getColumnIndex("productionDate"))
+                    item1.overdueDate = cursor.getString(cursor.getColumnIndex("overdueDate"))
+                    item1.description = cursor.getString(cursor.getColumnIndex("description"))
+                    item1.number = cursor.getString(cursor.getColumnIndex("number")).toInt()
+                    ItemList.add(item1)
+                } catch (e: Exception) {
+                    Log.d("error_cup_act", "An error occurred: " + e.message) // 最好包括异常的消息
+                }
+            } while (cursor.moveToNext())
         }
+
+        // 关闭游标和数据库
+        cursor.close()
+        db.close()
     }
 
-    private fun initStoryings(){
-        repeat(2){
-            StoryingList.add(Storying("书架"))
-            StoryingList.add(Storying("玩具"))
-        }
-    }
-
-    private fun initItem(){
-        for(i in 1..10) {
-            val item1: Item = Item(1)
-            item1.id = i
-            item1.name = "Item$i"
-//            item1.imageId = R.drawable.item_pic
-            item1.cupboardId = Random.nextInt(2)
-            item1.productionDate = "2024-2-25"
-            item1.number = Random.nextInt(10)
-            ItemList.add(item1)
-        }
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onResume() {
+        super.onResume()
+        initItem(cupboardId)
+        adapter.notifyDataSetChanged()
     }
 }
 
-class Storying(val name:String)
 
-class StoryingAdapter(val StoryingList:List<Storying>):
-        RecyclerView.Adapter<StoryingAdapter.ViewHolder>(){
-
-   inner class ViewHolder(view:View):RecyclerView.ViewHolder(view){
-       val storyingName:TextView = view.findViewById(R.id.storyingName)
-   }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.storying__item,parent,false)
-
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val storying = StoryingList[position]
-        holder.storyingName.text = storying.name
-    }
-
-    override fun getItemCount(): Int {
-        return StoryingList.size
-    }
-
-}
 
 

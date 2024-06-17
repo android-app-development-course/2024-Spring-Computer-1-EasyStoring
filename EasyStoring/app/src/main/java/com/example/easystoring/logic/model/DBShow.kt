@@ -20,15 +20,13 @@ class DBShow : AppCompatActivity() {
         // 创建SQLite数据库
         val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
         val db = dbHelper.writableDatabase
-        val userColumns = arrayOf("id", "username","firstName","lastName","age")
         val cupboardColumns = arrayOf("id", "userId","name","description")
         val ItemColumns = arrayOf("id", "userId","imageId","name", "description",
             "number", "productionDate", "overdueDate", "cupboardId")
         try {
-            val userData = dbHelper.getAllFromMyTable(db,"User",userColumns)
             val cupboardData = dbHelper.getAllFromMyTable(db,"Cupboard",cupboardColumns)
             val ItemData = dbHelper.getAllFromMyTable(db,"Item",ItemColumns)
-            dbShowText.text ="Item:\n" + ItemData
+            dbShowText.text ="Cupboard:\n"+cupboardData+"\nItem:\n" + ItemData
         }catch (e: Exception) { // 指定捕获 Exception 类型
             Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
         }

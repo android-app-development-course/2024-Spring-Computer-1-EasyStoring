@@ -80,7 +80,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editText1"
+                android:id="@+id/cupboardName"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="400dp"
@@ -91,7 +91,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/cupboardDes"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="468dp"
@@ -99,17 +99,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.851"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/button_shape2"
-                android:text="←"
-                android:textSize="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 

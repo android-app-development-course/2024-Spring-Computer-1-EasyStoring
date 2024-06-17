@@ -54,10 +54,13 @@ class ItemActivity : AppCompatActivity() {
         val pdateText = cursor.getString(cursor.getColumnIndex("productionDate"))
         val vdateText = cursor.getString(cursor.getColumnIndex("overdueDate"))
         val cupboardId = cursor.getString(cursor.getColumnIndex("cupboardId"))
-        var cupboardName:String=""
+        var cupboardName:String="默认收纳柜"
         cursor = db.rawQuery("SELECT * FROM Cupboard WHERE id = ?", arrayOf(cupboardId))
-        cursor.moveToFirst()
-        cupboardName=cursor.getString(cursor.getColumnIndex("name"))
+        if (cursor.moveToFirst()) {
+            cupboardName = cursor.getString(cursor.getColumnIndex("name"))
+        }
+        else
+            Log.d("error", "找不到收纳柜")
         try {
             name.setText(nameText)
             num.setText(number)
@@ -102,8 +105,17 @@ class ItemActivity : AppCompatActivity() {
                         item.description = description.text.toString()
                         cursor = db.rawQuery("SELECT * FROM Cupboard WHERE name = ?",
                             arrayOf(location.text.toString()))
-                        cursor.moveToFirst()
-                        item.cupboardId =cursor.getString(cursor.getColumnIndex("id")).toInt()
+                        var cupboardId = -1
+                        if(cursor.moveToFirst()) {
+                            try {
+                                cupboardId = cursor.getString(cursor.getColumnIndex("id")).toInt()
+                            }catch (e:Exception){
+                                Log.d("error",e.message!!)
+                            }
+                        }else{
+                            Log.d("error","找不到收纳柜")
+                        }
+                        item.cupboardId = cupboardId
                         item.productionDate = pdate.text.toString()
                         item.overdueDate = vdate.text.toString()
                         dbHelper.updateItem(db,item)

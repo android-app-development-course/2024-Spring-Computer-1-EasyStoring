@@ -22,7 +22,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easystoring.logic.model.AppDBHelper
 import com.example.easystoring.ui.ItemActivity
-import java.lang.Exception
+import kotlin.Exception
 
 class ItemAdapter(private val context: Context, val itemList:MutableList<Item>) :
     // 这个函数修改显示的内容
@@ -34,15 +34,27 @@ class ItemAdapter(private val context: Context, val itemList:MutableList<Item>) 
         val productionDate: TextView = view.findViewById(R.id.item_productionDate)
         val ItemNum: TextView = view.findViewById(R.id.item_num)
         val del:Button = view.findViewById(R.id.button7)
-
-//        var ItemBelongTo:
     }
     // 收纳柜字典
-    var cupboardMap  = mutableMapOf<Int, Cupboard>()
+    var cupboardNameMap  = mutableMapOf<Int, String>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_item, parent, false)
         val viewHolder = ViewHolder(view)
+
+        val dbHelper = AppDBHelper(viewHolder.itemView.context, "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+        val cupboards = dbHelper.getAllRowsFromMyTable(db,"Cupboard")
+        try {
+            if (cupboards.isNotEmpty()) {
+                for (i in 0..<cupboards.count()) {
+                    cupboardNameMap[cupboards[i]["id"].toString().toInt()] =
+                        cupboards[i]["name"].toString()
+                }
+            }
+        }catch (e:Exception){
+            Log.d("error2",e.message!!)
+        }
 
         // 点击整个事件
         viewHolder.itemView.setOnClickListener {
@@ -76,7 +88,7 @@ class ItemAdapter(private val context: Context, val itemList:MutableList<Item>) 
     }
 
     // 填入信息
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
         try {
@@ -88,12 +100,18 @@ class ItemAdapter(private val context: Context, val itemList:MutableList<Item>) 
         holder.ItemName.text = item.name
         holder.ItemName.typeface = Typeface.DEFAULT_BOLD
         holder.productionDate.text = item.productionDate
-        if (cupboardMap.containsKey(item.cupboardId))
-            holder.belongTo.text = cupboardMap[item.cupboardId]?.name ?:""
+        if (cupboardNameMap.containsKey(item.cupboardId))
+            holder.belongTo.text = cupboardNameMap[item.cupboardId]
+        else{
+            holder.belongTo.text ="默认收纳柜"
+            itemList[position].cupboardId = -1
+            notifyDataSetChanged()
+        }
         holder.ItemNum.text = "×${item.number}"
     }
 
     override fun getItemCount()=itemList.size
+    @SuppressLint("NotifyDataSetChanged")
     fun removeItem(position: Int) {
         // 检查位置是否有效
         if (position in 0 until itemCount) {
