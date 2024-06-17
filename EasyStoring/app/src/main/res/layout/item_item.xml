@@ -58,7 +58,7 @@
         android:gravity="center_vertical"
         android:text="ProductionDate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.698"
         app:layout_constraintStart_toEndOf="@+id/itemImage"
         app:layout_constraintTop_toBottomOf="@+id/item_belongTo" />
 
@@ -74,6 +74,19 @@
         app:layout_constraintStart_toEndOf="@+id/itemName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.217" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="59dp"
+        android:layout_height="34dp"
+        android:text="删除"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.881"
+        app:layout_constraintStart_toEndOf="@+id/item_belongTo"
+        app:layout_constraintTop_toBottomOf="@+id/item_num"
+        app:layout_constraintVertical_bias="0.488" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

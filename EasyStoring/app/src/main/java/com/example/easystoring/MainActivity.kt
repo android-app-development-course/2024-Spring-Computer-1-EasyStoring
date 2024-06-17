@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         dbHelper.rebuildTable(db, "Cupboard")
         dbHelper.rebuildTable(db, "Item")
+        //同步到本地
+        dbHelper.SeverToDevice(db)
 
         var CupboardNum = 0
         var ItemNum = 0
@@ -59,7 +61,9 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
         }
+
         // 测试添加柜子
+
 //        val values2 = ContentValues().apply {
 //            // 组装数据
 //            CupboardNum++
@@ -69,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 //            put("description", "1234567")
 //        }
 //        db.insert("Cupboard", null, values2)
+
 
 //         测试添加物品
 //        val ItemColumns = arrayOf(
@@ -98,7 +103,9 @@ class MainActivity : AppCompatActivity() {
 //            put("description", "第二行代码")
 //            put("number", 2)
 //            put("productionDate", "2023-3-29")
-//            put("cupboardId", 2)
+
+//            put("cupboardId", 1)
+
 //        }
 //        db.insert("Item", null, values4)
 //        val values5 = ContentValues().apply {
@@ -111,7 +118,7 @@ class MainActivity : AppCompatActivity() {
 //            put("description", "第三行代码")
 //            put("number", 3)
 //            put("productionDate", "2023-3-29")
-//            put("cupboardId", 14)
+//            put("cupboardId", 1)
 //        }
 //        db.insert("Item", null, values5)
 
