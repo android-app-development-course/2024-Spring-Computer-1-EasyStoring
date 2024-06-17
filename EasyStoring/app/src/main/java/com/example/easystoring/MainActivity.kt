@@ -3,7 +3,6 @@ package com.example.easystoring
 import ViewPager2Adapter
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -62,8 +61,9 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
         }
-//
-//        // 测试添加柜子
+
+        // 测试添加柜子
+
 //        val values2 = ContentValues().apply {
 //            // 组装数据
 //            CupboardNum++
@@ -73,8 +73,9 @@ class MainActivity : AppCompatActivity() {
 //            put("description", "1234567")
 //        }
 //        db.insert("Cupboard", null, values2)
-//
-////         测试添加物品
+
+
+//         测试添加物品
 //        val ItemColumns = arrayOf(
 //            "id", "userId", "imageId", "name", "description",
 //            "number", "productionDate", "overdueDate", "cupboardId"
@@ -102,7 +103,9 @@ class MainActivity : AppCompatActivity() {
 //            put("description", "第二行代码")
 //            put("number", 2)
 //            put("productionDate", "2023-3-29")
+
 //            put("cupboardId", 1)
+
 //        }
 //        db.insert("Item", null, values4)
 //        val values5 = ContentValues().apply {
@@ -118,6 +121,7 @@ class MainActivity : AppCompatActivity() {
 //            put("cupboardId", 1)
 //        }
 //        db.insert("Item", null, values5)
+
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -236,6 +240,15 @@ class MainActivity : AppCompatActivity() {
                         "Settings",
                         Toast.LENGTH_SHORT
                     ).show()
+                }
+
+                R.id.logout -> {
+                    Toast.makeText(
+                        EasyStoringApplication.context,
+                        "账号已退出",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
                 }
 
             }
