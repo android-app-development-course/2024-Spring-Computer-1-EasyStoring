@@ -22,7 +22,6 @@ class CupboardAdapter(private val context: Context, val cupboardList:MutableList
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
         val CupboardImage: ImageView = view.findViewById(R.id.cupboardImage)
         val Cupboardname:TextView = view.findViewById(R.id.cupboardName)
-        val ItemTypeNum:TextView = view.findViewById(R.id.itemType_num)
         val del:Button = view.findViewById(R.id.button_del)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

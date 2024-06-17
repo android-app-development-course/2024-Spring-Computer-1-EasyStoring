@@ -52,12 +52,12 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        // 测试数据库是否正常
-        val showSQLite = binding.showSQLite
-        showSQLite.setOnClickListener {
-            startActivity(Intent(requireContext(), DBShow::class.java))
-//            Toast.makeText(requireContext(),"1111",Toast.LENGTH_SHORT).show()
-        }
+//        // 测试数据库是否正常
+//        val showSQLite = binding.showSQLite
+//        showSQLite.setOnClickListener {
+//            startActivity(Intent(requireContext(), DBShow::class.java))
+////            Toast.makeText(requireContext(),"1111",Toast.LENGTH_SHORT).show()
+//        }
         initItem()
         recyclerView = binding.recyclerView
         val layoutManager = LinearLayoutManager(requireContext())
