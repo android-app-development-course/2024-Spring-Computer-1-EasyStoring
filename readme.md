@@ -6,6 +6,9 @@
 
 by 2024 春季课程第一组
 
+readme.md为Markdown格式的系统开发说明文件
+另有PDF格式在开发文档文件夹中
+
 # 系统开发说明文件
 
 ## 一、产品设计方案
@@ -189,7 +192,7 @@ class EasyStoringApplication : Application() {
 
 实现效果（App开屏界面、注册、登录）
 
-<img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181733.png" alt="" width="209"><img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181908.png" alt="" width="209"><img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181946.png" alt="" width="209">
+<img title="" src="resources/Screenshot_20240617_181733.png" alt="" width="209"><img title="" src="resources/Screenshot_20240617_181908.png" alt="" width="209"><img title="" src="resources/Screenshot_20240617_181946.png" alt="" width="209">
 
 #### 云同步用户数据
 
@@ -225,7 +228,7 @@ class EasyStoringApplication : Application() {
 
 #### 侧拉菜单设计
 
-<img title="" src="./resources/2024-06-16-19-05-23-image.png" alt="" width="313">
+<img title="" src="resources/2024-06-16-19-05-23-image.png" alt="" width="313">
 
 使用 DrawerLayout 实现，包含和账户相关的一些操作和用户名、用户头像和邮箱的显示
 
