@@ -6,6 +6,10 @@
 
 by 2024 春季课程第一组
 
+### readme.md为Markdown格式的系统开发说明文件
+
+### 另有PDF格式在开发文档文件夹中
+
 # 系统开发说明文件
 
 ## 一、产品设计方案
@@ -189,7 +193,7 @@ class EasyStoringApplication : Application() {
 
 实现效果（App开屏界面、注册、登录）
 
-<img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181733.png" alt="" width="209"><img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181908.png" alt="" width="209"><img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181946.png" alt="" width="209">
+<img title="" src="resources/Screenshot_20240617_181733.png" alt="" width="209"><img title="" src="resources/Screenshot_20240617_181908.png" alt="" width="209"><img title="" src="resources/Screenshot_20240617_181946.png" alt="" width="209">
 
 #### 云同步用户数据
 
@@ -310,7 +314,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
 #### 侧拉菜单设计
 
-<img title="" src="./resources/2024-06-16-19-05-23-image.png" alt="" width="313">
+<img title="" src="resources/2024-06-16-19-05-23-image.png" alt="" width="313">
 
 使用 DrawerLayout 实现，包含和账户相关的一些操作和用户名、用户头像和邮箱的显示
 
@@ -1428,9 +1432,24 @@ def syncFromServer(request):
 
 ### 4.用户体验记录和分析
 
+### 5.已完成的改进
 
+1. 用户登录和注册问题已实现，可以完美做到基本使用和信息同步。
 
-### 5.已完成的改进和存在的问题
+2. 服务器同步到设备和设备同步到服务器这两部分都顺利实现。
+
+3. AI二手交易辅助功能部分实现。
+
+### 6.仍然存在的问题
+
+1. 顶栏原本准备设计查找功能，但发现在Toolbar里嵌套一个View来实现搜索框效果无法达到预期，没有实现。在做这方面时深感现有的各种UI布局并不符合国内App开发的UI风格和习惯，如果要深入改进则需要自己根据现有布局自定义新的布局类型，这需要进一步研读现有UI元素的源代码并改进，应该作为未来学习的方向。
+
+2. AI交易辅助未实现选择一个商品进行生成功能。这个是因为现有开发内容量非常大，一路上出了无数没想过的问题，所以没能完善这一功能，只实现了固定一个示例物品的描述生成。
+
+3. 云同步和用户功能还比较简陋。严格来说，云同步功能应该具有相当复杂的同步逻辑才能实现多用户和家庭等功能的运行，但是我的能力还不足以实现；还有用户登录的过期等综合性的问题没有解决，这个可以通过为用户生成Token等方法改进，但是太过于复杂现阶段还无法完成。
+
+4. 用户设置和浏览记录未实现。这两个功能均需要做App内的前端界面和后端数据库对应的API来实现，但是出于和3一样的原因放弃了。
+
 
 
 
