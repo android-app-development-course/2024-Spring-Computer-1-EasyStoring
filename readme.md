@@ -203,11 +203,84 @@ class EasyStoringApplication : Application() {
 
 ![](/resources/2024-06-16-22-42-23-image.png)
 
+#### 本地信息存放在SQLite数据库
+
+从云端同步当前用户的物品和收纳柜信息，将其存放到本地的SQLite数据库中，方便不同Activity和Fragment之间读取、更新、删除、添加用户的物品和收纳柜信息。使用AppDBHelper类辅助访问SQLite数据库中的数据。AppDBHelper类中有获取指定表中总行数函数、获取指定表中所有行、在指定表中插入行、由id删除物品表中指定行、由id删除收纳柜表中指定行、更新指定表、将本地数据同步到云端、将云端数据同步到本地等函数
+
+```kotlin
+class AppDBHelper (val context: Context, name: String, version: Int):
+    SQLiteOpenHelper(context,name, null, version){
+
+    private val createCupboard = "create table Cupboard(" +
+            " id integer primary key autoincrement," +
+            " userId integer, " +
+            " name text, " +
+            " description text)"
+    private val createItem = "create table Item(" +
+            " id integer primary key autoincrement," +
+            " userId integer, " +
+            " imageId text, " +
+            " name text, " +
+            " description text, " +
+            " number integer, " +
+            " productionDate text, " +
+            " overdueDate text, " +
+            " cupboardId integer)"
+
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL(createCupboard)
+        db.execSQL(createItem)
+        }
+
+    // .......其他函数.....
+}
+```
+
+物品表
+
+![屏幕截图 2024-06-17 234548.png](D:\2024-Spring-Computer-1-EasyStoring\resources\屏幕截图%202024-06-17%20234548.png)
+
+收纳柜表
+
+![屏幕截图 2024-06-17 234617.png](D:\2024-Spring-Computer-1-EasyStoring\resources\屏幕截图%202024-06-17%20234617.png)
+
+#### 物品的查看、新增、修改、删除
+
+在物品列表界面，点击recycleView的任意项，可查看物品详情，详情界面可以上下滑动查看信息，以下是长截屏
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemInfomation.jpg" title="" alt="" width="121">
+
+在物品列表界面或顶栏点击“+”可以跳转到添加物品界面新增物品；新增的物品会添加到本地数据库，并同步到云端。物品列表界面会从本地数据库中将新增的物品添加到物品列表的recycleView中。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718641125684.jpg" title="" alt="" width="187">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemList.jpg" alt="" width="177">
+
+在物品详情界面修改后点击“确定”按钮可以更新物品信息；用户点击确定后会检查物品详情界面的EditTextView是否改变，若改变则会更新本地数据库和ItemList，并提醒recycleView更新数据。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/c9a1b97b019aec66a70b336f04d6069.jpg" title="" alt="" width="158">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/39daee81570c1a48e0a5d1fef460b21.jpg" alt="" width="199">
+
+点击物品列表中的“删除”按钮可以删除物品；物品的被ItemAdater从列表中移除并从本地数据库中删除，同时同步到云端数据库。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718640821337.jpg" title="" alt="" width="340">
+
+#### 收纳柜的查看，新增，删除
+
+在收纳柜列表界面，点击recycleView的任意项，可查看收纳柜中的物品，同样可以点击物品项查看物品详情，点击“删除”删除物品
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/SelectCupboard.jpg" title="" alt="" width="182">
+
+在收纳柜列表界面点击“+”按钮，跳转到添加空间界面，输入名称和描述后点击确定可以新增收纳柜。    
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718641713453.jpg" title="" alt="" width="194">        <img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/cc4fe2b7e857018437b9cfc415b06f4.jpg" title="" alt="" width="186">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/9e4e90127053cd2dbbce7d91d5061dd.jpg" alt="" width="185">
+
+同样点击“删除”按钮可以删除收纳柜
+
+![](D:\2024-Spring-Computer-1-EasyStoring\resources\1718642254357.jpg)
+
 #### AI 二手交易辅助
 
 调用后端服务器的 API 实现，服务器调用文心一言 API 来获得二手物品描述，并可以一键复制描述到剪贴板，方便去其它二手交易平台进行交易。
 
-<img src="resources/Screenshot_20240617_121306.png" title="" alt="" width="307"><img title="" src="resources/Screenshot_20240617_121241.png" alt="" width="307">
+<img title="" src="resources/Screenshot_20240617_121306.png" alt="" width="271">            <img title="" src="resources/Screenshot_20240617_121241.png" alt="" width="271">
 
 ### 2.UI 界面设计
 
@@ -215,11 +288,23 @@ class EasyStoringApplication : Application() {
 
 登录界面                                                           AI 交易助手界面
 
-<img title="" src="resources/2024-06-16-19-00-19-image.png" alt="" width="319"><img title="" src="resources/2024-06-16-19-01-40-image.png" alt="" width="320">
+<img title="" src="resources/2024-06-16-19-00-19-image.png" alt="" width="289">        <img title="" src="resources/2024-06-16-19-01-40-image.png" alt="" width="288">
 
-物品记录界面                                                              物品记录详情
+物品记录界面                                物品记录详情                    添加物品    
 
-收纳柜管理界面                                                          收纳柜详情
+（使用recycleView实现）                             
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemList.jpg" title="" alt="" width="175">           <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemInfomation.jpg" alt="" width="131">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/AddItem.jpg" alt="" width="133">
+
+
+
+收纳柜管理界面                         收纳柜详情                              收纳柜添加
+
+使用recycleView实现                使用recycleView实现
+
+<img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/cupboardList.jpg" alt="cupboardList.jpg" width="178">       <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/SelectCupboard.jpg" alt="" width="178">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/addCupboard.jpg" alt="" width="169">
+
+
 
 #### 顶栏设计
 
@@ -285,6 +370,129 @@ colors.xml 文件中定义的颜色：
 
 ##### 前端数据库 SQLite
 
+数据库辅助类实现：AppDBHelper类中有获取指定表中总行数函数、获取指定表中所有行、在指定表中插入行、由id删除物品表中指定行、由id删除收纳柜表中指定行、更新指定表、将本地数据同步到云端、将云端数据同步到本地等函数
+
+```kotlin
+class AppDBHelper (val context: Context, name: String, version: Int):
+    SQLiteOpenHelper(context,name, null, version){
+
+    private val createCupboard = "create table Cupboard(" +
+            " id integer primary key autoincrement," +
+            " userId integer, " +
+            " name text, " +
+            " description text)"
+    private val createItem = "create table Item(" +
+            " id integer primary key autoincrement," +
+            " userId integer, " +
+            " imageId text, " +
+            " name text, " +
+            " description text, " +
+            " number integer, " +
+            " productionDate text, " +
+            " overdueDate text, " +
+            " cupboardId integer)"
+
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL(createCupboard)
+        db.execSQL(createItem)
+        }
+    
+    // 重建指定表    
+    fun rebuildTable( db: SQLiteDatabase,tableName:String){
+        when(tableName){
+            "Cupboard"->{
+                db.execSQL("DROP TABLE IF EXISTS Cupboard")
+                db.execSQL(createCupboard)
+            }
+            "Item"->{
+                db.execSQL("DROP TABLE IF EXISTS Item")
+                db.execSQL(createItem)
+            }
+        }
+    }
+    
+    // 获取指定表的行数
+    fun getRowCount(db: SQLiteDatabase,tableName: String): Int {
+        val cursor: Cursor
+        try {
+            cursor = db.rawQuery("SELECT COUNT(*) FROM $tableName", null)
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0)
+            }
+            cursor.close()
+        } catch (e:Exception) {
+            Log.d("error",e.message!!)
+        }
+        // 如果没有行，返回0
+        return 0
+    }
+    fun insertItem(db: SQLiteDatabase, Item1: Item){
+        val values = ContentValues().apply {
+            // 组装数据
+            put("id",Item1.id)
+            put("userId", Item1.userId)
+            put("imageId",Item1.imageId)
+            put("name",Item1.name)
+            put("description",Item1.description)
+            put("number", Item1.number)
+            put("productionDate",Item1.productionDate)
+            put("overdueDate", Item1.overdueDate)
+            put("cupboardId", Item1.cupboardId)
+        }
+        db.insert("Item", null, values)
+    }
+
+    fun insertCupboard(db: SQLiteDatabase, cupboard: Cupboard) {
+        val values = ContentValues().apply {
+            // 组装数据
+            put("id",cupboard.id)
+            put("userId", cupboard.userId)
+            put("name",cupboard.name)
+            put("description",cupboard.description)
+        }
+        db.insert("Cupboard", null, values)
+    }
+
+    fun delItemById(db: SQLiteDatabase,id: Int){
+        db.delete("Item", "id = ?", arrayOf(id.toString()))
+    }
+    fun delCupboardById(db: SQLiteDatabase,id: Int){
+        db.delete("Cupboard", "id = ?", arrayOf(id.toString()))
+    }
+    fun updateItem(db: SQLiteDatabase, Item1: Item){
+        val values = ContentValues().apply {
+            // 组装数据
+            put("id",Item1.id)
+            put("userId", Item1.userId)
+            put("imageId",Item1.imageId)
+            put("name",Item1.name)
+            put("description",Item1.description)
+            put("number", Item1.number)
+            put("productionDate",Item1.productionDate)
+            put("overdueDate", Item1.overdueDate)
+            put("cupboardId", Item1.cupboardId)
+        }
+        // 执行更新操作
+        val updatedRows = db.update("Item", values, "id=?",
+            arrayOf(Item1.id.toString()))
+    }
+    
+    // 本地同步到云端
+    fun DeviceToSever(db: SQLiteDatabase){
+        // 代码过长，详情见AppDBHelper文件
+    }
+    
+    // 云端同步到本地
+    fun SeverToDevice(db: SQLiteDatabase){
+        // 代码过长，详情见AppDBHelper文件
+    }
+}
+
+
+```
+
+
+
 ##### 后端数据库 MongoDB
 
 数据库类实现：
@@ -327,6 +535,176 @@ class DBManager:
         else:
             return True
 ```
+
+#### RecycleView及相应Adapter实现
+
+**初始化物品列表ItemList：**
+
+清空ItemList，从本地数据库中读取所有物品信息，存入IemList中
+
+```kt
+private fun initItem() {
+        ItemList.clear()
+        val dbHelper = AppDBHelper(requireContext(), "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+
+        val cursor = db.rawQuery("SELECT * FROM Item WHERE userId = ?", arrayOf(EasyStoringApplication.userID))
+
+        var ItemNum = 0
+        // 遍历查询结果
+        if (cursor.moveToFirst()) {
+            do {
+                ItemNum++
+                val item1: Item = Item(EasyStoringApplication.userID.toInt())
+                try {
+                    item1.id = cursor.getInt(cursor.getColumnIndex("id"))
+                    item1.userId = cursor.getInt(cursor.getColumnIndex("userId"))
+                    item1.name = cursor.getString(cursor.getColumnIndex("name"))
+                    item1.imageId = cursor.getString(cursor.getColumnIndex("imageId"))
+                    item1.cupboardId = cursor.getString(cursor.getColumnIndex("cupboardId")).toInt()
+                    item1.productionDate = cursor.getString(cursor.getColumnIndex("productionDate"))
+                    item1.overdueDate = cursor.getString(cursor.getColumnIndex("overdueDate"))
+                    item1.description = cursor.getString(cursor.getColumnIndex("description"))
+                    item1.number = cursor.getString(cursor.getColumnIndex("number")).toInt()
+                    ItemList.add(item1)
+                } catch (e: Exception) {
+                    Log.d("error1", "An error occurred: " + e.message) // 最好包括异常的消息
+                }
+            } while (cursor.moveToNext())
+        }
+
+        // 关闭游标和数据库
+        cursor.close()
+        db.close()
+    }
+```
+
+**物品列表的RecycleView：**
+
+将ItemList中的数据通过ItemAdapter导入到RecycleView中。
+
+```kotlin
+        initItem()
+        recyclerView = binding.recyclerView
+        val layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = layoutManager
+        adapter = ItemAdapter(requireContext(), ItemList)     // 在这里修改物品栏显示的内容
+        recyclerView.adapter = adapter
+```
+
+**物品的Adapter：**
+
+实现在recycleView列表中显示相应信息；实现点击项目跳转到物品详情界面，并将点击的物品的id传过去；实现点击删除按钮后，从列表、本地数据库中删除对应的物品，并同步到云端数据库中。
+
+```kt
+class ItemAdapter(private val context: Context, val itemList:MutableList<Item>) :
+    // 这个函数修改显示的内容
+    RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+    inner class ViewHolder(view: View):RecyclerView.ViewHolder(view) {
+        val ItemImage: ImageView = view.findViewById(R.id.itemImage)
+        val ItemName: TextView = view.findViewById(R.id.itemName)
+        val belongTo: TextView = view.findViewById(R.id.item_belongTo)
+        val productionDate: TextView = view.findViewById(R.id.item_productionDate)
+        val ItemNum: TextView = view.findViewById(R.id.item_num)
+        val del:Button = view.findViewById(R.id.button7)
+    }
+    // 收纳柜字典
+    var cupboardNameMap  = mutableMapOf<Int, String>()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_item, parent, false)
+        val viewHolder = ViewHolder(view)
+
+        val dbHelper = AppDBHelper(viewHolder.itemView.context, "EasyStoring.db", 1)
+        val db = dbHelper.writableDatabase
+        val cupboards = dbHelper.getAllRowsFromMyTable(db,"Cupboard")
+        try {
+            if (cupboards.isNotEmpty()) {
+                for (i in 0..<cupboards.count()) {
+                    cupboardNameMap[cupboards[i]["id"].toString().toInt()] =
+                        cupboards[i]["name"].toString()
+                }
+            }
+        }catch (e:Exception){
+            Log.d("error2",e.message!!)
+        }
+
+        // 点击整个事件
+        viewHolder.itemView.setOnClickListener {
+            val position = viewHolder.bindingAdapterPosition
+            val item = itemList[position]
+            // 点击事件后，跳转界面，传信息
+            try {
+                val intent = Intent(viewHolder.itemView.context, ItemActivity::class.java).apply {
+                    putExtra("position", position.toString())
+                    putExtra("itemId",item.id.toString())
+                }
+                viewHolder.itemView.context.startActivity(intent)
+            }
+            catch (e:Exception){
+                Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
+            }
+        }
+        // 点击图片
+        viewHolder.ItemImage.setOnClickListener {
+
+        }
+
+        viewHolder.del.setOnClickListener {
+            val position = viewHolder.bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                // 通知Adapter删除该项
+                this.removeItem(position)
+            }
+        }
+        return viewHolder
+    }
+
+    // 填入信息
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = itemList[position]
+        holder.ItemName.text = item.name
+        holder.ItemName.typeface = Typeface.DEFAULT_BOLD
+        holder.productionDate.text = item.productionDate
+        if (cupboardNameMap.containsKey(item.cupboardId))
+            holder.belongTo.text = cupboardNameMap[item.cupboardId]
+        else{
+            holder.belongTo.text ="默认收纳柜"
+            itemList[position].cupboardId = -1
+        }
+        holder.ItemNum.text = "×${item.number}"
+    }
+
+    override fun getItemCount()=itemList.size
+    @SuppressLint("NotifyDataSetChanged")
+    fun removeItem(position: Int) {
+        // 检查位置是否有效
+        if (position in 0 until itemCount) {
+            // 从列表中移除项并从数据库中删除
+            val delItem = itemList.removeAt(position)
+            val ItemId = delItem.id
+            val dbHelper = AppDBHelper(context, "EasyStoring.db", 1)
+            val db = dbHelper.writableDatabase
+            dbHelper.delItemById(db, ItemId)
+            dbHelper.DeviceToSever(db)
+            // 通知RecyclerView项已被移除
+            notifyItemRemoved(position)
+
+            // 如果列表为空，可能还需要通知数据集变化
+            if (itemList.isEmpty()) {
+                notifyDataSetChanged()
+            }
+        }
+    }
+}
+```
+
+**收纳柜的RecycleView和Adapter:**
+
+实现过程与物品的类似，不在此赘述
+
+
 
 #### 侧滑菜单和底部导航栏实现
 
@@ -1072,6 +1450,11 @@ def syncFromServer(request):
 
 4. 用户设置和浏览记录未实现。这两个功能均需要做App内的前端界面和后端数据库对应的API来实现，但是出于和3一样的原因放弃了。
 
+
+
+
 ## 三、测试大纲和测试报告
+
+
 
 ## 四、产品安装和使用说明
