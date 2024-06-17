@@ -10,11 +10,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easystoring.logic.model.AppDBHelper
 import com.example.easystoring.ui.CupboardActivity
-import com.example.easystoring.ui.ItemActivity
 import java.lang.Exception
 
 class CupboardAdapter(private val context: Context, val cupboardList:MutableList<Cupboard>) :

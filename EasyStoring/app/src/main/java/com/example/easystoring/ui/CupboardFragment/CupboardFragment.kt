@@ -15,11 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.easystoring.Cupboard
 import com.example.easystoring.CupboardAdapter
 import com.example.easystoring.EasyStoringApplication
-import com.example.easystoring.Item
-import com.example.easystoring.ItemAdapter
 import com.example.easystoring.databinding.FragmentCupboardBinding
 import com.example.easystoring.logic.model.AppDBHelper
-import com.example.easystoring.ui.AdditemActivity.AddActivity
 import com.example.easystoring.ui.AdditemActivity.AddCupboardActivity
 
 class CupboardFragment : Fragment() {

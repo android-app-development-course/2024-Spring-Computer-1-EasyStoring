@@ -26,7 +26,7 @@ class AddPicFragment : Fragment() {
 
         // Find the button and set the click listener
         view.findViewById<Button>(R.id.button_in_fragment).setOnClickListener {
-            Toast.makeText(context, "Button clicked in Fragment!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "尚不支持", Toast.LENGTH_SHORT).show()
         }
 
 

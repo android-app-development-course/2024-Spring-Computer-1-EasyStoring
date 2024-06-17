@@ -2,36 +2,23 @@ package com.example.easystoring.ui.AdditemActivity
 
 //import androidx.activity.enableEdgeToEdge
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
-import android.database.Cursor
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentContainer
 import com.example.easystoring.EasyStoringApplication
 import com.example.easystoring.Item
 import com.example.easystoring.R
 import com.example.easystoring.logic.model.AppDBHelper
-import java.io.File
-import java.io.FileOutputStream
 import kotlin.Exception
 
 class AddActivity : AppCompatActivity() {

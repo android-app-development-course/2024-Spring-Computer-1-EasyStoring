@@ -1,9 +1,7 @@
 package com.example.easystoring
 
-import CupboardTypeConverter
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 
 @Entity
 //@TypeConverters(CupboardTypeConverter::class)

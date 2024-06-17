@@ -45,7 +45,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(createCupboard)
         db.execSQL(createItem)
-        Toast.makeText(context, "Create Succeeded", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "Create Succeeded", Toast.LENGTH_SHORT).show()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
