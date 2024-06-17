@@ -296,15 +296,11 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
 <img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemList.jpg" title="" alt="" width="175">           <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/ItemInfomation.jpg" alt="" width="131">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/AddItem.jpg" alt="" width="133">
 
-
-
 收纳柜管理界面                         收纳柜详情                              收纳柜添加
 
 使用recycleView实现                使用recycleView实现
 
 <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/cupboardList.jpg" alt="cupboardList.jpg" width="178">       <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/SelectCupboard.jpg" alt="" width="178">        <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/addCupboard.jpg" alt="" width="169">
-
-
 
 #### 顶栏设计
 
@@ -396,7 +392,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
         db.execSQL(createCupboard)
         db.execSQL(createItem)
         }
-    
+
     // 重建指定表    
     fun rebuildTable( db: SQLiteDatabase,tableName:String){
         when(tableName){
@@ -410,7 +406,7 @@ class AppDBHelper (val context: Context, name: String, version: Int):
             }
         }
     }
-    
+
     // 获取指定表的行数
     fun getRowCount(db: SQLiteDatabase,tableName: String): Int {
         val cursor: Cursor
@@ -476,22 +472,18 @@ class AppDBHelper (val context: Context, name: String, version: Int):
         val updatedRows = db.update("Item", values, "id=?",
             arrayOf(Item1.id.toString()))
     }
-    
+
     // 本地同步到云端
     fun DeviceToSever(db: SQLiteDatabase){
         // 代码过长，详情见AppDBHelper文件
     }
-    
+
     // 云端同步到本地
     fun SeverToDevice(db: SQLiteDatabase){
         // 代码过长，详情见AppDBHelper文件
     }
 }
-
-
 ```
-
-
 
 ##### 后端数据库 MongoDB
 
@@ -703,8 +695,6 @@ class ItemAdapter(private val context: Context, val itemList:MutableList<Item>) 
 **收纳柜的RecycleView和Adapter:**
 
 实现过程与物品的类似，不在此赘述
-
-
 
 #### 侧滑菜单和底部导航栏实现
 
@@ -1432,29 +1422,142 @@ def syncFromServer(request):
 
 ### 4.用户体验记录和分析
 
+用户A：界面整体看起来很清爽。在不同设备上登录同一个账号也能够同步账号的信息，很方便。但好像搜索功能不能用，希望能够实现以下，方便到时候东西多了后快速查找。物品的日期那里，可不可以改成选择日期，不想手动输入。像下面这样：
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/5baaf2aee120d0d3da725ce089641688_.jpg" title="" alt="" width="198">
+
+        分析：搜索功能由于时间和技术问题，没有实现，今后会多多研究，争取将搜索功能实现，才能更方便用户在收纳更多的东西时快速查找。日期输入确实是没有考虑到用户的体验优化，之后会研究添加一个日期选择器。
+
+
+
+用户B：
+
+        删除默认收纳柜，但物品位置还是在默认收纳柜中
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20012958.png" title="" alt="屏幕截图 2024-06-18 012958.png" width="400">
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013743.png" title="" alt="屏幕截图 2024-06-18 013743.png" width="190"><img src="file:///C:/Users/阿卡特兰/AppData/Roaming/marktext/images/2024-06-18-01-38-21-image.png" title="" alt="" width="224">
+
+        收纳柜重名问题
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013241.png" title="" alt="屏幕截图 2024-06-18 013241.png" width="406">
+
+        数量合法性问题
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013502.png" title="" alt="屏幕截图 2024-06-18 013502.png" width="231">
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013637.png" title="" alt="屏幕截图 2024-06-18 013637.png" width="182">
+
+
+
+        分析：由于物品的实现逻辑需要每个物品都有对应的收纳柜，因此将默认收纳柜设置为不可删除，避免用户将默认收纳柜删除后，无法在收纳柜列表中找到存放于默认收纳柜中的物品。
+
+        收纳柜同名确实会造成冲突，经过测试，同名时，只有最早创建的收纳柜中会有物品，后创建的同名收纳柜为空。在收纳柜新建时检查重名，如重名则提示“新建失败，已有此数据库”，应该就可以解决问题。而数据确实缺少合法性检查，应用的健壮性不足，应多考虑用户非法输入的情况。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013407.png" title="" alt="屏幕截图 2024-06-18 013407.png" width="441">
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013149.png" title="" alt="屏幕截图 2024-06-18 013149.png" width="446">
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20013542.png" title="" alt="屏幕截图 2024-06-18 013542.png" width="422">
+
+        用户C：好像注册时有点问题，我点注册就闪退了，再注册时提示“用户已存在”，结果发现可以直接登录了。用户界面的默认头像很可爱，还有交易辅助界面的fufu玩偶也可爱，只可惜不能选自己添加的物品，不过可以自动生成物品的描述，期待选择物品生成描述的功能真正实现的时候。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/cb3aa9b9f0eafdd20c763c58d972ab2.jpg" title="" alt="" width="157">    <img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20015252.png" title="" alt="" width="189">
+
+        分析：注册时有概率闪退，目前还不清楚原因，但第一次注册成功并登录后，再进行注册就不会闪退了，这种概率性遇到的bug很难找到原因，由于时间关系，且问题不影响使用，会在之后尽力排查原因。AI交易辅助界面的物品选择暂时还没有完成，会在后续的开发和学习中实现。
+
+        用户D：应用很不错，挺实用的，给年龄大的人用，给东西多的上班族用都可以。不过添加物品时遇到问题了，数量不填或填非数字时会添加失败。希望加多点说明
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/屏幕截图%202024-06-18%20020051.png" title="" alt="屏幕截图 2024-06-18 020051.png" width="312">
+
+<img src="file:///C:/Users/阿卡特兰/AppData/Roaming/marktext/images/2024-06-18-02-03-47-image.png" title="" alt="" width="313">
+
+        分析：应用的目标人群确实包含了记忆力不佳的老年人、物品较多较杂的上班族和学生党。不过提到了老年人，应该设计更清晰的使用说明和引导，将界面设计应设计得清晰，降低学习成本。添加物品的“数量”一栏只能够输入数字，没有考虑到用户可能不熟悉应用而造成困扰。应该添加一些提示性语句在输入框前，并检查用户的输入，避免因用户输入不当造成程序崩溃，应在输入不当数据时进行提示。
+
 ### 5.已完成的改进
 
-1. 用户登录和注册问题已实现，可以完美做到基本使用和信息同步。
+1. 用户登录和注册问题已实现，可以完美做到基本使用和云端信息同步，可以通过网络连接云端，在不同设备上登录同一个账号。
 
 2. 服务器同步到设备和设备同步到服务器这两部分都顺利实现。
 
 3. AI二手交易辅助功能部分实现。
 
+4. 整体的UI设计进行了改进，使得界面简洁清新。由原本的深蓝色背景改为了白色背景+明亮图案和按钮的组合，整体更加协调明亮。界面还统一设计了toolbar，在toolbar上实现返回功能而不是在按钮上，更加美观和谐。
+
 ### 6.仍然存在的问题
 
 1. 顶栏原本准备设计查找功能，但发现在Toolbar里嵌套一个View来实现搜索框效果无法达到预期，没有实现。在做这方面时深感现有的各种UI布局并不符合国内App开发的UI风格和习惯，如果要深入改进则需要自己根据现有布局自定义新的布局类型，这需要进一步研读现有UI元素的源代码并改进，应该作为未来学习的方向。
 
-2. AI交易辅助未实现选择一个商品进行生成功能。这个是因为现有开发内容量非常大，一路上出了无数没想过的问题，所以没能完善这一功能，只实现了固定一个示例物品的描述生成。
+2. AI交易辅助仅实现AI接口的网络连接，未实现选择一个商品进行生成描述的功能。这个是因为现有开发内容量非常大，一路上出了无数没想过的问题，所以没能完善这一功能，只实现了固定一个示例物品的描述生成。
 
-3. 云同步和用户功能还比较简陋。严格来说，云同步功能应该具有相当复杂的同步逻辑才能实现多用户和家庭等功能的运行，但是我的能力还不足以实现；还有用户登录的过期等综合性的问题没有解决，这个可以通过为用户生成Token等方法改进，但是太过于复杂现阶段还无法完成。
+3. 云同步和用户功能还比较简陋，仅能支持基本的用户注册和登录，以及用户物品和收纳柜信息的云同步。严格来说，云同步功能应该具有相当复杂的同步逻辑才能实现多用户和家庭等功能的运行，但是我的能力还不足以实现；还有用户登录的过期等综合性的问题没有解决，这个可以通过为用户生成Token等方法改进，但是太过于复杂现阶段还无法完成。
 
 4. 用户设置和浏览记录未实现。这两个功能均需要做App内的前端界面和后端数据库对应的API来实现，但是出于和3一样的原因放弃了。
 
-
-
+5. 缺少对用户的非法输入的应对，应用健壮性不足，虽然通过try catch语句尽量避免了应用崩溃，但用户非法输入时，不能正常实现功能，需要后续多多进行测试并修改。
 
 ## 三、测试大纲和测试报告
 
 
 
 ## 四、产品安装和使用说明
+
+### 产品安装
+
+1.获取apk文件后（项目根目录下的app-release.apk），使用浏览器打开，点击安装。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/89fa77750683dc0c1155c632b996c39.jpg" title="" alt="89fa77750683dc0c1155c632b996c39.jpg" width="191">
+
+2.由于本应用暂时没有上架任何应用商店，也未进行备案，在安装时会提示风险，但本应用一定没有任何窃取隐私、投放病毒等威胁用户信息安全的行为，无视风险安装即可。安装完成即可打开应用。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/6017e4260a432d6e08155d89622bd52.jpg" title="" alt="6017e4260a432d6e08155d89622bd52.jpg" width="191">
+
+### 使用说明
+
+##### 注册与登录
+
+打开应用后，若已有账号，输入账号密码登录即可；若第一次使用本应用，输入新的账号和密码，点击注册按钮，等待注册成功后再登录即可，无需绑定手机号等个人信息。
+
+<img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/2024-06-16-19-00-19-image.png" alt="2024-06-16-19-00-19-image.png" width="168">            <img title="" src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/Screenshot_20240617_181946.png" alt="" width="168">
+
+##### 下方导航栏与左侧侧栏
+
+登录成功后，点击下方导航栏可以切换“物品记录”、“收纳柜管理”、“交易助手”等界面。点击屏幕左上图标可以弹出侧栏，点击侧栏的“退出账号”可以退出当前用户，其余功能暂未实现。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/2024-06-16-19-07-28-image.png" title="" alt="2024-06-16-19-07-28-image.png" width="358">
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/2024-06-16-19-05-23-image.png" title="" alt="2024-06-16-19-05-23-image.png" width="166">
+
+##### 物品记录界面
+
+在物品记录界面可查看所有物品列表。点击任意一项可以查看物品详细信息；点击任意一项的删除按钮可以删除该项；点击右上角或右下角“+”按钮可以添加物品。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718652158211.jpg" title="" alt="1718652158211.jpg" width="163">
+
+        查看物品详情时，可以修改物品的信息，点击确定后会返回物品记录界面，并更新物品的信息。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718652518264.jpg" title="" alt="1718652518264.jpg" width="166">
+
+        添加物品时，可以输入物品信息，信息无误后点击确定，可成功添加物品。注意：数量一栏必须填写，且必须填写整数，否则会添加失败；位置一栏应填写已有的收纳柜名字，若填写其它，也可以成功添加物品，但位置一栏会自动变为“默认收纳柜”。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718652798961.jpg" title="" alt="1718652798961.jpg" width="166">
+
+##### 收纳柜界面
+
+在收纳柜界面可以查看所有收纳柜列表。点击任意一项收纳柜可以查看收纳柜中的物品列表；点击任意一项收纳柜的删除按钮可以删除该项收纳柜；点击右下角“+”按钮可以添加收纳柜。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718652975883.jpg" title="" alt="1718652975883.jpg" width="194">
+
+        查看收纳柜中的物品列表时，与物品记录界面类似，点击任意一项可以查看物品详细信息、点击任意一项的删除按钮可以删除该物品。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718653064137.jpg" title="" alt="1718653064137.jpg" width="198">
+
+        添加收纳柜时，可以输入收纳柜信息，信息无误后点击确定可成功添加收纳柜。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718653173523.jpg" title="" alt="1718653173523.jpg" width="194">
+
+##### 交易助手界面
+
+在交易助手界面，点击“生成描述”按钮，AI会生成对物品的描述，以便进行二手交易；点击“复制描述”可以将生成的描述复制到剪贴板，以便粘贴到二手交易平台。选择物品进行描述的功能暂未实现。
+
+<img src="file:///D:/2024-Spring-Computer-1-EasyStoring/resources/1718653343901.jpg" title="" alt="1718653343901.jpg" width="194">
