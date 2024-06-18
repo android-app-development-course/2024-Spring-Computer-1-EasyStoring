@@ -51,23 +51,6 @@ class AppDBHelper (val context: Context, name: String, version: Int):
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
 
     }
-    @SuppressLint("Range")
-    fun getAllFromMyTable(db: SQLiteDatabase, tableName: String, columns:Array<String>): List<Map<String, Any?>> {
-        val list = mutableListOf<Map<String, Any?>>()
-        val cursor: Cursor = db.query(tableName, columns,
-            null, null, null, null, null)
-        if (cursor.moveToFirst()) {
-            do {
-                val row = mutableMapOf<String, Any?>()
-                for (columnName in columns) {
-                    row[columnName] = cursor.getString(cursor.getColumnIndex(columnName))
-                }
-                list.add(row)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        return list
-    }
 
     fun rebuildTable( db: SQLiteDatabase,tableName:String){
         when(tableName){
@@ -85,7 +68,8 @@ class AppDBHelper (val context: Context, name: String, version: Int):
     // 获取MyTable中所有行的函数
     fun getAllRowsFromMyTable(db: SQLiteDatabase, tableName:String): List<Map<String, Any?>> {
         val list = mutableListOf<Map<String, Any?>>()
-        val cursor: Cursor = db.query(tableName, null, null, null, null, null, null)
+        val cursor: Cursor = db.query(tableName, null, null,
+            null, null, null, null)
 
         if (cursor.moveToFirst()) {
             do {
@@ -101,15 +85,18 @@ class AppDBHelper (val context: Context, name: String, version: Int):
         return list
     }
     // 获取指定表的行数
-    fun getRowCount(db: SQLiteDatabase,tableName: String): Int {
+    fun getMaxId(db: SQLiteDatabase,tableName: String): Int {
         val cursor: Cursor
         try {
-            cursor = db.rawQuery("SELECT COUNT(*) FROM $tableName", null)
+            cursor = db.rawQuery("SELECT MAX(id) FROM $tableName", null)
             if (cursor.moveToFirst()) {
-                return cursor.getInt(0)
+                val maxId = cursor.getInt(0) // 0 是第一列的索引
+                cursor.close()
+                return maxId
             }
             cursor.close()
-        } catch (e:Exception) {
+        }catch (e:Exception)
+        {
             Log.d("error",e.message!!)
         }
         // 如果没有行，返回0

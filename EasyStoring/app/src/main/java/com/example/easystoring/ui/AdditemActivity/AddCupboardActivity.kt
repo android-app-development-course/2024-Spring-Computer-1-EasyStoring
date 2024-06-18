@@ -45,7 +45,7 @@ class AddCupboardActivity : AppCompatActivity() {
             try {
                 val dbHelper = AppDBHelper(this, "EasyStoring.db", 1)
                 val db = dbHelper.writableDatabase
-                newCupboard.id = dbHelper.getRowCount(db,"Cupboard") + 1
+                newCupboard.id = dbHelper.getMaxId(db,"Cupboard") + 1
                 newCupboard.name = edit_1.text.toString()
                 newCupboard.description = edit_2.text.toString()
                 dbHelper.insertCupboard(db, newCupboard)

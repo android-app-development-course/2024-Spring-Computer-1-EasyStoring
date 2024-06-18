@@ -85,7 +85,7 @@ class AddActivity : AppCompatActivity() {
                 if (cursor.moveToFirst()) {
                     cupboardId = cursor.getString(cursor.getColumnIndex("id")).toInt()
                 }
-                use_item.id = dbHelper.getRowCount(db,"Item") + 1
+                use_item.id = dbHelper.getMaxId(db,"Item") + 1
                 use_item.name = edit_1.text.toString()
                 use_item.number = Integer.parseInt(edit_2.text.toString())
                 use_item.description = edit_7.text.toString()
