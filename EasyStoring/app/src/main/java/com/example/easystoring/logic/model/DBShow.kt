@@ -23,8 +23,8 @@ class DBShow : AppCompatActivity() {
         val ItemColumns = arrayOf("id", "userId","imageId","name", "description",
             "number", "productionDate", "overdueDate", "cupboardId")
         try {
-            val cupboardData = dbHelper.getAllFromMyTable(db,"Cupboard",cupboardColumns)
-            val ItemData = dbHelper.getAllFromMyTable(db,"Item",ItemColumns)
+            val cupboardData = dbHelper.getAllRowsFromMyTable(db,"Cupboard")
+            val ItemData = dbHelper.getAllRowsFromMyTable(db,"Item")
             dbShowText.text ="Cupboard:\n"+cupboardData+"\nItem:\n" + ItemData
         }catch (e: Exception) { // 指定捕获 Exception 类型
             Log.d("error", "An error occurred: " + e.message) // 最好包括异常的消息
