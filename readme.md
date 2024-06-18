@@ -238,11 +238,11 @@ class AppDBHelper (val context: Context, name: String, version: Int):
 
 物品表
 
-![屏幕截图 2024-06-17 234548.png](\resources\屏幕截图%202024-06-17%20234548.png)
+<img src="resources/屏幕截图%202024-06-17%20234548.png" title="" alt="" width="800">
 
 收纳柜表
 
-![屏幕截图 2024-06-17 234617.png](\resources\屏幕截图%202024-06-17%20234617.png)
+<img src="resources/屏幕截图%202024-06-17%20234617.png" title="" alt="" width="600">
 
 #### 物品的查看、新增、修改、删除
 
@@ -1500,12 +1500,11 @@ def syncFromServer(request):
 
 采用腾讯云测服务，共测试了38款机型，其中只有2款失败，原因是安装失败，设备名称为“小米 MIX4”和“realme V11”，通过率为94.74%
 
-![屏幕截图 2024-06-18 055833.png](\resources\屏幕截图%202024-06-18%20055833.png)
+<img src="resources/屏幕截图%202024-06-18%20055833.png" title="" alt="" width="600">
 
-![屏幕截图 2024-06-18 060349.png](\resources\屏幕截图%202024-06-18%20060349.png)
+<img src="resources/屏幕截图%202024-06-18%20060349.png" title="" alt="" width="600">
 
-![屏幕截图 2024-06-18 060604.png](\resources\屏幕截图%202024-06-18%20060604.png)
-
+<img src="resources/屏幕截图%202024-06-18%20060604.png" title="" alt="" width="600">
 
 
 ## 四、产品安装和使用说明
